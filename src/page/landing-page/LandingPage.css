@@ -30,7 +30,7 @@
   background: #3d7100;
 }
 .hero {
-  background-image: url("/public/images/hero.svg");
+  background-image: url("/images/hero.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }

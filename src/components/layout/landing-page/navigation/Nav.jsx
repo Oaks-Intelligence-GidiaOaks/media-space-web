@@ -1,6 +1,6 @@
-import * as images from "../../../assets";
+import * as images from "../../../../assets";
 import { NavLink, Link } from "react-router-dom";
-import { INDEX, CONTACT_US, FAQ, ABOUT } from "../../../routes/CONSTANT";
+import { INDEX, CONTACT_US, FAQ, ABOUT } from "../../../../routes/CONSTANT";
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useClickAway } from "react-use";
@@ -30,7 +30,7 @@ function Nav() {
         <div className="logo">
           <Link to={INDEX} className="flex">
             <img src={images.logo} alt="logo" />
-            <p className="logo-text">MediaSpace</p>
+            <p className="logo-text">Kommunita</p>
           </Link>
         </div>
 
