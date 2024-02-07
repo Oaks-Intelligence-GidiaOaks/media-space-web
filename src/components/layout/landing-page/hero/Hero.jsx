@@ -3,22 +3,24 @@ import { INDEX } from "../../../../routes/CONSTANT";
 
 function Hero() {
   return (
-    <section className="hero flex items-center justify-center h-screen">
-      <div className="hero-content my-auto">
-        <h6 className="hero-title pb-5">Welcome to Media Space</h6>
-        <h5 className="hero-subtitle text-center pb-3">
-          <span className="spotlight">Elevate</span> Your Communication <br />
-          Experience
-        </h5>
-        <h5 className="hero-lead pt-5 pb-8">
-          Empower Your Organization with Seamless Integration <br /> and
-          Customized Communication Spaces!
-        </h5>
+    <section className="hero h-screen flex justify-center items-center">
+      <div className="container">
+        <div className="hero-content text-center">
+          <h6 className="hero-title pb-5">Welcome to Media Space</h6>
+          <h5 className="hero-subtitle pb-3">
+            <span className="spotlight">Elevate</span> Your Communication <br />
+            Experience
+          </h5>
+          <h5 className="hero-lead pt-5 pb-8">
+            Empower Your Organization with Seamless Integration <br /> and
+            Customized Communication Spaces!
+          </h5>
 
-        <div className="flex justify-center">
-          <Link to={INDEX} className="flex hero-btn">
-            Get started
-          </Link>
+          <div className="flex justify-center">
+            <Link to={INDEX} className="hero-btn">
+              Get started
+            </Link>
+          </div>
         </div>
       </div>
     </section>
