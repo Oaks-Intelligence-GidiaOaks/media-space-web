@@ -7,7 +7,9 @@ import instagram from "../assets/instagram.svg";
 import linkedin from "../assets/linkedin.svg";
 import { AiOutlineMail } from "react-icons/ai";
 import BgGroup from "../assets/BgGroup.svg";
+import Ellipse from "../assets/Ellipse.svg";
 import { Link } from "react-router-dom";
+import {  motion } from "framer-motion";
 
 const Login = () => {
   const [eyeState, setEyeState] = useState(false);
@@ -19,8 +21,8 @@ const Login = () => {
   return (
     <div className="flex lg:h-screen bg-[#001900]  flex-col lg:flex-row ">
       <div className="w-full lg:w-3/5">
-        <div className="">
-          <div className="h-screen w-full bg-[#001900] bg-no-repeat overflow-hidden relative">
+        <div className="relative">
+          <div className="h-screen w-full flex justify-center items-center bg-[#001900] bg-no-repeat overflow-hidden relative">
             <h1
               className="absolute text-center font-Inter top-0 left-1/2 transform -translate-x-1/2 text-white text-4xl font-bold mt-20"
               style={{
@@ -33,10 +35,24 @@ const Login = () => {
             >
               KOMMUNITA
             </h1>
-            <img
+            <motion.img
+              initial={{ y: 200, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: "easeInOut" }}
               src={BgGroup}
               alt="Background"
-              className="absolute bg-cover bottom-0 left-1/2 transform -translate-x-1/2 w-[60%]"
+              className="absolute bg-cover bottom-0  transform -translate-x-1/2 w-[60%]"
+            />
+          </div>
+
+          <div className="absolute right-0 left-0 top-0 h-full w-full">
+            <motion.img
+              initial={{ y: -650, x: -650 }}
+              animate={{ y: 0, x: 0 }}
+              transition={{ delay: 1.5, duration: 1, ease: "easeOut" }}
+              src={Ellipse}
+              alt=""
+              className=" scale-100 w-[60%]"
             />
           </div>
         </div>
@@ -76,7 +92,7 @@ const Login = () => {
                 htmlFor="username"
                 className=" px-2 absolute text-primary-gray  bg-transparent duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-dark-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
               >
-              Username
+                Username
               </label>
               <GoPerson
                 color=""
