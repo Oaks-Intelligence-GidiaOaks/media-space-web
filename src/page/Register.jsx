@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { AiOutlineMail } from "react-icons/ai";
+import { GoPerson } from "react-icons/go";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { Link } from "react-router-dom";
 import facebook from "../assets/facebook.svg";
 import goggle from "../assets/goggle.svg";
 import instagram from "../assets/instagram.svg";
 import linkedin from "../assets/linkedin.svg";
+import { AiOutlineMail } from "react-icons/ai";
 import BgGroup from "../assets/BgGroup.svg";
 import Ellipse from "../assets/Ellipse.svg";
+import { Link } from "react-router-dom";
 import {  motion } from "framer-motion";
 
 const Login = () => {
@@ -40,7 +41,7 @@ const Login = () => {
               transition={{ duration: 1, ease: "easeInOut" }}
               src={BgGroup}
               alt="Background"
-              className="absolute bottom-0 transform -translate-x-1/2 w-[60%]"
+              className="absolute bg-cover bottom-0  transform -translate-x-1/2 w-[60%]"
             />
           </div>
 
@@ -56,19 +57,55 @@ const Login = () => {
           </div>
         </div>
       </div>
-
-      <div className="w-full lg:w-2/5 rounded-tl-[10%]  lg:rounded-tl-[20%]  mx-auto p-8 lg:p-16 bg-white">
+      <div className="w-full lg:w-2/5 rounded-tl-[10%]  lg:rounded-tl-[20%] mx-auto p-8 lg:p-16 bg-white overflow-y-scroll">
         <div className="">
           <form className="">
             <h1 className="font-Inter py-2 text-primary-dark-green font-bold text-4xl">
-              Sign In
+              Create Account
             </h1>
+            <div className="relative mt-6">
+              <input
+                id="name"
+                type="text"
+                className="block px-2 w-full py-3 bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
+                placeholder="Display name"
+              />
+              <label
+                htmlFor="name"
+                className=" px-2 absolute text-primary-gray  bg-transparent duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-dark-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+              >
+                Display name
+              </label>
+              <GoPerson
+                color=""
+                className=" text-primary-gray absolute top-4 right-2"
+              />
+            </div>
+            <div className="relative mt-6">
+              <input
+                id="username"
+                type="text"
+                className="block px-2 w-full py-3 bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
+                placeholder="Username"
+              />
+              <label
+                htmlFor="username"
+                className=" px-2 absolute text-primary-gray  bg-transparent duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-dark-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+              >
+                Username
+              </label>
+              <GoPerson
+                color=""
+                className=" text-primary-gray absolute top-4 right-2"
+              />
+            </div>
+
             <div className="relative mt-6">
               <input
                 id="email"
                 type="email"
                 className="block px-2 w-full py-3 bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
-                placeholder="Email"
+                placeholder="Email address"
               />
               <label
                 htmlFor="email"
@@ -101,6 +138,26 @@ const Login = () => {
                 {eyeState ? <BsEye size={20} /> : <BsEyeSlash size={20} />}
               </div>
             </div>
+            <div className="relative mt-6">
+              <input
+                type={eyeState ? "text" : "password"}
+                className="block px-2 w-full py-3 bg-transparent  border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
+                placeholder="Re-enter Password"
+              />
+              <label
+                htmlFor=""
+                className=" px-2 absolute  text-primary-gray bg-transparent duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-dark-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+              >
+                Re-enter Password
+              </label>
+
+              <div
+                className="text-primary-gray absolute top-4 right-2 hover:cursor-pointer"
+                onClick={toggleConfirmEye}
+              >
+                {eyeState ? <BsEye size={20} /> : <BsEyeSlash size={20} />}
+              </div>
+            </div>
             <div className="flex items-center mt-4 gap-2">
               <div>
                 <input
@@ -120,7 +177,7 @@ const Login = () => {
               type="submit"
               className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85"
             >
-              Sign In
+              Sign Up
             </button>
           </form>
 
@@ -166,8 +223,8 @@ const Login = () => {
           <div className="flex items-center justify-center mt-4">
             <button className="font-Inter font-medium text-base text-primary-gray ">
               Already have an account?{" "}
-              <Link to="/signup" className=" text-primary-red">
-                Sign up
+              <Link to="/signin" className=" text-primary-red">
+                Sign In
               </Link>
             </button>
           </div>
