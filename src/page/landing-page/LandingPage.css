@@ -30,6 +30,8 @@
   background: #3d7100;
 }
 
+/* hero section */
+
 .hero {
   background: url("/images/hero.svg") no-repeat;
   background-size: cover;
@@ -118,4 +120,88 @@
   gap: 6px;
   border-radius: 5px;
   background: #3d7100;
+}
+
+/* footer section */
+.footer-head {
+  color: #fff;
+  text-align: center;
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.footer-trial {
+  color: #fff;
+  text-align: center;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.footer-signin {
+  padding: 14px 20px;
+  border-radius: 5px;
+  border: 1px solid #3d7100;
+  color: #f8fafc;
+  text-align: center;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.footer-signup {
+  padding: 14px 20px;
+  border-radius: 5px;
+  background: #3d7100;
+  color: #f8fafc;
+  text-align: center;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+}
+.footer-divider {
+  background: rgba(255, 255, 255, 0.1);
+  height: 1px;
+}
+.link-head {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+}
+.footer-link {
+  color: #fff;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+}
+@media (max-width: 640px) {
+  .footer-head {
+    font-size: 1.5rem;
+  }
+}
+.footer {
+  background-image: url("/images/footer.svg");
+  background-color: #141414;
+  background-position: center;
+}
+.copyright {
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

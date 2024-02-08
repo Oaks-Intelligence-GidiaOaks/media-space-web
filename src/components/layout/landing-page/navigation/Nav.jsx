@@ -25,7 +25,7 @@ function Nav() {
   useClickAway(ref, () => setMenuOpen(false));
 
   return (
-    <section className="landing-nav-section bg-white">
+    <section className="landing-nav-section fixed w-full bg-[#F7FEEE]">
       <div className="w-full container mx-auto max-w-screen-xl py-4 flex items-center gap-5">
         <div className="logo">
           <Link to={INDEX} className="flex">
