@@ -1,0 +1,122 @@
+import React, { useState } from "react";
+import { AiOutlineMail } from "react-icons/ai";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
+import facebook from "../assets/facebook.svg";
+import goggle from "../assets/goggle.svg";
+import instagram from "../assets/instagram.svg";
+import linkedin from "../assets/linkedin.svg";
+import { Illustration } from "../components/container";
+
+const Login = () => {
+  const [eyeState, setEyeState] = useState(false);
+
+  const toggleConfirmEye = (e) => {
+    e.preventDefault();
+    setEyeState((prev) => !prev);
+  };
+  return (
+    <div className="flex bg-[#001900]  flex-col md:flex-row ">
+      <div className="flex-1 ">
+        <Illustration />
+      </div>
+
+      <div className="flex-[0.6] rounded-tl-[10%] mx-auto p-16 bg-white">
+        <div className="">
+        <form className="">
+          <h1 className="font-Inter py-2 text-primary-dark-green font-bold text-4xl">
+            Sign In
+          </h1>
+          <div className="relative mt-6 ">
+            <input
+              type="email"
+              className="block px-2 w-full py-3 bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
+              placeholder=""
+            />
+            <label
+              htmlFor=""
+              className=" px-2 absolute text-primary-gray  bg-transparent duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-dark-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+            >
+              Email address
+            </label>
+            <AiOutlineMail
+              color=""
+              className=" text-primary-gray absolute top-4 right-2"
+            />
+          </div>
+          <div className="relative mt-6">
+            <input
+              type={eyeState ? "text" : "password"}
+              className="block px-2 w-full py-3 bg-transparent  border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
+              placeholder=""
+            />
+            <label
+              htmlFor=""
+              className=" px-2 absolute  text-primary-gray bg-transparent duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-dark-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+            >
+              Password
+            </label>
+
+            <div
+              className="text-primary-gray absolute top-4 right-2 hover:cursor-pointer"
+              onClick={toggleConfirmEye}
+            >
+              {eyeState ? (
+                <BsEye size={20} />
+              ) : (
+                <BsEyeSlash size={20} />
+              )}
+            </div>
+          </div>
+          <div className="flex items-center mt-4 gap-2">
+            <div>
+              <input type="checkbox" name="" id="" className="text-[#FF3A29]" />
+              <label htmlFor="Remember Me"></label>
+            </div>
+            <span className="text-xs font-Inter font-light ">
+              Keep me sign in
+            </span>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85"
+          >
+            Sign In
+          </button>
+        </form>
+
+        <div className="mt-4 grid grid-cols-3 gap-3 items-center max-w-md">
+          <hr className="outline-gray-500" />
+          <p className="text-center text-xs text-gray-500 whitespace-nowrap">
+            Or Sign Up With{" "}
+          </p>
+          <hr className="outline-gray-500" />
+        </div>
+
+        <div className="flex items-center justify-center w-full mt-4 gap-3">
+            <div className="p-2 border border-gray-500 w-12 h-12 flex justify-center items-center rounded-full">
+                <img src={goggle} alt="" className="bg-cover hover:cursor-pointer" />
+            </div>
+            <div className="p-2 border border-gray-500 w-12 h-12 flex justify-center items-center rounded-full">
+                <img src={facebook} alt="" className="bg-cover hover:cursor-pointer" />
+            </div>
+            <div className="p-2 border border-gray-500 w-12 h-12 flex justify-center items-center rounded-full">
+                <img src={instagram} alt="" className="bg-cover hover:cursor-pointer" />
+            </div>
+            <div className="p-2 border border-gray-500 w-12 h-12 flex justify-center items-center rounded-full">
+                <img src={linkedin} alt="" className="bg-cover hover:cursor-pointer" />
+            </div>
+        </div>
+
+        <div className="flex items-center justify-center mt-4">
+
+        <button className="font-Inter font-medium text-base text-primary-gray ">Already have an account? <span className=" text-primary-red">Sign In</span></button>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
