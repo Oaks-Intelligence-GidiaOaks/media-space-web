@@ -195,6 +195,7 @@
   background-image: url("/images/footer.svg");
   background-color: #141414;
   background-position: center;
+  background-size: cover;
 }
 .copyright {
   color: rgba(255, 255, 255, 0.5);
