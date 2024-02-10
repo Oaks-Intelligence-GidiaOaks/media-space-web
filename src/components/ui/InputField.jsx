@@ -11,14 +11,14 @@ const InputField = ({
   placeholder,
 }) => {
   return (
-    <div className="relative mt-6">
+    <div className="relative 2xl:mt-6 lg:mt-4">
       <input
         id={id}
         type={type}
         name={name}
         value={value}
         onChange={onChange}
-        className="block px-2 w-full py-3 bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
+        className="block px-2 w-full placeholder:text-sm py-3 bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
         placeholder={placeholder}
       />
       <label

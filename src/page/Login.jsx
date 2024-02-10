@@ -27,7 +27,7 @@ const Login = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 3, duration: 1, ease: "easeIn" }}
-              className="absolute text-center font-Inter top-0 left-1/2 transform -translate-x-1/2 text-white text-4xl font-bold mt-20"
+              className="absolute text-center font-Inter top-0 left-1/2 transform -translate-x-1/2 text-white text-3xl font-semibold mt-20"
               style={{
                 backgroundImage:
                   "linear-gradient(90deg, #6E9D37 0%, #74A12D 52%, #97B24C 99.99%, #94B04A 100%)",
@@ -61,10 +61,10 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="w-full lg:w-2/5 rounded-tl-[10%]  lg:rounded-tl-[20%]  mx-auto p-8 lg:p-16 bg-white">
-        <div className="">
+      <div className="w-full h-screen lg:w-2/5 rounded-tl-[10%]  lg:rounded-tl-[20%]  mx-auto pt- px-820 lg:p-16 bg-white">
+        <div className="lg:mt-0 2xl:mt-40">
           <form className="">
-            <h1 className="font-Inter py-2 text-primary-dark-green font-bold text-4xl">
+            <h1 className="font-Inter py-2 text-primary-dark-green font-semibold text-3xl">
               Sign In
             </h1>
 
