@@ -1,5 +1,158 @@
+import { Link } from "react-router-dom";
+import {
+  card_img,
+  card_img_1,
+  card_img_2,
+  card_img_3,
+  card_img_4,
+} from "../../../../assets";
+
 function Features() {
-  return <div>Features</div>;
+  return (
+    <section className="features">
+      <div className="justify-center hidden md:flex pt-3">
+        <div className="features-board">
+          <div className="flex flex-col sm:justify-center sm:items-center md:justify-start md:items-start pt-10 md:p-20">
+            <p className="features-board-head">Transform</p>
+            <p className="features-board-title">
+              your organization's <br /> communication landscape
+            </p>
+            <p className="features-board-text pt-5">
+              Discover the revolutionary features of Media <br /> Space, your
+              go-to SaaS solution designed to <br /> effortlessly integrate into
+              your favorite apps <br /> while providing a communication space
+              that <br /> is both familiar yet distinct from anything you <br />{" "}
+              have ever experienced.
+            </p>
+            <div className="flex pt-7">
+              <Link to={""} className="footer-signup">
+                Get started
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="justify-center flex md:hidden pt-3">
+        <div className="features-board">
+          <div className="flex flex-col justify-center items-center pt-10 md:p-20">
+            <p className="features-board-head">Transform</p>
+            <p className="features-board-title text-center">
+              your organization's communication landscape
+            </p>
+            <p className="features-board-text pt-5">
+              Discover the revolutionary features of Media <br /> Space, your
+              go-to SaaS solution designed to <br /> effortlessly integrate into
+              your favorite apps <br /> while providing a communication space
+              that <br /> is both familiar yet distinct from anything you <br />{" "}
+              have ever experienced.
+            </p>
+            <div className="flex pt-7">
+              <Link to={""} className="footer-signup">
+                Get started
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap justify-center items-center gap-28 pt-12 pb-20">
+        <div className="features-layer-1 p-2">
+          <div className="text-start flex gap-5 pb-5">
+            <div className="bar"></div>
+            <p className="feature-title">What is Media Space for?</p>{" "}
+          </div>
+
+          <p className="feature-head pb-5">
+            Your organization becomes <br className="hidden md:flex" />
+            <span className="feature-spotlight">
+              the architect of its <br className="hidden md:flex" />{" "}
+              communication future
+            </span>{" "}
+            with <br className="hidden md:flex" /> Media Space
+          </p>
+
+          <p className="feature-text">
+            Say goodbye to communication silos as Media{" "}
+            <br className="hidden md:flex" /> Space effortlessly weaves through
+            the digital <br className="hidden md:flex" /> landscape, ensuring
+            that your team stays united <br className="hidden md:flex" /> and
+            your messages resonate across platforms.{" "}
+            <br className="hidden md:flex" /> Immerse yourself in a world where
+            integration is not <br className="hidden md:flex" /> just a feature,
+            but a transformative force that <br className="hidden md:flex" />{" "}
+            amplifies the strength of your organization.
+          </p>
+
+          <div className="flex pt-7">
+            <Link to={""} className="footer-signup">
+              Get started
+            </Link>
+          </div>
+        </div>
+
+        <div className="features-layer-2">
+          <div className="flex flex-wrap justify-center items-center gap-6">
+            <div className="feature-card relative">
+              <img src={card_img} className="absolute top-0 right-0" alt="" />
+              <div className="card-content p-5">
+                <img src={card_img_1} alt="" />
+                <p className="card-title pt-5 pb-3">
+                  Integration at Your Fingertips
+                </p>
+                <p className="card-text">
+                  Break free from communication silos! Media Space seamlessly
+                  integrates into your existing apps and workflows, ensuring
+                  uninterrupted communication across your organization.
+                </p>
+              </div>
+            </div>
+            <div className="feature-card relative">
+              <img src={card_img} className="absolute top-0 right-0" alt="" />
+              <div className="card-content p-5">
+                <img src={card_img_2} alt="" />
+                <p className="card-title pt-5 pb-3">Tailor Your Experience</p>
+                <p className="card-text">
+                  Recognizing the uniqueness of every organization, Media Space
+                  allows you to customize your communication spaces and
+                  workflows. Adapt our versatile solution to perfectly align
+                  with your organizational goals.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-6 pt-6">
+            <div className="feature-card relative">
+              <img src={card_img} className="absolute top-0 right-0" alt="" />
+              <div className="card-content p-5">
+                <img src={card_img_3} alt="" />
+                <p className="card-title pt-5 pb-3">
+                  Cross-Platform Brilliance
+                </p>
+                <p className="card-text">
+                  Whether you're on desktop or mobile, Media Space ensures a
+                  seamless experience. Stay connected and engaged with your team
+                  anytime, anywhere.
+                </p>
+              </div>
+            </div>
+            <div className="feature-card relative">
+              <img src={card_img} className="absolute top-0 right-0" alt="" />
+              <div className="card-content p-5">
+                <img src={card_img_4} alt="" />
+                <p className="card-title pt-5 pb-3">Real-Time Collaboration</p>
+                <p className="card-text">
+                  Ignite creativity and innovation with our real-time
+                  collaboration features. Foster teamwork and efficient
+                  communication within your organization.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default Features;

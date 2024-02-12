@@ -3,7 +3,7 @@ import { INDEX } from "../../../../routes/CONSTANT";
 
 function Hero() {
   return (
-    <section className="bg-[#F7FEEE] h-screen flex justify-center items-center">
+    <section className="hero bg-[#F7FEEE] h-screen flex justify-center items-center">
       <div className="container">
         <div className="hero-content text-center">
           <h6 className="hero-title pb-5">Welcome to Media Space</h6>

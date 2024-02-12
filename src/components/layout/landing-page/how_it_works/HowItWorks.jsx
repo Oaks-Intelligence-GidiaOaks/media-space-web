@@ -7,7 +7,7 @@ function HowItWorks() {
         How Media Space works
       </h1>
       <div className="flex flex-col lg:flex-row justify-center lg:justify-evenly gap-10 pt-5 lg:pt-30">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center lg:items-start">
           <p className="works-label ml-5">01</p>
           <div className="flex gap-6 pt-4">
             <div className="blocker"></div>
@@ -20,7 +20,7 @@ function HowItWorks() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center lg:items-start">
           <p className="works-label ml-5">02</p>
           <div className="flex gap-6 pt-4">
             <div className="blocker"></div>
@@ -33,7 +33,7 @@ function HowItWorks() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center lg:items-start">
           <p className="works-label ml-5">03</p>
           <div className="flex gap-6 pt-4">
             <div className="blocker"></div>
