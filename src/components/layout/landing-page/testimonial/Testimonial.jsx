@@ -108,7 +108,7 @@ function Testimonial() {
             </div>
           </motion.div>
         </AnimatePresence>
-        <button onClick={goToPrevSlide}>
+        <button onClick={goToNextSlide}>
           <IoArrowForwardCircleOutline size={50} />
         </button>
       </div>
