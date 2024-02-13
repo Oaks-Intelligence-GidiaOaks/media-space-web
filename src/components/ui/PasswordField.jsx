@@ -11,10 +11,10 @@ const PasswordField = ({
   onChange
 }) => {
   return (
-    <div className="relative 2xl:mt-6 lg:mt-4">
+    <div className="relative mb-4 lg:mb-0 2xl:mt-6 lg:mt-4">
       <input
         type={eyeState ? "text" : "password"}
-        className="block px-2 w-full py-3 placeholder:text-sm bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
+        className="block px-2 w-full py-3 placeholder:text-sm placeholder:font-Inter bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
         placeholder={placeholder}
         value={value}
         onChange={onChange}

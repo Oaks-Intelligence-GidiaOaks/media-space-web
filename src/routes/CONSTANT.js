@@ -3,4 +3,5 @@ export const ABOUT = "/about";
 export const CONTACT_US = "/contact";
 export const FAQ = "/faq";
 export const LOGIN = "/signin"
-export const REGISTER = "/signup"
+export const REGISTER = "/register"
+export const SIGN_UP = "/signup"

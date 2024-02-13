@@ -28,7 +28,7 @@ const Register = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 3, duration: 1, ease: "easeIn" }}
-              className="absolute text-center font-Inter top-0 left-1/2 transform -translate-x-1/2 text-white text-3xl font-semibold mt-20"
+              className="absolute text-center font-Inter top-0 left-1/2 transform -translate-x-1/2 text-white text-3xl  mt-20"
               style={{
                 backgroundImage:
                   "linear-gradient(90deg, #6E9D37 0%, #74A12D 52%, #97B24C 99.99%, #94B04A 100%)",
@@ -62,9 +62,9 @@ const Register = () => {
         </div>
       </div>
       <div className="w-full h-screen lg:w-2/5 rounded-tl-[10%]  lg:rounded-tl-[20%] mx-auto pt-20 px-8 lg:p-16 bg-white overflow-y-scroll scrollbar-thin bar  scrollbar-thumb-[#AEAEAE] scrollbar-track-gray-200">
-        <div className=" lg:mt-0 2xl:mt-40">
+        <div className=" lg:mt-10 2xl:mt-40">
           <form className="">
-            <h1 className="font-Inter py-2 text-primary-dark-green font-semibold text-3xl">
+            <h1 className="font-Inter mb-7 lg:py-0 text-primary-dark-green font-medium text-3xl">
               Create Account
             </h1>
             <InputField
@@ -122,8 +122,8 @@ const Register = () => {
                 />
                 <label htmlFor="Remember Me"></label>
               </div>
-              <span className="text-xs font-Inter font-light ">
-                Keep me sign in
+              <span className="text-xs font-Inter font-normal">
+              I accept the <span className=" text-primary-red">terms of use</span> and <span className=" text-primary-red">privacy policy</span>
               </span>
             </div>
 
@@ -137,35 +137,35 @@ const Register = () => {
 
           <div className="mt-4 grid grid-cols-3 lg:gap-3 items-center w-full">
             <hr className="outline-gray-500" />
-            <p className="text-center text-xs font-Montserrat text-gray-500 whitespace-nowrap">
+            <p className="text-center text-sm font-Montserrat text-gray-500 whitespace-nowrap">
               Or Sign Up With{" "}
             </p>
             <hr className="outline-gray-500" />
           </div>
 
-          <div className="flex items-center justify-center w-full mt-4 gap-3">
-            <div className="p-2 border border-gray-500 w-12 h-12 flex justify-center items-center rounded-full">
+          <div className="flex items-center justify-center w-full mt-4 gap-5">
+            <div className="p-2 border border-gray-500 w-10 h-10 flex justify-center items-center rounded-full">
               <img
                 src={goggle}
                 alt=""
                 className="bg-cover hover:cursor-pointer"
               />
             </div>
-            <div className="p-2 border border-gray-500 w-12 h-12 flex justify-center items-center rounded-full">
+            <div className="p-2 border border-gray-500 w-10 h-10 flex justify-center items-center rounded-full">
               <img
                 src={facebook}
                 alt=""
                 className="bg-cover hover:cursor-pointer"
               />
             </div>
-            <div className="p-2 border border-gray-500 w-12 h-12 flex justify-center items-center rounded-full">
+            <div className="p-2 border border-gray-500 w-10 h-10 flex justify-center items-center rounded-full">
               <img
                 src={instagram}
                 alt=""
                 className="bg-cover hover:cursor-pointer"
               />
             </div>
-            <div className="p-2 border border-gray-500 w-12 h-12 flex justify-center items-center rounded-full">
+            <div className="p-2 border border-gray-500 w-10 h-10 flex justify-center items-center rounded-full">
               <img
                 src={linkedin}
                 alt=""
