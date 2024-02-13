@@ -98,7 +98,7 @@ const Sidebar = ({ sidebarItems }) => {
           />
         </div>
         {/* green glow */}
-        <div className="w-full h-full rounded-[1.25rem] overflow-hidden relative">
+        <div className="w-full h-full rounded-[1.25rem] overflow-hidden absolute top-0">
           <div className="w-40 h-40 rounded-full bg-primary-dark-green absolute -bottom-28 -left-4 blur-3xl" />
         </div>
       </div>

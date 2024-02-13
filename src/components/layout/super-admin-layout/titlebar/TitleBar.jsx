@@ -3,11 +3,21 @@ import search from "../../../../assets/titlebar/search.svg";
 import notification from "../../../../assets/titlebar/notification.svg";
 import placeholder from "../../../../assets/titlebar/placeholder.svg";
 import chevron from "../../../../assets/titlebar/chevron.svg";
+import { useNavigate } from "react-router-dom";
 
 const TitleBar = () => {
+  const navigate = useNavigate();
+
+  const navigateToOverview = () => {
+    navigate("/dashboard/overview");
+  };
+
   return (
     <div className="h-10 mb-4 flex justify-between pt-4 w-full pr-10 sticky top-0 bg-white">
-      <div className="flex gap-1 flex-nowrap items-center">
+      <div
+        className="flex gap-1 flex-nowrap items-center w-fit cursor-pointer"
+        onClick={navigateToOverview}
+      >
         <img src={logo} />
         <p className="text-xl font-pt-serif">Kommunita</p>
       </div>
