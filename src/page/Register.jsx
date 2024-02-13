@@ -118,7 +118,8 @@ const Register = () => {
                   type="checkbox"
                   name=""
                   id=""
-                  className="text-[#FF3A29]"
+                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#FF3A29] d dark:focus:ring-blue-600"
+                  
                 />
                 <label htmlFor="Remember Me"></label>
               </div>

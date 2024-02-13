@@ -14,7 +14,8 @@ export default {
         "primary-gray": "#AEAEAE",
         "primary-light-gray": "#ADADAD",
         "primary-dark-gray": "#4D4D4D",
-        "primary-red": "#FF3A29"
+        "primary-red": "#FF3A29",
+        "secondary-white": "#7C8DB5",
       },
 
       borderColor: {
@@ -27,7 +28,12 @@ export default {
         "primary-dark-green": "#3D7100",
         "primary--bright-green": "#7ADD02",
         "primary-gray": "#AEAEAE",
-        "step-active": "#3D7100"
+        "primary-black": "#091001",
+      },
+      fontFamily: {
+        "pt-serif": "'PT Serif Caption', serif",
+        poppins: "'Poppins', sans-serif",
+        inter: "'Inter', sans-serif",
       },
     },
   },
