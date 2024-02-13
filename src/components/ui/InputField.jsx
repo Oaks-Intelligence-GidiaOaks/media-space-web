@@ -18,12 +18,12 @@ const InputField = ({
         name={name}
         value={value}
         onChange={onChange}
-        className="block px-2 w-full placeholder:text-sm placeholder:font-Inter py-3 bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
+        className="block px-2 w-full placeholder:text-sm placeholder:font-Inter placeholder:text-primary-light-gray py-3 bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
         placeholder={placeholder}
       />
       <label
         htmlFor={id}
-        className=" px-2 absolute text-primary-gray  bg-transparent duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-dark-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+        className=" px-2 absolute text-primary-light-gray  bg-transparent duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-dark-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
       >
         {label}
       </label>

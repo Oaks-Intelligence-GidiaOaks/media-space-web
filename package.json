@@ -14,11 +14,14 @@
     "framer-motion": "^11.0.3",
     "hamburger-react": "^2.5.0",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.18.0",
+    "react-slick": "^0.30.1",
     "react-use": "^17.5.0",
-    "tailwind-scrollbar": "^3.0.5"
+    "slick-carousel": "^1.8.1",
+    "tailwind-merge": "^2.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

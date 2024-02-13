@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { GoPerson } from "react-icons/go";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
-import facebook from "../assets/facebook.svg";
-import goggle from "../assets/goggle.svg";
-import instagram from "../assets/instagram.svg";
-import linkedin from "../assets/linkedin.svg";
 import { AiOutlineMail } from "react-icons/ai";
 import medianote from "../assets/medianote.svg";
 import Ellipse from "../assets/Ellipse.svg";
-import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { InputField, PasswordField, DropDownMenu } from "../components/ui";
+import { motion } from "framer-motion";
+import { InputField, DropDownMenu } from "../components/ui";
+import { FilePicker } from "../components/containers";
 
 const SignUp = () => {
   const [eyeState, setEyeState] = useState(false);
+
+  const [form, setForm] = useState({
+    orgName: "",
+    orgEmail: "",
+    email: "",
+  });
+
+  const setValue = (fieldName, value) => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      [fieldName]: value,
+    }));
+  };
 
   const toggleEye = (e) => {
     e.preventDefault();
@@ -99,6 +107,16 @@ const SignUp = () => {
 
             <DropDownMenu displayText="Select Industry" />
             <DropDownMenu displayText="Company Size" />
+
+            <div className="mb-4 lg:mb-0 2xl:mt-6 lg:mt-4">
+              <h1 className="w-[clamp(280px,70%,600px)] font-Inter font text-sm text-primary-light-gray py-3">Upload certificate of Incorporation</h1>
+            <FilePicker
+              width="w-[100%]"
+              form={form}
+              valueSetter={setValue}
+            />
+
+            </div>
 
             <button
               type="submit"
