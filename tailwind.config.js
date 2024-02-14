@@ -33,6 +33,10 @@ export default {
         poppins: "'Poppins', sans-serif",
         inter: "'Inter', sans-serif",
       },
+      boxShadow: {
+        "primary-dark": "5px 7px 12px rgba(0,0,0,0.3)",
+        "primary-dark-hovered": "7px 9px 14px rgba(0,0,0,0.3)",
+      },
     },
   },
   plugins: [],

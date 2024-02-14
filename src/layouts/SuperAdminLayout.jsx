@@ -12,7 +12,7 @@ const SuperAdminLayout = () => {
         <div className="w-full max-w-[1440px] h-screen mx-auto">
           <Titlebar />
 
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto pt-10 sm:pt-0 min-h-[200vh] px-2 sm:px-0">
             <div className="">{<Outlet />}</div>
           </div>
         </div>
