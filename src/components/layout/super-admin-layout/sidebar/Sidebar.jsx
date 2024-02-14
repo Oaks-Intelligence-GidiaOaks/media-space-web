@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import hamburgerMenu from "../../../../assets/sidebar/menu.svg";
-// import closeMenu from "../../../../assets/sidebar/close.svg"
+import closeMenu from "../../../../assets/sidebar/close.svg";
 
 /* eslint-disable react/prop-types */
 const Sidebar = ({ sidebarItems }) => {
@@ -116,7 +116,7 @@ const Sidebar = ({ sidebarItems }) => {
           onClick={() => setShowMenu(!showMenu)}
           className="mb-4 transition-all duration-200 shadow-primary-dark hover:shadow-primary-dark-hovered w-full h-10 py-2 rounded-[1.25rem] relative mt-12 bg-primary-black flex justify-center items-center"
         >
-          <img src={hamburgerMenu} className="h-full" />
+          <img src={showMenu ? hamburgerMenu : closeMenu} className="h-full" />
         </button>
         {/* sidebar */}
         <div
