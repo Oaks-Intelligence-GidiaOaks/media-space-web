@@ -1,0 +1,1 @@
+export const acceptedOrgFileTypes = ["png", "jpg", "jpeg", "pdf"];

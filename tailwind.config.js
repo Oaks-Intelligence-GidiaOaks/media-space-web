@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", 'node_modules/flowbite-react/lib/esm/**/*.js',],
   theme: {
     fontFamily: {
       Inter: ["Inter", "san-serif"],
@@ -12,6 +12,8 @@ export default {
         "primary-bright-green": "#7ADD02",
         "primary-light-green": "#94FC83",
         "primary-gray": "#AEAEAE",
+        "primary-light-gray": "#ADADAD",
+        "primary-dark-gray": "#4D4D4D",
         "primary-red": "#FF3A29",
         "secondary-white": "#7C8DB5",
       },
@@ -39,5 +41,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [ require('tailwind-scrollbar'), require('flowbite/plugin')],
 };
