@@ -8,6 +8,21 @@ const LineChart = ({ data, xKey, yKey }) => {
   }));
 
   const options = {
+    chart: {
+      height: 350,
+      type: "line",
+      toolbar: {
+        show: false,
+      },
+      dropShadow: {
+        enabled: true,
+        color: "#000",
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2,
+      },
+    },
     xaxis: {
       type: "category",
       categories: formattedData.map((item) => item.x),
@@ -23,12 +38,12 @@ const LineChart = ({ data, xKey, yKey }) => {
     },
     stroke: {
       curve: "smooth",
-      width: 4,
+      width: 6,
     },
     fill: {
       type: "solid",
-      color: "#3D7100",
     },
+    colors: ["#3D7100"],
     tooltip: {
       x: {
         format: "HH:mm",
@@ -41,7 +56,7 @@ const LineChart = ({ data, xKey, yKey }) => {
       show: true,
     },
     title: {
-      text: "User Overall Activity",
+      text: "Overall User Activity",
     },
   };
 
@@ -51,7 +66,7 @@ const LineChart = ({ data, xKey, yKey }) => {
         options={options}
         series={[
           {
-            name: "Risk",
+            name: "Total",
             data: formattedData.map((item) => parseFloat(item.y)),
           },
         ]}
