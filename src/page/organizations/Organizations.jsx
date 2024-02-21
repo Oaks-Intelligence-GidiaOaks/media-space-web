@@ -1,4 +1,5 @@
 import { OrganizationMetricCard, ViewAllCard } from "../../components";
+import { OrgGrid } from "../../components/grid";
 
 const Organizations = () => {
   return (
@@ -49,6 +50,7 @@ const Organizations = () => {
           </form>
         </div>
       </div>
+      {/* <OrgGrid /> */}
     </div>
   );
 };

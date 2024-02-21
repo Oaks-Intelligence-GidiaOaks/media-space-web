@@ -28,7 +28,9 @@ const MonthDropDown = ({ selectedMonth, onChange }) => {
         value={selectedMonth}
         onChange={handleChange}
       >
-        <option value="" className="">Monthly</option>
+        <option value="" className="">
+          Monthly
+        </option>
         {months.map((month, index) => (
           <option key={index} value={month} className="">
             {month}
