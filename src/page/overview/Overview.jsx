@@ -49,7 +49,7 @@ const Overview = () => {
           </div>
 
           <div className="flex justify-between pb-10 flex-col gap-3 md:flex-row">
-            <div className="card card-overview-1">
+            <div className="card card-overview-1 shadow hover:shadow-lg">
               <p className="overview-header py-3 ml-3">Users</p>
               <p className="overview-number ml-3">3,279</p>
               <div className="flex">
@@ -57,7 +57,7 @@ const Overview = () => {
               </div>
             </div>
 
-            <div className="card card-overview-2">
+            <div className="card card-overview-2 shadow hover:shadow-lg">
               <p className="overview-header py-3 ml-3">Subscriptions</p>
               <p className="overview-number ml-3">1,214</p>
               <div className="flex h-[120px]">
@@ -66,7 +66,7 @@ const Overview = () => {
             </div>
           </div>
 
-          <div className="linechart py-3 px-3 hidden sm:block  max-w-full">
+          <div className="linechart py-3 px-3 hidden sm:block  max-w-full shadow hover:shadow-lg">
             <LineChart data={dummyData} xKey="date" yKey="activity" />
           </div>
         </div>
@@ -79,7 +79,7 @@ const Overview = () => {
           </div>
 
           <div className="card-list flex flex-col gap-7">
-            <div className="company-card">
+            <div className="company-card shadow-lg">
               <div className="card-content p-3">
                 <div className="flex justify-between pb-3">
                   <p className="company-name">Oaks Intelligence</p>{" "}
@@ -104,7 +104,7 @@ const Overview = () => {
               </div>
             </div>
 
-            <div className="company-card">
+            <div className="company-card shadow-lg">
               <div className="card-content p-3">
                 <div className="flex justify-between pb-3">
                   <p className="company-name">M&M Limited</p>{" "}
@@ -129,7 +129,7 @@ const Overview = () => {
               </div>
             </div>
 
-            <div className="company-card">
+            <div className="company-card shadow-lg">
               <div className="card-content p-3">
                 <div className="flex justify-between pb-3">
                   <p className="company-name">Home Made Ltd</p>{" "}
