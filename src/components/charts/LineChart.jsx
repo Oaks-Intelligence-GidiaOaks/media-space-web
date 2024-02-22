@@ -62,18 +62,34 @@ const LineChart = ({ data, xKey, yKey }) => {
 
   return (
     <div id="chart">
-      <ReactApexChart
-        options={options}
-        series={[
-          {
-            name: "Total",
-            data: formattedData.map((item) => parseFloat(item.y)),
-          },
-        ]}
-        type="line"
-        height={350}
-        width={680}
-      />
+      <div className="hidden lg:block">
+        <ReactApexChart
+          options={options}
+          series={[
+            {
+              name: "Total",
+              data: formattedData.map((item) => parseFloat(item.y)),
+            },
+          ]}
+          type="line"
+          height={350}
+          width={680}
+        />
+      </div>
+
+      <div className="hidden md:block lg:hidden">
+        <ReactApexChart
+          options={options}
+          series={[
+            {
+              name: "Total",
+              data: formattedData.map((item) => parseFloat(item.y)),
+            },
+          ]}
+          type="line"
+          height={333}
+        />
+      </div>
     </div>
   );
 };

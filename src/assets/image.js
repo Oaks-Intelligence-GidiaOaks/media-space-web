@@ -22,3 +22,5 @@ export const btn_more_sm = `${PATH}/more-btn-sm.svg`;
 export const avatar_sm = `${PATH}/avatar-sm.svg`;
 export const chart_sm_down = `${PATH}/chart-sm-down.svg`;
 export const chart_sm_up = `${PATH}/chart-sm-up.svg`;
+export const card_img_bg_1 = `${PATH}/card-img-bg-1.svg`;
+export const card_img_bg_2 = `${PATH}/card-img-bg-2.svg`;
