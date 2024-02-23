@@ -8,9 +8,6 @@ const LineChart = ({ data, xKey, yKey }) => {
   }));
 
   const options = {
-    chart: {
-      height: 350,
-    },
     xaxis: {
       type: "category",
       categories: formattedData.map((item) => item.x),
@@ -26,11 +23,11 @@ const LineChart = ({ data, xKey, yKey }) => {
     },
     stroke: {
       curve: "smooth",
-      width: 2,
+      width: 4,
     },
     fill: {
       type: "solid",
-      color: "#008FFB",
+      color: "#3D7100",
     },
     tooltip: {
       x: {
@@ -58,8 +55,9 @@ const LineChart = ({ data, xKey, yKey }) => {
             data: formattedData.map((item) => parseFloat(item.y)),
           },
         ]}
-        type="area"
+        type="line"
         height={350}
+        width={680}
       />
     </div>
   );

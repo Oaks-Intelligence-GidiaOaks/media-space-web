@@ -1,68 +1,48 @@
+import React from "react";
 import ReactApexChart from "react-apexcharts";
 import PropTypes from "prop-types";
 
-const MultipleLineChart = ({ seriesData, xKey, yKey }) => {
-  const formattedData = seriesData.map((series) => ({
-    name: series.name,
-    data: series.data.map((item) => ({
-      x: item[xKey],
-      y: item[yKey],
-    })),
-  }));
+const MultipleLineChart = ({ seriesData, xKey, yKeys }) => {
+  // Extracting x-axis categories from the first series
+  console.log(seriesData);
+  const categories = seriesData[0].data.map((item) => item[xKey]);
 
   const options = {
     chart: {
       height: 350,
+      type: "line",
+      toolbar: {
+        show: false,
+      },
     },
     xaxis: {
-      type: "category",
-      categories: formattedData[0].data.map((item) => item.x),
+      categories: categories,
     },
     yaxis: {
-      tickAmount: 5,
-      labels: {
-        formatter: (value) => `${value}%`,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: "smooth",
-      width: 2,
-    },
-    fill: {
-      type: "solid",
-      color: "#008FFB",
-    },
-    tooltip: {
-      x: {
-        format: "HH:mm",
-      },
-      y: {
-        formatter: (value) => `${value}k`,
+      title: {
+        text: "Activity",
       },
     },
     legend: {
-      show: true,
-    },
-    title: {
-      text: "Risk Analysis Status",
+      position: "top",
     },
   };
 
+  const series = seriesData.map((series, index) => ({
+    name: series.name,
+    data: series.data.map((item) => parseFloat(item[yKeys[index]])),
+  }));
+
   return (
-    <div id="chart">
-      <ReactApexChart
-        options={options}
-        series={formattedData.map((series) => ({
-          name: series.name,
-          data: series.data.map((item) => parseFloat(item.y)),
-        }))}
-        type="area"
-        height={350}
-      />
-    </div>
+    <ReactApexChart
+      options={options}
+      series={seriesData.map((series) => ({
+        name: series.name,
+        data: series.data.map((point) => ({ x: point.x, y: point.y })),
+      }))}
+      type="line"
+      height={350}
+    />
   );
 };
 
@@ -74,7 +54,7 @@ MultipleLineChart.propTypes = {
     })
   ).isRequired,
   xKey: PropTypes.string.isRequired,
-  yKey: PropTypes.string.isRequired,
+  yKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default MultipleLineChart;

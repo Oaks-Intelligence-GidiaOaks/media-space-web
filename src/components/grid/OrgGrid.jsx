@@ -3,37 +3,32 @@ import { Table, Pagination } from "flowbite-react";
 import organizationData from "../constants/organizationsData.json";
 import more from "../../assets/more.svg";
 import { MonthDropDown } from "../ui";
+import SortingComponent from "./SortingComponent";
 
 function OrgGrid() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedMonth, setSelectedMonth] = useState("");
-  const [filteredData, setFilteredData] = useState(
-    organizationData.organizations
-  );
+  const [data, setData] = useState(organizationData.organizations);
 
   const ITEMS_PER_PAGE = 3;
-  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData.length);
+  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, data.length);
 
   const onPageChange = (page) => setCurrentPage(page);
 
-  const handleMonthSelection = (month) => {
-    setSelectedMonth(month);
-  };
+  // function to handle filtering
+  // const handleMonthSelection = (month) => {
+  //   setSelectedMonth(month);
+  // };
 
-  const handleDateFilter = () => {
-    const filtered = organizationData.organizations.filter((item) => {
-      const itemDate = item.Date.split("-");
-      console.log(itemDate);
-      // return (
-      //   (!startDate || itemDate >= startDate) &&
-      //   (!endDate || itemDate <= endDate)
-      // );
-    });
-    // setFilteredData(filtered);
-    // setCurrentPage(1);
+  // sorting function
+  const handleSortChange = (sortedData) => {
+    if (!sortedData) {
+      setData(organizationData.organizations);
+      return;
+    }
+    setData(sortedData);
   };
 
   return (
@@ -45,11 +40,12 @@ function OrgGrid() {
         </h1>
 
         <MonthDropDown
-          selectedMonth={selectedMonth}
-          onChange={handleMonthSelection}
+        // selectedMonth={selectedMonth}
+        // onChange={handleMonthSelection}
         />
       </div>
 
+      <SortingComponent data={data} onSortChange={handleSortChange} />
       <Table hoverable className="">
         <Table.Head className="normal-case font-Inter text-sm text-primary-dark-gray font-medium">
           <Table.HeadCell>No</Table.HeadCell>
@@ -62,7 +58,7 @@ function OrgGrid() {
           <Table.HeadCell>Action</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y m-3">
-          {filteredData.slice(startIndex, endIndex).map((org) => (
+          {data.slice(startIndex, endIndex).map((org) => (
             <Table.Row
               key={org.No}
               className=" font-Inter bg-white hover:bg-gray-200 text-xs font-normal text-primary-dark-gray"
