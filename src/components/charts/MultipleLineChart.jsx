@@ -14,6 +14,22 @@ const MultipleLineChart = ({ seriesData, xKey, yKeys }) => {
       toolbar: {
         show: false,
       },
+      dropShadow: {
+        enabled: true,
+        color: "#000",
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2,
+      },
+    },
+    colors: ["#3D7100", "#02BA09", "#979797"],
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: "smooth",
+      width: 3,
     },
     xaxis: {
       categories: categories,
@@ -28,18 +44,15 @@ const MultipleLineChart = ({ seriesData, xKey, yKeys }) => {
     },
   };
 
-  const series = seriesData.map((series, index) => ({
+  const series = seriesData.map((series) => ({
     name: series.name,
-    data: series.data.map((item) => parseFloat(item[yKeys[index]])),
+    data: series.data.map((point) => ({ x: point.x, y: point.y })),
   }));
 
   return (
     <ReactApexChart
       options={options}
-      series={seriesData.map((series) => ({
-        name: series.name,
-        data: series.data.map((point) => ({ x: point.x, y: point.y })),
-      }))}
+      series={series}
       type="line"
       height={350}
     />

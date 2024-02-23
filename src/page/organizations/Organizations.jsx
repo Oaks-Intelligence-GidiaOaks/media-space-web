@@ -1,10 +1,6 @@
 import { OrganizationMetricCard, ViewAllCard } from "../../components";
-import MultipleLineChart from "../../components/charts/MultipleLineChart";
-import { generateDummyData } from "../../utils/data";
 
 const Organizations = () => {
-  const dummyData = generateDummyData();
-
   return (
     <div className="py-4 px-8">
       <h1 className=" font-inter text-xl font-medium pb-8 leading-[24.2px]">
@@ -51,33 +47,6 @@ const Organizations = () => {
           </form>
         </div>
       </div>
-      <MultipleLineChart
-        seriesData={[
-          {
-            name: "Total Users",
-            data: dummyData.map((point) => ({
-              x: point.date,
-              y: point.totalUsers,
-            })),
-          },
-          {
-            name: "Inactive Users",
-            data: dummyData.map((point) => ({
-              x: point.date,
-              y: point.inactiveUsers,
-            })),
-          },
-          {
-            name: "Active Users",
-            data: dummyData.map((point) => ({
-              x: point.date,
-              y: point.activeUsers,
-            })),
-          },
-        ]}
-        xKey="x"
-        yKeys={["y"]}
-      />
     </div>
   );
 };

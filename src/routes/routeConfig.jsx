@@ -8,7 +8,8 @@ import {
   Register,
   Settings,
   Subscription,
-  SignUp
+  SignUp,
+  OrganizationUsers,
 } from "../page";
 
 import * as routes from "./CONSTANT";
@@ -29,6 +30,10 @@ const RouterConfig = () => {
         >
           <Route index element={<Navigate to={"/dashboard/overview"} />} />
           <Route path={routes.OVERVIEW} element={<Overview />} />
+          <Route
+            path={routes.ORGANIZATIONS_USERS}
+            element={<OrganizationUsers />}
+          />
           <Route path={routes.ORGANIZATIONS} element={<Organizations />} />
           <Route path={routes.SUBSCRIPTION} element={<Subscription />} />
           <Route path={routes.NOTIFICATIONS} element={<Notifications />} />
