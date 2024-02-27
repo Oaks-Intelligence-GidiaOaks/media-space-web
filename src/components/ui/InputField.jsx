@@ -9,9 +9,10 @@ const InputField = ({
   icon: Icon,
   placeholder,
   component,
+  readOnly,
 }) => {
   return (
-    <div className="relative mb-4 lg:mb-0 2xl:mt-6 lg:mt-4">
+    <div className="relative mb-4 lg:mb-0 2xl:mt-6 lg:mt-4 z-0">
       <Field
         id={id}
         type={type}
@@ -19,6 +20,7 @@ const InputField = ({
         component={component}
         className="block px-2 w-full placeholder:text-sm placeholder:font-Inter placeholder:text-primary-light-gray py-3 bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
         placeholder={placeholder}
+        {...(readOnly && { readOnly: true })}
       />
       <label
         htmlFor={id}
@@ -42,6 +44,7 @@ InputField.propTypes = {
   icon: PropTypes.elementType,
   placeholder: PropTypes.string.isRequired,
   component: PropTypes.elementType.isRequired,
+  readOnly: PropTypes.bool,
 };
 
 export default InputField;

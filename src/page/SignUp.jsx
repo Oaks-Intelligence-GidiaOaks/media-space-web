@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { GoPerson } from "react-icons/go";
+import { MdNumbers } from "react-icons/md";
 import { AiOutlineMail } from "react-icons/ai";
 import medianote from "../assets/medianote.svg";
 import Ellipse from "../assets/Ellipse.svg";
 import { motion } from "framer-motion";
 import { InputField, DropDownMenu } from "../components/ui";
-import { FilePicker } from "../components/containers";
-import { Form, Field } from "react-final-form";
+// import { FilePicker } from "../components/containers";
+import { Form } from "react-final-form";
 import validate from "validate.js";
+import { useSelector } from "react-redux";
+import { countries } from "../static/countries";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { showAlert } from "../static/alert";
+import rtkMutation from "../utils/rtkMutation";
+import { useRegisterUserMutation } from "../service/user.service";
+import { updateFormdata } from "../redux/slices/register.slice";
+import { LOGIN } from "../routes/CONSTANT";
+import { FormSpy } from "react-final-form";
 
 const constraints = {
   organization_name: {
@@ -22,34 +33,85 @@ const constraints = {
 };
 
 const SignUp = () => {
+  const register = useSelector((state) => state.register);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [industry_type, setSelectedIndustry] = useState("");
-  const [selectedCompanySize, setSelectedCompanySize] = useState("");
+  // const [selectedCompanySize, setSelectedCompanySize] = useState("");
+  const [location, setSelectedCompanyLocation] = useState("");
 
   const validateForm = (values) => {
     return validate(values, constraints) || {};
   };
 
-  const onSubmit = (values) => {
-    // Combine selected values with other form values
-    const formData = {
-      ...values,
-      industry_type,
-      selectedCompanySize,
-    };
-    console.log(formData);
+  const state = useSelector((state) => state.register);
+
+  const [registerUser, { error, isSuccess }] = useRegisterUserMutation({
+    provideTag: ["User"],
+  });
+
+  const onSubmit = async () => {
+    try {
+      const formData = {
+        ...state,
+        location,
+        industry_type,
+      };
+      console.log(formData);
+      await rtkMutation(registerUser, formData);
+    } catch (error) {
+      // console.log(error);
+      showAlert("Oops", error.message || "An error occurred", "error");
+    }
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(LOGIN);
+      showAlert(
+        "Account created successfully!",
+        "Pls login to continue",
+        "success"
+      );
+    } else if (error) {
+      showAlert("Oops", error.data.message || "An error occurred", "error");
+    }
+  }, [error, isSuccess, navigate]);
+
+  const formSpyComponent = useMemo(
+    () => (
+      <FormSpy subscription={{ values: true }}>
+        {({ values }) => {
+          dispatch(updateFormdata(values));
+          return null;
+        }}
+      </FormSpy>
+    ),
+    [dispatch]
+  );
+
   const industries = [
-    { name: "Industry 1" },
-    { name: "Industry 2" },
-    { name: "Industry 3" },
+    "Agriculture",
+    "Automotive",
+    "Banking",
+    "Construction",
+    "Education",
+    "Energy",
+    "Entertainment",
+    "Finance",
+    "Healthcare",
+    "Information Technology",
+    "Manufacturing",
+    "Retail",
+    "Telecommunications",
+    "Transportation",
+    "Travel & Tourism",
+    "Utilities",
+    "Other",
   ];
 
-  const companySizes = [
-    { name: "Small" },
-    { name: "Medium" },
-    { name: "Large" },
-  ];
+  // const companySizes = ["Micro", "Small", "Medium", "Large", "Enterprise"];
 
   return (
     <div className="flex lg:h-screen bg-[#001900]  flex-col lg:flex-row ">
@@ -99,8 +161,11 @@ const SignUp = () => {
             <Form
               onSubmit={onSubmit}
               validate={validateForm}
+              initialValues={register || ""}
               render={({ handleSubmit, form, submitting }) => (
                 <form onSubmit={handleSubmit}>
+                  {formSpyComponent}
+
                   <h1 className="font-Inter py-4 lg:py-0 text-primary-dark-green font-medium text-3xl">
                     Company Details
                   </h1>
@@ -108,10 +173,25 @@ const SignUp = () => {
                     id="organization_name"
                     type="text"
                     name="organization_name"
-                    label="Display Name"
+                    label="Organization name"
                     component="input"
                     icon={GoPerson}
-                    placeholder="Display name"
+                    placeholder=" "
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.organization_name && (
+                      <small className="text-red-600">
+                        {form.getState().errors.organization_name}
+                      </small>
+                    )}
+                  <InputField
+                    id="phone_number"
+                    type="number"
+                    name="phone_number"
+                    label="Phone Number"
+                    component="input"
+                    icon={MdNumbers}
+                    placeholder=" "
                   />
                   {form.getState().submitFailed &&
                     form.getState().errors.organization_name && (
@@ -120,7 +200,11 @@ const SignUp = () => {
                       </small>
                     )}
 
-                  <DropDownMenu displayText="Location" />
+                  <DropDownMenu
+                    options={countries}
+                    onSelect={(option) => setSelectedCompanyLocation(option)}
+                    displayText="Select Location"
+                  />
                   <InputField
                     id="organization_email"
                     type="organization_email"
@@ -128,7 +212,7 @@ const SignUp = () => {
                     component="input"
                     label="Organization Email address"
                     icon={AiOutlineMail}
-                    placeholder="Organization Email address"
+                    placeholder=" "
                   />
                   {form.getState().submitFailed &&
                     form.getState().errors.organization_email && (
@@ -143,7 +227,8 @@ const SignUp = () => {
                     label="Email"
                     component="input"
                     icon={AiOutlineMail}
-                    placeholder="Email"
+                    placeholder=" "
+                    readOnly
                   />
                   {form.getState().submitFailed &&
                     form.getState().errors.email && (
@@ -154,17 +239,17 @@ const SignUp = () => {
 
                   <DropDownMenu
                     options={industries}
-                    onSelect={(option) => setSelectedIndustry(option.name)}
+                    onSelect={(option) => setSelectedIndustry(option)}
                     displayText="Select Industry"
                   />
 
-                  <DropDownMenu
+                  {/* <DropDownMenu
                     options={companySizes}
-                    onSelect={(option) => setSelectedCompanySize(option.name)}
+                    onSelect={(option) => setSelectedCompanySize(option)}
                     displayText="Select Company Size"
-                  />
+                  /> */}
 
-                  <div className="mb-4 lg:mb-0 2xl:mt-6 lg:mt-4">
+                  {/* <div className="mb-4 lg:mb-0 2xl:mt-6 lg:mt-4">
                     <h1 className="w-[clamp(280px,70%,600px)] font-Inter font text-sm text-primary-light-gray py-3">
                       Upload certificate of Incorporation
                     </h1>
@@ -178,7 +263,7 @@ const SignUp = () => {
                         />
                       )}
                     />
-                  </div>
+                  </div> */}
 
                   <button
                     type="submit"

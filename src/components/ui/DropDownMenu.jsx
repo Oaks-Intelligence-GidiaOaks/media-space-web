@@ -1,10 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
+import PropTypes from "prop-types";
 
 const DropdownMenu = ({ options, onSelect, displayText }) => {
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
+
+  // Function to handle option selection
+  const handleSelect = (option) => {
+    setSelected(option);
+    setOpen(false);
+    setInputValue("");
+    onSelect(option);
+  };
 
   return (
     <div className="w-full mb-4 lg:mb-0 2xl:mt-6 lg:mt-4">
@@ -14,10 +23,10 @@ const DropdownMenu = ({ options, onSelect, displayText }) => {
           selected && "focus:border-b-primary-dark-green"
         } ${!selected && "text-gray-700"}`}
       >
-      <span className="text-primary-gray">
+        <span className="text-primary-gray">
           {selected
-            ? selected?.length > 25
-              ? selected?.substring(0, 25) + "..."
+            ? selected.length > 25
+              ? selected.substring(0, 25) + "..."
               : selected
             : displayText || "Select option"}
         </span>
@@ -43,36 +52,43 @@ const DropdownMenu = ({ options, onSelect, displayText }) => {
             className="placeholder:text-gray-700 hidden p-2 outline-none"
           />
         </div>
-        {options?.map((option) => (
+        {/* Map through options */}
+        {options.map((option) => (
           <li
-            key={option?.name}
+            key={typeof option === "object" ? option.name : option}
             className={`p-2 mt-1 text-sm hover:bg-sky-600 hover:text-white
               ${
-                option?.name?.toLowerCase() === selected?.toLowerCase() &&
+                (typeof option === "object"
+                  ? option.name
+                  : option
+                ).toLowerCase() === selected.toLowerCase() &&
                 "bg-sky-600 rounded text-white"
               }
               ${
-                option?.name?.toLowerCase().startsWith(inputValue) &&
+                (typeof option === "object" ? option.name : option)
+                  .toLowerCase()
+                  .startsWith(inputValue) &&
                 inputValue &&
                 "block"
               }
               ${!inputValue && "block"}
             `}
-            onClick={() => {
-              if (option?.name?.toLowerCase() !== selected.toLowerCase()) {
-                setSelected(option?.name);
-                setOpen(false);
-                setInputValue("");
-                onSelect(option);
-              }
-            }}
+            onClick={() =>
+              handleSelect(typeof option === "object" ? option.name : option)
+            }
           >
-            {option?.name}
+            {typeof option === "object" ? option.name : option}
           </li>
         ))}
       </ul>
     </div>
   );
+};
+
+DropdownMenu.propTypes = {
+  options: PropTypes.array.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  displayText: PropTypes.string,
 };
 
 export default DropdownMenu;

@@ -1,5 +1,4 @@
 // Auth constants
-export const LOGIN = "user/login";
-export const REGISTER = "user";
-export const GETUSER = "user/me";
-export const DIVISION_LIST = "data/police_division";
+export const LOGIN = "admin/user/login";
+export const REGISTER = "admin/user";
+export const GETUSER = "admin/user/me";

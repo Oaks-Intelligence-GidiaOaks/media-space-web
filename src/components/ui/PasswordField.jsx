@@ -12,7 +12,7 @@ const PasswordField = ({
   component,
 }) => {
   return (
-    <div className="relative mb-4 lg:mb-0 2xl:mt-6 lg:mt-4">
+    <div className="relative mb-4 lg:mb-0 2xl:mt-6 lg:mt-4 z-0">
       <Field
         id={id}
         type={eyeState ? "text" : "password"}

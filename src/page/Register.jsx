@@ -10,8 +10,13 @@ import Ellipse from "../assets/Ellipse.svg";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { InputField, PasswordField } from "../components/ui";
-import { Form } from "react-final-form";
+import { Form, Field } from "react-final-form";
 import validate from "validate.js";
+import { updateFormdata, clearFormData } from "../redux/slices/register.slice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { showAlert } from "../static/alert";
+import { SIGN_UP } from "../routes/CONSTANT";
 
 const constraints = {
   display_name: {
@@ -33,6 +38,15 @@ const constraints = {
     presence: true,
     equality: "password",
   },
+  terms: {
+    presence: {
+      message: "must be accepted",
+    },
+    inclusion: {
+      within: [true],
+      message: "^must be accepted",
+    },
+  },
 };
 
 const Register = () => {
@@ -47,8 +61,15 @@ const Register = () => {
     return validate(values, constraints) || {};
   };
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const onSubmit = (values) => {
     console.log(values);
+    dispatch(clearFormData());
+    dispatch(updateFormdata(values));
+    navigate(SIGN_UP);
+    showAlert("Sign up successful", "finish sign up", "success");
   };
 
   return (
@@ -112,7 +133,7 @@ const Register = () => {
                     label="Display Name"
                     component="input"
                     icon={GoPerson}
-                    placeholder="Display name"
+                    placeholder=" "
                   />
                   {form.getState().submitFailed &&
                     form.getState().errors.display_name && (
@@ -127,7 +148,7 @@ const Register = () => {
                     label="Username"
                     component="input"
                     icon={GoPerson}
-                    placeholder="Username"
+                    placeholder=" "
                   />
                   {form.getState().submitFailed &&
                     form.getState().errors.username && (
@@ -142,7 +163,7 @@ const Register = () => {
                     label="Email"
                     component="input"
                     icon={AiOutlineMail}
-                    placeholder="Email"
+                    placeholder=" "
                   />
                   {form.getState().submitFailed &&
                     form.getState().errors.email && (
@@ -157,7 +178,7 @@ const Register = () => {
                     component="input"
                     eyeState={eyeState}
                     toggleEye={toggleEye}
-                    placeholder="Password"
+                    placeholder=" "
                     label="Password"
                   />
                   {form.getState().submitFailed &&
@@ -172,7 +193,7 @@ const Register = () => {
                     component="input"
                     eyeState={eyeState}
                     toggleEye={toggleEye}
-                    placeholder="Re-enter Password"
+                    placeholder=" "
                     label="Re-enter Password"
                   />
                   {form.getState().submitFailed &&
@@ -184,21 +205,25 @@ const Register = () => {
 
                   <div className="flex items-center mt-4 gap-2">
                     <div>
-                      <input
+                      <Field
                         type="checkbox"
-                        name=""
-                        id=""
+                        name="terms"
+                        component="input"
                         className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#FF3A29] d dark:focus:ring-blue-600"
                       />
-                      <label htmlFor="Remember Me"></label>
                     </div>
-                    <span className="text-xs font-Inter font-normal">
+                    <span className="text-xs font-Inter font-normal pt-1">
                       I accept the{" "}
                       <span className=" text-primary-red">terms of use</span>{" "}
                       and{" "}
                       <span className=" text-primary-red">privacy policy</span>
                     </span>
                   </div>
+                  {form.getState().errors.terms && (
+                    <small className="text-red-600">
+                      {form.getState().errors.terms}
+                    </small>
+                  )}
 
                   <button
                     type="submit"

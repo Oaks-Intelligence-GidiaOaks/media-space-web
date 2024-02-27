@@ -13,14 +13,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
       onQueryStarted: async (credentials, { dispatch, queryFulfilled }) => {
         try {
-          const { data } = await queryFulfilled;
+          const data = await queryFulfilled;
           // const { accessToken, user } = data;
           const accessToken = data.data.accessToken;
           const user = data.data.user;
           const refreshToken = data.data.user.refreshToken;
 
-          console.log(accessToken, "data");
-
+          // console.log(refreshToken, "refreshToken");
           dispatch(
             updateUser({
               token: accessToken,
@@ -34,7 +33,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         }
       },
       transformResponse: (response) => {
-        console.log(response, "rtk");
+        // console.log(response, "rtk");
         return response;
       },
       invalidatesTags: ["User"],

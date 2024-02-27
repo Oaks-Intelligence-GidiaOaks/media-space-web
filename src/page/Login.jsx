@@ -120,7 +120,7 @@ const Login = () => {
                     label="Email"
                     component="input"
                     icon={AiOutlineMail}
-                    placeholder=" Email address"
+                    placeholder=" "
                   />
                   {form.getState().submitFailed &&
                     form.getState().errors.email && (
@@ -134,8 +134,8 @@ const Login = () => {
                     component="input"
                     eyeState={eyeState}
                     toggleEye={toggleEye}
-                    placeholder="Password"
                     label="Password"
+                    placeholder=" "
                   />
                   {form.getState().submitFailed &&
                     form.getState().errors.password && (
