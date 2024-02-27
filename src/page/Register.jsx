@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { GoPerson } from "react-icons/go";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
 import facebook from "../assets/facebook.svg";
 import goggle from "../assets/goggle.svg";
 import instagram from "../assets/instagram.svg";
@@ -11,6 +10,30 @@ import Ellipse from "../assets/Ellipse.svg";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { InputField, PasswordField } from "../components/ui";
+import { Form } from "react-final-form";
+import validate from "validate.js";
+
+const constraints = {
+  display_name: {
+    presence: true,
+  },
+  email: {
+    presence: true,
+  },
+  username: {
+    presence: true,
+  },
+  password: {
+    presence: true,
+    length: {
+      minimum: 6,
+    },
+  },
+  confirm_password: {
+    presence: true,
+    equality: "password",
+  },
+};
 
 const Register = () => {
   const [eyeState, setEyeState] = useState(false);
@@ -19,6 +42,15 @@ const Register = () => {
     e.preventDefault();
     setEyeState((prev) => !prev);
   };
+
+  const validateForm = (values) => {
+    return validate(values, constraints) || {};
+  };
+
+  const onSubmit = (values) => {
+    console.log(values);
+  };
+
   return (
     <div className="flex lg:h-screen bg-[#001900]  flex-col lg:flex-row ">
       <div className="w-full lg:w-3/5">
@@ -63,78 +95,131 @@ const Register = () => {
       </div>
       <div className="w-full h-screen lg:w-2/5 rounded-tl-[10%]  lg:rounded-tl-[20%] mx-auto pt-20 px-8 lg:p-16 bg-white overflow-y-scroll scrollbar-thin bar  scrollbar-thumb-[#AEAEAE] scrollbar-track-gray-200">
         <div className=" lg:mt-10 2xl:mt-40">
-          <form className="">
-            <h1 className="font-Inter mb-7 lg:py-0 text-primary-dark-green font-medium text-3xl">
-              Create Account
-            </h1>
-            <InputField
-              id="name"
-              type="text"
-              name="name"
-              label="Username"
-              // onChange={handleChange}
-              icon={GoPerson}
-              placeholder="Display name"
-            />
-            <InputField
-              id="username"
-              type="text"
-              name="username"
-              label="Username"
-              // onChange={handleChange}
-              icon={GoPerson}
-              placeholder="Username"
-            />
-            <InputField
-              id="email"
-              type="email"
-              name="email"
-              label="Email"
-              // onChange={handleChange}
-              icon={AiOutlineMail}
-              placeholder=" Email address"
-            />
-            <PasswordField
-              name="passwore"
-              id="password"
-              // onChange={handleChange}
-              eyeState={eyeState}
-              toggleEye={toggleEye}
-              placeholder="Password"
-              label="Password"
-            />
-            <PasswordField
-              name="passwore"
-              id="password"
-              // onChange={handleChange}
-              eyeState={eyeState}
-              toggleEye={toggleEye}
-              placeholder="Re-enter Password"
-              label="Re-enter Password"
-            />
-            <div className="flex items-center mt-4 gap-2">
-              <div>
-                <input
-                  type="checkbox"
-                  name=""
-                  id=""
-                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#FF3A29] d dark:focus:ring-blue-600"
-                  
-                />
-                <label htmlFor="Remember Me"></label>
-              </div>
-              <span className="text-xs font-Inter font-normal">
-              I accept the <span className=" text-primary-red">terms of use</span> and <span className=" text-primary-red">privacy policy</span>
-              </span>
-            </div>
+          <div className="">
+            <Form
+              onSubmit={onSubmit}
+              validate={validateForm}
+              render={({ handleSubmit, form, submitting }) => (
+                <form onSubmit={handleSubmit}>
+                  <h1 className="font-Inter mb-7 lg:py-0 text-primary-dark-green font-medium text-3xl">
+                    Create Account
+                  </h1>
 
-            <button
-              type="submit"
-              className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85"
-            >
-              Sign Up
-            </button>
-          </form>
+                  <InputField
+                    id="display_name"
+                    type="text"
+                    name="display_name"
+                    label="Display Name"
+                    component="input"
+                    icon={GoPerson}
+                    placeholder="Display name"
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.display_name && (
+                      <small className="text-red-600">
+                        {form.getState().errors.display_name}
+                      </small>
+                    )}
+                  <InputField
+                    id="username"
+                    type="text"
+                    name="username"
+                    label="Username"
+                    component="input"
+                    icon={GoPerson}
+                    placeholder="Username"
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.username && (
+                      <small className="text-red-600">
+                        {form.getState().errors.username}
+                      </small>
+                    )}
+                  <InputField
+                    id="email"
+                    type="email"
+                    name="email"
+                    label="Email"
+                    component="input"
+                    icon={AiOutlineMail}
+                    placeholder="Email"
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.email && (
+                      <small className="text-red-600">
+                        {form.getState().errors.email}
+                      </small>
+                    )}
+
+                  <PasswordField
+                    name="password"
+                    id="password"
+                    component="input"
+                    eyeState={eyeState}
+                    toggleEye={toggleEye}
+                    placeholder="Password"
+                    label="Password"
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.password && (
+                      <small className="text-red-600">
+                        {form.getState().errors.password}
+                      </small>
+                    )}
+                  <PasswordField
+                    name="confirm_password"
+                    id="confirm_password"
+                    component="input"
+                    eyeState={eyeState}
+                    toggleEye={toggleEye}
+                    placeholder="Re-enter Password"
+                    label="Re-enter Password"
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.confirm_password && (
+                      <small className="text-red-600">
+                        {form.getState().errors.confirm_password}
+                      </small>
+                    )}
+
+                  <div className="flex items-center mt-4 gap-2">
+                    <div>
+                      <input
+                        type="checkbox"
+                        name=""
+                        id=""
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#FF3A29] d dark:focus:ring-blue-600"
+                      />
+                      <label htmlFor="Remember Me"></label>
+                    </div>
+                    <span className="text-xs font-Inter font-normal">
+                      I accept the{" "}
+                      <span className=" text-primary-red">terms of use</span>{" "}
+                      and{" "}
+                      <span className=" text-primary-red">privacy policy</span>
+                    </span>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85"
+                  >
+                    {submitting ? (
+                      <>
+                        <span className="loading-dots">
+                          <span className="loading-dots-dot"></span>
+                          <span className="loading-dots-dot"></span>
+                          <span className="loading-dots-dot"></span>
+                        </span>
+                      </>
+                    ) : (
+                      "Sign Up"
+                    )}
+                  </button>
+                </form>
+              )}
+            />
+          </div>
 
           <div className="mt-4 grid grid-cols-3 lg:gap-3 items-center w-full">
             <hr className="outline-gray-500" />

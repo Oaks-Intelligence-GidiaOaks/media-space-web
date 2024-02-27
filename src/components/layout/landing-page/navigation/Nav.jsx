@@ -1,6 +1,12 @@
 import * as images from "../../../../assets";
 import { NavLink, Link } from "react-router-dom";
-import { INDEX, CONTACT_US, FAQ, ABOUT } from "../../../../routes/CONSTANT";
+import {
+  INDEX,
+  CONTACT_US,
+  FAQ,
+  ABOUT,
+  REGISTER,
+} from "../../../../routes/CONSTANT";
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useClickAway } from "react-use";
@@ -53,7 +59,7 @@ function Nav() {
         </div>
 
         <div className="ml-auto sm:mr-1">
-          <Link to={INDEX} className="flex action-button sm:mr-1">
+          <Link to={REGISTER} className="flex action-button sm:mr-1">
             Sign up
           </Link>
         </div>

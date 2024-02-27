@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { BsEye, BsEyeSlash } from "react-icons/bs"; // Import the eye icons
+import { BsEye, BsEyeSlash } from "react-icons/bs";
+import PropTypes from "prop-types";
+import { Field } from "react-final-form";
 
 const PasswordField = ({
   id,
@@ -7,21 +8,22 @@ const PasswordField = ({
   toggleEye,
   placeholder,
   label,
-  value,
-  onChange
+  name,
+  component,
 }) => {
   return (
     <div className="relative mb-4 lg:mb-0 2xl:mt-6 lg:mt-4">
-      <input
+      <Field
+        id={id}
         type={eyeState ? "text" : "password"}
-        className="block px-2 w-full py-3 placeholder:text-sm placeholder:font-Inter bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
+        name={name}
+        component={component}
+        className="block px-2 w-full placeholder:text-sm placeholder:font-Inter placeholder:text-primary-light-gray py-3 bg-transparent border-0 border-b border-black appearance-none focus:border-b-primary-dark-green focus:outline-none focus:ring-0 peer"
         placeholder={placeholder}
-        value={value}
-        onChange={onChange}
       />
       <label
         htmlFor={id}
-        className="px-2 absolute text-primary-gray bg-transparent duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-dark-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8"
+        className={`px-2 absolute text-primary-light-gray bg-transparent duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary-dark-green peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8`}
       >
         {label}
       </label>
@@ -33,6 +35,16 @@ const PasswordField = ({
       </div>
     </div>
   );
+};
+
+PasswordField.propTypes = {
+  id: PropTypes.string.isRequired,
+  eyeState: PropTypes.bool.isRequired,
+  toggleEye: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  component: PropTypes.elementType.isRequired,
 };
 
 export default PasswordField;

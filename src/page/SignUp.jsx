@@ -6,27 +6,51 @@ import Ellipse from "../assets/Ellipse.svg";
 import { motion } from "framer-motion";
 import { InputField, DropDownMenu } from "../components/ui";
 import { FilePicker } from "../components/containers";
+import { Form, Field } from "react-final-form";
+import validate from "validate.js";
+
+const constraints = {
+  organization_name: {
+    presence: true,
+  },
+  organization_email: {
+    presence: true,
+  },
+  email: {
+    presence: true,
+  },
+};
 
 const SignUp = () => {
-  const [eyeState, setEyeState] = useState(false);
+  const [industry_type, setSelectedIndustry] = useState("");
+  const [selectedCompanySize, setSelectedCompanySize] = useState("");
 
-  const [form, setForm] = useState({
-    orgName: "",
-    orgEmail: "",
-    email: "",
-  });
-
-  const setValue = (fieldName, value) => {
-    setForm((prevForm) => ({
-      ...prevForm,
-      [fieldName]: value,
-    }));
+  const validateForm = (values) => {
+    return validate(values, constraints) || {};
   };
 
-  const toggleEye = (e) => {
-    e.preventDefault();
-    setEyeState((prev) => !prev);
+  const onSubmit = (values) => {
+    // Combine selected values with other form values
+    const formData = {
+      ...values,
+      industry_type,
+      selectedCompanySize,
+    };
+    console.log(formData);
   };
+
+  const industries = [
+    { name: "Industry 1" },
+    { name: "Industry 2" },
+    { name: "Industry 3" },
+  ];
+
+  const companySizes = [
+    { name: "Small" },
+    { name: "Medium" },
+    { name: "Large" },
+  ];
+
   return (
     <div className="flex lg:h-screen bg-[#001900]  flex-col lg:flex-row ">
       <div className="w-full lg:w-3/5">
@@ -71,60 +95,111 @@ const SignUp = () => {
       </div>
       <div className="w-full h-screen lg:w-2/5 rounded-tl-[10%]  lg:rounded-tl-[20%] mx-auto pt-20 px-8 lg:p-16 bg-white overflow-y-scroll scrollbar-thin bar  scrollbar-thumb-[#AEAEAE] scrollbar-track-gray-200">
         <div className=" lg:mt-0 2xl:mt-40">
-          <form className="">
-            <h1 className="font-Inter py-4 lg:py-0 text-primary-dark-green font-medium text-3xl">
-              Company Details
-            </h1>
-            <InputField
-              id="name"
-              type="text"
-              name="orgName"
-              label="Organization name"
-              // onChange={handleChange}
-              icon={GoPerson}
-              placeholder="Display name"
+          <div className="">
+            <Form
+              onSubmit={onSubmit}
+              validate={validateForm}
+              render={({ handleSubmit, form, submitting }) => (
+                <form onSubmit={handleSubmit}>
+                  <h1 className="font-Inter py-4 lg:py-0 text-primary-dark-green font-medium text-3xl">
+                    Company Details
+                  </h1>
+                  <InputField
+                    id="organization_name"
+                    type="text"
+                    name="organization_name"
+                    label="Display Name"
+                    component="input"
+                    icon={GoPerson}
+                    placeholder="Display name"
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.organization_name && (
+                      <small className="text-red-600">
+                        {form.getState().errors.organization_name}
+                      </small>
+                    )}
+
+                  <DropDownMenu displayText="Location" />
+                  <InputField
+                    id="organization_email"
+                    type="organization_email"
+                    name="organization_email"
+                    component="input"
+                    label="Organization Email address"
+                    icon={AiOutlineMail}
+                    placeholder="Organization Email address"
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.organization_email && (
+                      <small className="text-red-600">
+                        {form.getState().errors.organization_email}
+                      </small>
+                    )}
+                  <InputField
+                    id="email"
+                    type="email"
+                    name="email"
+                    label="Email"
+                    component="input"
+                    icon={AiOutlineMail}
+                    placeholder="Email"
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.email && (
+                      <small className="text-red-600">
+                        {form.getState().errors.email}
+                      </small>
+                    )}
+
+                  <DropDownMenu
+                    options={industries}
+                    onSelect={(option) => setSelectedIndustry(option.name)}
+                    displayText="Select Industry"
+                  />
+
+                  <DropDownMenu
+                    options={companySizes}
+                    onSelect={(option) => setSelectedCompanySize(option.name)}
+                    displayText="Select Company Size"
+                  />
+
+                  <div className="mb-4 lg:mb-0 2xl:mt-6 lg:mt-4">
+                    <h1 className="w-[clamp(280px,70%,600px)] font-Inter font text-sm text-primary-light-gray py-3">
+                      Upload certificate of Incorporation
+                    </h1>
+                    <Field
+                      name="certOfInc" // Make sure this matches your form state
+                      render={({ input }) => (
+                        <FilePicker
+                          width="w-[100%]"
+                          form={form}
+                          valueSetter={input.onChange}
+                        />
+                      )}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85"
+                  >
+                    {submitting ? (
+                      <>
+                        <span className="loading-dots">
+                          <span className="loading-dots-dot"></span>
+                          <span className="loading-dots-dot"></span>
+                          <span className="loading-dots-dot"></span>
+                        </span>
+                      </>
+                    ) : (
+                      "Finish"
+                    )}
+                  </button>
+                </form>
+              )}
             />
-
-            <DropDownMenu displayText="Location" />
-            <InputField
-              id="username"
-              type="email"
-              name="orgEmail"
-              label="Organization Email address"
-              // onChange={handleChange}
-              icon={AiOutlineMail}
-              placeholder="Organization Email address"
-            />
-            <InputField
-              id="email"
-              type="email"
-              name="email"
-              label="Email"
-              // onChange={handleChange}
-              icon={AiOutlineMail}
-              placeholder=" Email address"
-            />
-
-            <DropDownMenu displayText="Select Industry" />
-            <DropDownMenu displayText="Company Size" />
-
-            <div className="mb-4 lg:mb-0 2xl:mt-6 lg:mt-4">
-              <h1 className="w-[clamp(280px,70%,600px)] font-Inter font text-sm text-primary-light-gray py-3">Upload certificate of Incorporation</h1>
-            <FilePicker
-              width="w-[100%]"
-              form={form}
-              valueSetter={setValue}
-            />
-
-            </div>
-
-            <button
-              type="submit"
-              className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85"
-            >
-              Finish
-            </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>

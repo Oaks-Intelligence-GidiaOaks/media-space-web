@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import facebook from "../assets/facebook.svg";
 import goggle from "../assets/goggle.svg";
 import instagram from "../assets/instagram.svg";
@@ -10,6 +9,24 @@ import BgGroup from "../assets/BgGroup.svg";
 import Ellipse from "../assets/Ellipse.svg";
 import { motion } from "framer-motion";
 import { InputField, PasswordField } from "../components/ui";
+import { Form } from "react-final-form";
+import validate from "validate.js";
+import { useEffect } from "react";
+import rtkMutation from "../utils/rtkMutation";
+import { showAlert } from "../static/alert";
+import { useLoginUserMutation } from "../service/user.service";
+import { DASHBOARD, REGISTER } from "../routes/CONSTANT";
+const constraints = {
+  email: {
+    presence: true,
+  },
+  password: {
+    presence: true,
+    length: {
+      minimum: 6,
+    },
+  },
+};
 
 const Login = () => {
   const [eyeState, setEyeState] = useState(false);
@@ -18,6 +35,30 @@ const Login = () => {
     e.preventDefault();
     setEyeState((prev) => !prev);
   };
+
+  const [loginUser, { error, isSuccess }] = useLoginUserMutation({
+    provideTag: ["User"],
+  });
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (values) => {
+    await rtkMutation(loginUser, values);
+  };
+
+  const validateForm = (values) => {
+    return validate(values, constraints) || {};
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      showAlert("", "Login Successful!", "success");
+      navigate(DASHBOARD);
+    } else if (error) {
+      showAlert("Oops", error.data.message || "An error occurred", "error");
+    }
+  }, [isSuccess, error, navigate]);
+
   return (
     <div className="flex lg:h-screen bg-[#001900]  flex-col lg:flex-row ">
       <div className="w-full lg:w-3/5">
@@ -63,51 +104,80 @@ const Login = () => {
 
       <div className="w-full h-screen lg:w-2/5 rounded-tl-[10%]  lg:rounded-tl-[20%]  mx-auto pt-20 px-8 lg:p-16 bg-white">
         <div className="sm:mt-20 lg:mt-0 2xl:mt-40">
-          <form className="">
+          <div className="">
             <h1 className="font-Inter mb-7 lg:py-0  text-primary-dark-green font-medium text-3xl">
               Sign In
             </h1>
+            <Form
+              onSubmit={onSubmit}
+              validate={validateForm}
+              render={({ handleSubmit, form, submitting }) => (
+                <form onSubmit={handleSubmit}>
+                  <InputField
+                    id="email"
+                    type="email"
+                    name="email"
+                    label="Email"
+                    component="input"
+                    icon={AiOutlineMail}
+                    placeholder=" Email address"
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.email && (
+                      <small className="text-red-600">
+                        {form.getState().errors.email}
+                      </small>
+                    )}
+                  <PasswordField
+                    name="password"
+                    id="password"
+                    component="input"
+                    eyeState={eyeState}
+                    toggleEye={toggleEye}
+                    placeholder="Password"
+                    label="Password"
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.password && (
+                      <small className="text-red-600">
+                        {form.getState().errors.password}
+                      </small>
+                    )}
+                  <div className="flex items-center mt-4 gap-2">
+                    <div>
+                      <input
+                        type="checkbox"
+                        name=""
+                        id=""
+                        className="text-[#FF3A29]"
+                      />
+                      <label htmlFor="Remember Me"></label>
+                    </div>
+                    <span className="text-xs font-Inter font-light ">
+                      Keep me sign in
+                    </span>
+                  </div>
 
-            <InputField
-              id="email"
-              type="email"
-              name="email"
-              label="Email"
-              // onChange={handleChange}
-              icon={AiOutlineMail}
-              placeholder=" Email address"
+                  <button
+                    type="submit"
+                    className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85"
+                  >
+                    {submitting ? (
+                      <>
+                        <span className="loading-dots">
+                          <span className="loading-dots-dot"></span>
+                          <span className="loading-dots-dot"></span>
+                          <span className="loading-dots-dot"></span>
+                        </span>
+                      </>
+                    ) : (
+                      "Sign In"
+                    )}
+                  </button>
+                </form>
+              )}
             />
-            <PasswordField
-              name="passwore"
-              id="password"
-              // onChange={handleChange}
-              eyeState={eyeState}
-              toggleEye={toggleEye}
-              placeholder="Password"
-              label="Password"
-            />
-            <div className="flex items-center mt-4 gap-2">
-              <div>
-                <input
-                  type="checkbox"
-                  name=""
-                  id=""
-                  className="text-[#FF3A29]"
-                />
-                <label htmlFor="Remember Me"></label>
-              </div>
-              <span className="text-xs font-Inter font-light ">
-                Keep me sign in
-              </span>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85"
-            >
-              Sign In
-            </button>
-          </form>
+          </div>
 
           <div className="mt-4 grid grid-cols-3 lg:gap-3 items-center w-full">
             <hr className="outline-gray-500" />
@@ -151,7 +221,7 @@ const Login = () => {
           <div className="flex items-center justify-center mt-4">
             <button className="font-Inter font-medium text-base text-primary-gray ">
               Already have an account?{" "}
-              <Link to="/register" className=" text-primary-red">
+              <Link to={REGISTER} className=" text-primary-red">
                 Sign up
               </Link>
             </button>

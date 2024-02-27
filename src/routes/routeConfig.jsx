@@ -13,15 +13,20 @@ import {
 } from "../page";
 
 import * as routes from "./CONSTANT";
-import { ProtectedRoute } from "../guards";
+// import { ProtectedRoute } from "../guards";
 import { SuperAdminLayout } from "../layouts";
+import ProtectedRoute from "../components/protected/ProtectedRoute";
+import PublicRoute from "../components/protected/PublicRoute";
 
 const RouterConfig = () => {
   return (
     <>
       <Routes>
         <Route path={routes.INDEX} element={<LandingPage />} />
-        <Route path={routes.LOGIN} element={<Login />} />
+        <Route
+          path={routes.LOGIN}
+          element={<PublicRoute component={Login} />}
+        />
         <Route path={routes.REGISTER} element={<Register />} />
         <Route path={routes.SIGN_UP} element={<SignUp />} />
         <Route
