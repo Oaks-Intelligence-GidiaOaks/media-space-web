@@ -1,9 +1,11 @@
 import { OrganizationMetricCard, ViewAllCard } from "../../components";
+import OrgGridSort from "../../components/grid/OrgGridSort";
+import OrgGrid from "./../../components/grid/OrgGrid";
 
 const Organizations = () => {
   return (
     <div className="py-4 px-8">
-      <h1 className=" font-inter text-xl font-medium pb-8 leading-[24.2px]">
+      {/* <h1 className=" font-inter text-xl font-medium pb-8 leading-[24.2px]">
         Registered Users
       </h1>
       <div className=" grid grid-cols-6 gap-2">
@@ -13,8 +15,8 @@ const Organizations = () => {
         <OrganizationMetricCard />
         <OrganizationMetricCard />
         <ViewAllCard />
-      </div>
-      <div className="flex flex-col justify-center mx-auto mt-10 max-w-[636px] pb-10">
+      </div> */}
+      {/* <div className="flex flex-col justify-center mx-auto mt-10 max-w-[636px] pb-10">
         <div>
           <h1 className="font-inter text-center mb-6 text-3xl font-semibold leading-[39.94px]">
             Lorem ipsum dolor sit amet consectetur. Porttitor egestas vitae at
@@ -46,7 +48,9 @@ const Organizations = () => {
             </div>
           </form>
         </div>
-      </div>
+      </div> */}
+      <OrgGridSort />
+      {/* <OrgGrid /> */}
     </div>
   );
 };
