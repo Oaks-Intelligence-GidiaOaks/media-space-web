@@ -12,3 +12,4 @@ export const SUBSCRIPTION = "/dashboard/subscription";
 export const NOTIFICATIONS = "/dashboard/notifications";
 export const SETTINGS = "/dashboard/settings";
 export const ORGANIZATIONS_USERS = "/dashboard/organizations/users";
+export const USER_ACQUISITION = "/dashboard/users";

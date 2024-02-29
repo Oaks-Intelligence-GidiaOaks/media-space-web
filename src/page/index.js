@@ -8,3 +8,4 @@ export { default as Subscription } from "./subscription/Subscription.jsx";
 export { default as Notifications } from "./notifications/Notifications.jsx";
 export { default as Settings } from "./settings/Settings.jsx";
 export { default as OrganizationUsers } from "./organizations/OrganizationUsers.jsx";
+export { default as UserAcquisition } from "./users/Users.jsx";

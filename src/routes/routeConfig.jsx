@@ -10,6 +10,7 @@ import {
   Subscription,
   SignUp,
   OrganizationUsers,
+  UserAcquisition,
 } from "../page";
 
 import * as routes from "./CONSTANT";
@@ -23,11 +24,11 @@ const RouterConfig = () => {
     <>
       <Routes>
         <Route path={routes.INDEX} element={<LandingPage />} />
-        {/* <Route
+        <Route
           path={routes.LOGIN}
           element={<PublicRoute component={Login} />}
-        /> */}
-        <Route path={routes.LOGIN} element={<Login />} />
+        />
+        {/* <Route path={routes.LOGIN} element={<Login />} /> */}
 
         <Route path={routes.REGISTER} element={<Register />} />
         <Route path={routes.SIGN_UP} element={<SignUp />} />
@@ -41,6 +42,7 @@ const RouterConfig = () => {
             path={routes.ORGANIZATIONS_USERS}
             element={<OrganizationUsers />}
           />
+          <Route path={routes.USER_ACQUISITION} element={<UserAcquisition />} />
           <Route path={routes.ORGANIZATIONS} element={<Organizations />} />
           <Route path={routes.SUBSCRIPTION} element={<Subscription />} />
           <Route path={routes.NOTIFICATIONS} element={<Notifications />} />

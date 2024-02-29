@@ -1,16 +1,31 @@
+import { useState } from "react";
 import { logo } from "../../../../assets";
 import search from "../../../../assets/titlebar/search.svg";
 import notification from "../../../../assets/titlebar/notification.svg";
 import placeholder from "../../../../assets/titlebar/placeholder.svg";
 import chevron from "../../../../assets/titlebar/chevron.svg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FaUserCircle, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { handleLogout } from "../../../../static/logout";
+import { useSelector } from "react-redux";
 
 const TitleBar = () => {
   const navigate = useNavigate();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const navigateToOverview = () => {
     navigate("/dashboard/overview");
   };
+
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    setIsDropdownOpen(false);
+    handleLogout(dispatch);
+  };
+
+  const display_name = useSelector((state) => state.user.user.display_name);
 
   return (
     <div className="h-10 mb-4 flex justify-between pt-4 w-full pl-1 sm:pl-0 pr-2 sticky top-0 bg-white">
@@ -35,14 +50,48 @@ const TitleBar = () => {
           <img src={notification} className="w-[14px] sm:w-4" />
           <div className="w-1 h-1 rounded-full absolute bg-red-500 top-[2px] right-[2px]" />
         </button>
-        <button
-          aria-label="Profile"
-          className="flex flex-nowrap gap-2 items-center hover:bg-primary-gray rounded p-1"
-        >
-          <img src={placeholder} className="w-[18px] sm:w-6 rounded-full" />
-          <p className="font-inter hidden sm:block">Yarri Sandra</p>
-          <img className="w-3" src={chevron} />
-        </button>
+        {/* Dropdown button */}
+        <div className="relative inline-block text-left">
+          <button
+            aria-label="Profile"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex flex-nowrap gap-2 items-center hover:bg-primary-gray rounded p-1"
+          >
+            <img src={placeholder} className="w-[18px] sm:w-6 rounded-full" />
+            <p className="font-inter hidden sm:block">{display_name}</p>
+            <img className="w-3" src={chevron} />
+          </button>
+          {/* Dropdown menu */}
+          {isDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg z-10">
+              <Link
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                onClick={() => {
+                  setIsDropdownOpen(false);
+                }}
+              >
+                <FaUserCircle className="w-4 h-4 mr-2 inline" />
+                Profile
+              </Link>
+              <Link
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                onClick={() => {
+                  setIsDropdownOpen(false);
+                }}
+              >
+                <FaCog className="w-4 h-4 mr-2 inline" />
+                Settings
+              </Link>
+              <button
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                onClick={() => logout()}
+              >
+                <FaSignOutAlt className="w-4 h-4 mr-2 inline" />
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

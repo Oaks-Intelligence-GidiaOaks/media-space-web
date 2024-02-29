@@ -32,14 +32,16 @@ const Sidebar = ({ sidebarItems }) => {
   useEffect(() => {
     if (pathname.includes("overview")) {
       setCurrentTabIndex(0);
-    } else if (pathname.includes("organizations")) {
+    } else if (pathname.includes("users")) {
       setCurrentTabIndex(1);
-    } else if (pathname.includes("subscription")) {
+    } else if (pathname.includes("organizations")) {
       setCurrentTabIndex(2);
-    } else if (pathname.includes("notifications")) {
+    } else if (pathname.includes("subscription")) {
       setCurrentTabIndex(3);
-    } else if (pathname.includes("settings")) {
+    } else if (pathname.includes("notifications")) {
       setCurrentTabIndex(4);
+    } else if (pathname.includes("settings")) {
+      setCurrentTabIndex(5);
     }
   }, [pathname]);
 
