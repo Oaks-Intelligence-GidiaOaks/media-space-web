@@ -32,3 +32,6 @@ export const impressions = `${PATH}/impressions.svg`;
 export const icon_success = `${PATH}/icon-success.svg`;
 export const icon_error = `${PATH}/icon-error.svg`;
 export const users = `${PATH}/users.svg`;
+export const menu = `${PATH}/menu.svg`;
+export const delete_img = `${PATH}/delete.svg`;
+export const approve = `${PATH}/approve.svg`;
