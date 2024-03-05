@@ -197,3 +197,14 @@
   height: 90.301px;
   background: #e6edff;
 }
+.rounded-donut {
+  display: flex;
+  max-width: 296.841px;
+  width: 100%;
+  /* padding: 21.944px; */
+  align-items: flex-start;
+  gap: 10.972px;
+  border-radius: 13.167px;
+  border: 1.097px solid #e6edff;
+  background: #fff;
+}

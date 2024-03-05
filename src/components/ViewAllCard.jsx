@@ -1,4 +1,5 @@
-import React from "react";
+import { Link } from "react-router-dom";
+import { ORGANIZATIONS_TABLE } from "../routes/CONSTANT";
 
 const ViewAllCard = () => {
   return (
@@ -15,7 +16,12 @@ const ViewAllCard = () => {
           </div>
 
           <div className="absolute top-48  left-7 flex justify-start">
-          <button className=" font-inter text-base font-medium">View all</button>
+            <Link
+              to={ORGANIZATIONS_TABLE}
+              className=" font-inter text-base font-medium"
+            >
+              View all
+            </Link>
           </div>
         </div>
       </div>

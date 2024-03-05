@@ -1,7 +1,7 @@
 import ReactApexChart from "react-apexcharts";
 import PropTypes from "prop-types";
 
-const MultipleLineChart = ({ seriesData, xKey, yKeys }) => {
+const MultipleChart = ({ seriesData, xKey, yKeys }) => {
   // Extracting x-axis categories from the first series
   console.log(seriesData);
   const categories = seriesData[0].data.map((item) => item[xKey]);
@@ -22,7 +22,7 @@ const MultipleLineChart = ({ seriesData, xKey, yKeys }) => {
         opacity: 0.2,
       },
     },
-    colors: ["#3D7100", "#02BA09", "#979797"],
+    colors: ["#3D7100", "#FF3A29"],
     dataLabels: {
       enabled: true,
     },
@@ -33,13 +33,16 @@ const MultipleLineChart = ({ seriesData, xKey, yKeys }) => {
     xaxis: {
       categories: categories,
     },
-    yaxis: {
-      title: {
-        text: "Activity",
-      },
-    },
+    // yaxis: {
+    //   title: {
+    //     text: "Activity",
+    //   },
+    // },
     legend: {
       position: "top",
+    },
+    title: {
+      text: "Users Analytics",
     },
   };
 
@@ -58,7 +61,7 @@ const MultipleLineChart = ({ seriesData, xKey, yKeys }) => {
   );
 };
 
-MultipleLineChart.propTypes = {
+MultipleChart.propTypes = {
   seriesData: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -69,4 +72,4 @@ MultipleLineChart.propTypes = {
   yKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default MultipleLineChart;
+export default MultipleChart;
