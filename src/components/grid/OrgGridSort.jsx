@@ -5,19 +5,31 @@ import more from "../../assets/more.svg";
 import { MonthDropDown } from "../ui";
 
 const OrgGridSort = ({ data, title, action }) => {
+  const newData = data?.organizations;
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortedData, setSortedData] = useState(data);
+  const [sortedData, setSortedData] = useState(newData);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
-  const columns = Object.keys(sortedData[0]).map((key) => ({
-    key: key,
-    label: key,
-  }));
+  if (!sortedData) {
+    return (
+      <p className="font-semibold text-2xl">
+        No data to render, kindly send in data as prop
+      </p>
+    );
+  }
+  const columns = Object.keys(sortedData[0])
+    .filter((i) => i !== "_id" && i !== "apiKey")
+    .map((key) => ({
+      key: key,
+      label: key,
+    }));
 
-  const ITEMS_PER_PAGE = 3;
-  const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
+  // console.log("Columns: ", columns);
+
+  const ITEMS_PER_PAGE = newData?.length > 10 ? 10 : newData?.length;
+  const totalPages = Math.ceil(newData?.length / ITEMS_PER_PAGE);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, data.length);
+  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, newData.length);
 
   const onPageChange = (page) => setCurrentPage(page);
 
@@ -28,7 +40,7 @@ const OrgGridSort = ({ data, title, action }) => {
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
     }
-    const sorted = [...data].sort((a, b) => {
+    const sorted = [...newData].sort((a, b) => {
       if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
       if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
       return 0;
@@ -65,14 +77,15 @@ const OrgGridSort = ({ data, title, action }) => {
           ))}
         </Table.Head>
         <Table.Body className="divide-y m-3">
-          {sortedData.slice(startIndex, endIndex).map((org) => (
+          {sortedData.slice(startIndex, endIndex).map((org, i) => (
             <Table.Row
-              key={org.No}
+              key={i}
               className=" font-Inter bg-white hover:bg-gray-200 text-xs font-normal text-primary-dark-gray"
             >
               {columns.map((column) => (
                 // <td key={column.key}>{row[column.key]}</td>
                 <Table.Cell key={column.key} className="whitespace-nowrap">
+                  {/* {"Test"} */}
                   {org[column.key]}
                 </Table.Cell>
               ))}
@@ -101,7 +114,7 @@ const OrgGridSort = ({ data, title, action }) => {
 
 OrgGridSort.defaultProps = {
   title: "Title prop (title)",
-  data: organizationData.organizations,
+  // data: organizationData,
 };
 
 export default OrgGridSort;

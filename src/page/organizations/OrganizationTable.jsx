@@ -4,12 +4,16 @@ import { useGetOrganizationQuery } from "../../service/organization.service";
 
 function OrganizationTable() {
   const { data } = useGetOrganizationQuery();
-  //   console.log(data);
+  // console.log(data);
 
   return (
     <div className="px-5 py-8">
       {/* <OrgGrid /> */}
-      <OrgGridSort title={"Organizations"} data={data} />
+      {!data ? (
+        <p>Fetching Data</p>
+      ) : (
+        <OrgGridSort title={"Organizations"} data={data} />
+      )}
     </div>
   );
 }
