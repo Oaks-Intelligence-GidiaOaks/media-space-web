@@ -6,6 +6,7 @@ import {
   card_img_3,
   card_img_4,
 } from "../../../../assets";
+import { motion } from "framer-motion";
 
 function Features() {
   return (
@@ -24,11 +25,19 @@ function Features() {
               that <br /> is both familiar yet distinct from anything you <br />{" "}
               have ever experienced.
             </p>
-            <div className="flex pt-7">
-              <Link to={""} className="footer-signup">
-                Get started
-              </Link>
-            </div>
+            <motion.button
+              whileHover={{
+                scale: 1.2,
+                transition: { duration: 1 },
+              }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <div className="flex pt-7">
+                <Link to={""} className="footer-signup">
+                  Get started
+                </Link>
+              </div>
+            </motion.button>
           </div>
         </div>
       </div>
@@ -93,61 +102,73 @@ function Features() {
 
         <div className="features-layer-2">
           <div className="flex flex-wrap justify-center items-center gap-6">
-            <div className="feature-card relative">
-              <img src={card_img} className="absolute top-0 right-0" alt="" />
-              <div className="card-content p-5">
-                <img src={card_img_1} alt="" />
-                <p className="card-title pt-5 pb-3">
-                  Integration at Your Fingertips
-                </p>
-                <p className="card-text">
-                  Break free from communication silos! Media Space seamlessly
-                  integrates into your existing apps and workflows, ensuring
-                  uninterrupted communication across your organization.
-                </p>
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <div className="feature-card relative">
+                <img src={card_img} className="absolute top-0 right-0" alt="" />
+                <div className="card-content p-5">
+                  <img src={card_img_1} alt="" />
+                  <p className="card-title pt-5 pb-3">
+                    Integration at Your Fingertips
+                  </p>
+                  <p className="card-text">
+                    Break free from communication silos! Media Space seamlessly
+                    integrates into your existing apps and workflows, ensuring
+                    uninterrupted communication across your organization.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="feature-card relative">
-              <img src={card_img} className="absolute top-0 right-0" alt="" />
-              <div className="card-content p-5">
-                <img src={card_img_2} alt="" />
-                <p className="card-title pt-5 pb-3">Tailor Your Experience</p>
-                <p className="card-text">
-                  Recognizing the uniqueness of every organization, Media Space
-                  allows you to customize your communication spaces and
-                  workflows. Adapt our versatile solution to perfectly align
-                  with your organizational goals.
-                </p>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <div className="feature-card relative">
+                <img src={card_img} className="absolute top-0 right-0" alt="" />
+                <div className="card-content p-5">
+                  <img src={card_img_2} alt="" />
+                  <p className="card-title pt-5 pb-3">Tailor Your Experience</p>
+                  <p className="card-text">
+                    Recognizing the uniqueness of every organization, Media
+                    Space allows you to customize your communication spaces and
+                    workflows. Adapt our versatile solution to perfectly align
+                    with your organizational goals.
+                  </p>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </div>
           <div className="flex flex-wrap justify-center items-center gap-6 pt-6">
-            <div className="feature-card relative">
-              <img src={card_img} className="absolute top-0 right-0" alt="" />
-              <div className="card-content p-5">
-                <img src={card_img_3} alt="" />
-                <p className="card-title pt-5 pb-3">
-                  Cross-Platform Brilliance
-                </p>
-                <p className="card-text">
-                  Whether you're on desktop or mobile, Media Space ensures a
-                  seamless experience. Stay connected and engaged with your team
-                  anytime, anywhere.
-                </p>
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <div className="feature-card relative">
+                <img src={card_img} className="absolute top-0 right-0" alt="" />
+                <div className="card-content p-5">
+                  <img src={card_img_3} alt="" />
+                  <p className="card-title pt-5 pb-3">
+                    Cross-Platform Brilliance
+                  </p>
+                  <p className="card-text">
+                    Whether you're on desktop or mobile, Media Space ensures a
+                    seamless experience. Stay connected and engaged with your
+                    team anytime, anywhere.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="feature-card relative">
-              <img src={card_img} className="absolute top-0 right-0" alt="" />
-              <div className="card-content p-5">
-                <img src={card_img_4} alt="" />
-                <p className="card-title pt-5 pb-3">Real-Time Collaboration</p>
-                <p className="card-text">
-                  Ignite creativity and innovation with our real-time
-                  collaboration features. Foster teamwork and efficient
-                  communication within your organization.
-                </p>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <div className="feature-card relative">
+                <img src={card_img} className="absolute top-0 right-0" alt="" />
+                <div className="card-content p-5">
+                  <img src={card_img_4} alt="" />
+                  <p className="card-title pt-5 pb-3">
+                    Real-Time Collaboration
+                  </p>
+                  <p className="card-text">
+                    Ignite creativity and innovation with our real-time
+                    collaboration features. Foster teamwork and efficient
+                    communication within your organization.
+                  </p>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
