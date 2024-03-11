@@ -14,56 +14,78 @@ import {
   icon_error,
 } from "../../assets";
 import "./style.css";
-import { generateDonutData } from "../../utils/donut";
-import { generateSubscriptionData } from "../../utils/subscription";
 import { useSelector } from "react-redux";
 import { Cards } from "../../components/layout/super-admin-layout";
 import { generateDummyData } from "../../utils/data";
 import MultipleChart from "../../components/charts/MultipleChart";
 import CircleCharts from "../../components/charts/CircleCharts";
+import { useGetSubscriptionQuery } from "../../service/superadmin/subscription.service";
+import { ShimmerThumbnail } from "react-shimmer-effects";
+import {
+  useGetUserStatsQuery,
+  useGetUserOverallActivityQuery,
+} from "../../service/superadmin/statistics.service";
+import { useGetTopOrganizationQuery } from "../../service/organization.service";
+import {
+  useGetPostStatsQuery,
+  useGetAminUserActivityStatsQuery,
+  useGetAminUserAnalyticsStatsQuery,
+} from "../../service/admin/statistics.service";
 
 const Overview = () => {
   const usersData = generateDummyData();
 
-  const organization_name = useSelector(
-    (state) => state.user.user.organization_id.organization_name
-  );
+  const { data: analyticsData, isLoading: loadingAnalyticsData } =
+    useGetAminUserAnalyticsStatsQuery();
+
+  const { data: activityData, isLoading: loadingActivityData } =
+    useGetAminUserActivityStatsQuery();
+  const activity = activityData?.data;
+  console.log(activity);
 
   const user = useSelector((state) => state.user.user);
+  const { data: overallActivity, isLoading: loadingOverallActivity } =
+    useGetUserOverallActivityQuery();
 
-  const donutData = generateDonutData();
-  const subscriptionData = generateSubscriptionData();
-  const dummyData = [
-    { date: "JAN", activity: 10 },
-    { date: "FEB", activity: 20 },
-    { date: "MAR", activity: 15 },
-    { date: "APRIL", activity: 25 },
-    { date: "MAY", activity: 18 },
-    { date: "JUNE", activity: 3 },
-    { date: "JULY", activity: 50 },
-    { date: "AUG", activity: 45 },
-    { date: "SEP", activity: 39 },
-    { date: "OCT", activity: 30 },
-    { date: "NOV", activity: 11 },
-    { date: "DEC", activity: 40 },
+  const userActivity = [];
+
+  if (overallActivity && overallActivity.data) {
+    userActivity.push({
+      month: overallActivity?.data?.month,
+      count: overallActivity?.data?.count,
+    });
+  }
+
+  const { data: topOrganization, isLoading: loadingTopOrg } =
+    useGetTopOrganizationQuery();
+  const topOrg = topOrganization?.data;
+  // console.log(topOrg);
+
+  const { data: statsData, isLoading: loadingStats } = useGetUserStatsQuery();
+  const userStats = [
+    { label: "New", value: statsData?.data?.new_users?.total },
+    { label: "Returning", value: statsData?.data?.returning_users?.total },
+    { label: "Inactive", value: statsData?.data?.inactive_users?.total },
   ];
+
+  const { data: subscriptionData, isLoading } = useGetSubscriptionQuery();
+  const subscription = [
+    { label: "Paid", value: subscriptionData?.data?.paid_subscription?.total },
+    {
+      label: "Trial",
+      value: subscriptionData?.data?.trial_subscription?.total,
+    },
+  ];
+
+  const { data: postStats, isLoading: loadStats } = useGetPostStatsQuery();
 
   return (
     <div className="px-3 pt-5 pb-5">
-      <div className="block pb-5">
-        <p className="greetings pb-2">Welcome Back, {organization_name}</p>
-        <p className="greetings-text">
-          Here is a brief overview of your product.
-        </p>
-      </div>
-
       <div className="">
-        {/* {user && user.role == "OrgAdmin" ? ( */}
-
         {user && user.role == "SuperAdmin" ? (
           <>
-            <div className="flex gap-10 px-3 pt-5 flex-col lg:flex-row lg:gap-10">
-              <div className="chart-section px-5 md:flex-1">
+            <div className="flex gap-10 pt-5 px-5 flex-col lg:flex-row lg:gap-20">
+              <div className="chart-section md:flex-1">
                 <div className="flex flex-col gap-3 pb-5 md:flex-row md:justify-start md:gap-3">
                   <select name="" className="filter-1">
                     <option value="">Timeframe: All-time</option>
@@ -75,29 +97,45 @@ const Overview = () => {
                 </div>
 
                 <div className="flex justify-between pb-10 flex-col gap-3 md:flex-row">
-                  <div className="card card-overview-1 shadow hover:shadow-lg">
-                    <p className="overview-header py-3 ml-3">Users</p>
-                    <p className="overview-number ml-3">3,279</p>
-                    <div className="flex">
-                      <DonutChart seriesData={donutData} />
+                  {loadingStats ? (
+                    <ShimmerThumbnail width={260} height={222} />
+                  ) : (
+                    <div className="card card-overview-1 shadow hover:shadow-lg">
+                      <p className="overview-header py-3 ml-3">Users</p>
+                      <p className="overview-number ml-3">
+                        {statsData?.data?.total_users}
+                      </p>
+                      <div className="flex">
+                        <DonutChart seriesData={userStats} />
+                      </div>
                     </div>
-                  </div>
+                  )}
 
-                  <div className="card card-overview-2 shadow hover:shadow-lg">
-                    <p className="overview-header py-3 ml-3">Subscriptions</p>
-                    <p className="overview-number ml-3">1,214</p>
-                    <div className="flex h-[120px]">
-                      <DonutChart seriesData={subscriptionData} />
+                  {isLoading ? (
+                    <ShimmerThumbnail width={260} height={222} />
+                  ) : (
+                    <div className="card card-overview-2 shadow hover:shadow-lg">
+                      <p className="overview-header py-3 ml-3">Subscriptions</p>
+                      <p className="overview-number ml-3">
+                        {subscriptionData?.data?.total_organization}
+                      </p>
+                      <div className="flex h-[120px]">
+                        <DonutChart seriesData={subscription} />
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
-                <div className="linechart py-3 px-3 hidden sm:block  max-w-full shadow hover:shadow-lg">
-                  <LineChart data={dummyData} xKey="date" yKey="activity" />
-                </div>
+                {loadingOverallActivity ? (
+                  <ShimmerThumbnail width={"100%"} height={"100%"} />
+                ) : (
+                  <div className="linechart py-3 px-3 hidden sm:block  max-w-full shadow hover:shadow-lg">
+                    <LineChart data={userActivity} xKey="month" yKey="count" />
+                  </div>
+                )}
               </div>
 
-              <div className="company-list w-full md:w-auto">
+              <div className="company-list w-full">
                 <div className="flex pb-5">
                   <select name="" className="filter-1">
                     <option value="">Top Users: Organization</option>
@@ -105,164 +143,159 @@ const Overview = () => {
                 </div>
 
                 <div className="card-list flex flex-col gap-7">
-                  <div className="company-card shadow-lg">
-                    <div className="card-content p-3">
-                      <div className="flex justify-between pb-3">
-                        <p className="company-name">Oaks Intelligence</p>{" "}
-                        <button>
-                          <img src={btn_more_sm} alt="" />
-                        </button>{" "}
+                  {loadingTopOrg ? (
+                    <ShimmerThumbnail width={"100%"} height={400} />
+                  ) : (
+                    topOrg?.map((org) => (
+                      <div
+                        className="company-card shadow-lg"
+                        key={org.organization.organization_name}
+                      >
+                        <div className="card-content p-3">
+                          <div className="flex justify-between pb-3">
+                            <p className="company-name">
+                              {org.organization.organization_name}
+                            </p>
+                            <button>
+                              <img src={btn_more_sm} alt="" />
+                            </button>
+                          </div>
+                          <p className="company-desc w-10/12 pb-5">
+                            {org.organization_description}
+                          </p>
+                          <p className="company-user-total text-right mr-4">
+                            {org.user_count}
+                          </p>
+                          <div className="prog-range-1">
+                            <div className="range-1"></div>
+                          </div>
+                          <div className="flex gap-1 pt-5">
+                            {org.users.slice(0, 8).map((user) => (
+                              <img
+                                key={user._id}
+                                width="35"
+                                height="34"
+                                src={user?.background_photo_url ?? avatar_sm}
+                                alt=""
+                              />
+                            ))}
+                            {org.users.length > 10 && (
+                              <span className="rounded-full bg-white p-1">
+                                +{org.users.length - 10}
+                              </span>
+                            )}
+                            <img src={chart_sm_down} alt="" />
+                          </div>
+                        </div>
                       </div>
-                      <p className="company-desc w-10/12 pb-5">
-                        Lorem ipsum dolor sit amet consectetur. Senectus risus a
-                        duis nisl commodo ac blandit. Elementum ipsum sapien id
-                        in mattis.
-                      </p>
-                      <p className="company-user-total text-right mr-4">
-                        123,094
-                      </p>
-                      <div className="prog-range-1">
-                        <div className="range-1"></div>
-                      </div>
-                      <div className="flex gap-1 pt-5">
-                        <img src={avatar_sm} alt="" />
-                        <img src={avatar_sm} alt="" />
-                        <img src={avatar_sm} alt="" />
-                        <img src={chart_sm_down} alt="" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="company-card shadow-lg">
-                    <div className="card-content p-3">
-                      <div className="flex justify-between pb-3">
-                        <p className="company-name">M&M Limited</p>{" "}
-                        <button>
-                          <img src={btn_more_sm} alt="" />
-                        </button>{" "}
-                      </div>
-                      <p className="company-desc w-10/12 pb-5">
-                        LoLorem ipsum dolor sit amet consectetur. Tellus nisl
-                        maecenas tellus cursus a. Venenatis molestie a quis
-                        laoreet elementum.
-                      </p>
-                      <p className="company-user-total text-[#34B53A] text-right mr-4">
-                        43,361
-                      </p>
-                      <div className="prog-range-2">
-                        <div className="range-2"></div>
-                      </div>
-                      <div className="flex gap-1 pt-5">
-                        <img src={avatar_sm} alt="" />
-                        <img src={chart_sm_up} alt="" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="company-card shadow-lg">
-                    <div className="card-content p-3">
-                      <div className="flex justify-between pb-3">
-                        <p className="company-name">Home Made Ltd</p>{" "}
-                        <button>
-                          <img src={btn_more_sm} alt="" />
-                        </button>{" "}
-                      </div>
-                      <p className="company-desc w-10/12 pb-5">
-                        Lorem ipsum dolor sit amet consectetur. Urna arcu
-                        venenatis nulla feugiat id leo nisl justo. Volutpat
-                        sagittis in eget a quam.
-                      </p>
-                      <p className="company-user-total text-right mr-4">
-                        34,567
-                      </p>
-                      <div className="prog-range-1">
-                        <div className="range-1"></div>
-                      </div>
-                      <div className="flex gap-1 pt-5 mb-5">
-                        <img src={avatar_sm} alt="" />
-                        <img src={avatar_sm} alt="" />
-                        <img src={chart_sm_up} alt="" />
-                      </div>
-                    </div>
-                  </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
           </>
         ) : (
           <>
-            <div className="w-full super-admin-card-box flex flex-col items-center justify-center sm:flex-row sm:flex-wrap sm:justify-center sm:gap-10 md:grid md:grid-cols-2 md:justify-between lg:grid lg:grid-cols-4 xl:grid-cols-5 mb-10">
-              <Cards
-                title={"67m"}
-                subtitle={"Total post"}
-                percentage={"10.2%"}
-                img={post}
-                icon={icon_success}
-                text={"+1.01% this week"}
-              />
+            <div className="w-full super-admin-card-box  items-center justify-center sm:flex-row sm:flex-wrap sm:justify-center sm:gap-10 md:grid md:grid-cols-2 md:justify-between lg:grid lg:grid-cols-4 xl:grid-cols-5 mb-20">
+              {loadStats ? (
+                <ShimmerThumbnail width={250} height={150} />
+              ) : (
+                <Cards
+                  title={postStats?.data?.posts_count}
+                  subtitle={"Total post"}
+                  percentage={"10.2%"}
+                  img={post}
+                  icon={icon_success}
+                  text={"+1.01% this week"}
+                />
+              )}
 
-              <Cards
-                title={"231m"}
-                subtitle={"Total post Likes "}
-                percentage={"10.2%"}
-                img={fav}
-                icon={icon_success}
-                text={"+1.01% this week"}
-              />
+              {loadStats ? (
+                <ShimmerThumbnail width={250} height={150} />
+              ) : (
+                <Cards
+                  title={postStats?.data?.likes_count}
+                  subtitle={"Total post Likes "}
+                  percentage={"10.2%"}
+                  img={fav}
+                  icon={icon_success}
+                  text={"+1.01% this week"}
+                />
+              )}
 
-              <Cards
-                title={"122m"}
-                subtitle={"Total impression"}
-                percentage={"2.56%"}
-                img={impressions}
-                icon={icon_error}
-                text={"-0.91% this week"}
-              />
+              {loadStats ? (
+                <ShimmerThumbnail width={250} height={150} />
+              ) : (
+                <Cards
+                  title={postStats?.data?.impressions_count}
+                  subtitle={"Total impression"}
+                  percentage={"2.56%"}
+                  img={impressions}
+                  icon={icon_error}
+                  text={"-0.91% this week"}
+                />
+              )}
 
-              <Cards
-                title={"20m"}
-                subtitle={"Total post share "}
-                percentage={"3.1%"}
-                img={share}
-                icon={icon_success}
-                text={"+0.49% this week"}
-              />
+              {loadStats ? (
+                <ShimmerThumbnail width={250} height={150} />
+              ) : (
+                <Cards
+                  title={postStats?.data?.shares_count}
+                  subtitle={"Total post share "}
+                  percentage={"3.1%"}
+                  img={share}
+                  icon={icon_success}
+                  text={"+0.49% this week"}
+                />
+              )}
 
-              <Cards
-                title={"11m"}
-                subtitle={"Total post repost"}
-                percentage={"7.2%"}
-                img={repeat}
-                icon={icon_success}
-                text={"+1.51% this week"}
-              />
+              {loadStats ? (
+                <ShimmerThumbnail width={250} height={150} />
+              ) : (
+                <Cards
+                  title={postStats?.data?.reposts_count}
+                  subtitle={"Total post repost"}
+                  percentage={"7.2%"}
+                  img={repeat}
+                  icon={icon_success}
+                  text={"+1.51% this week"}
+                />
+              )}
             </div>
             <div className="flex gap-10 flex-col lg:flex-row lg:gap-10">
               <div className="linechart py-5 px-3 hidden sm:block w-full shadow hover:shadow-lg">
-                <MultipleChart
-                  seriesData={[
-                    {
-                      name: "Offline users",
-                      data: usersData.map((point) => ({
-                        x: point.date,
-                        y: point.totalUsers,
-                      })),
-                    },
-                    {
-                      name: "Online users",
-                      data: usersData.map((point) => ({
-                        x: point.date,
-                        y: point.activeUsers,
-                      })),
-                    },
-                  ]}
-                  xKey="x"
-                  yKeys={["y"]}
-                />
+                {loadingActivityData ? (
+                  <ShimmerThumbnail width={800} height={"100%"} />
+                ) : (
+                  <MultipleChart
+                    seriesData={[
+                      {
+                        name: "Offline users",
+                        data: analyticsData?.data?.map((point) => ({
+                          x: point.month,
+                          y: point.offline_users,
+                        })),
+                      },
+                      {
+                        name: "Online users",
+                        data: analyticsData?.data?.map((point) => ({
+                          x: point.month,
+                          y: point.online_users,
+                        })),
+                      },
+                    ]}
+                    xKey="x"
+                    yKeys={["y"]}
+                  />
+                )}
               </div>
 
               <div className="rounded-donut w-full justify-center items-center">
-                <CircleCharts />
+                {loadingActivityData ? (
+                  <ShimmerThumbnail width={200} height={"100%"} />
+                ) : (
+                  <CircleCharts data={activity} />
+                )}
               </div>
             </div>
           </>

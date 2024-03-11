@@ -25,11 +25,11 @@ const RouterConfig = () => {
     <>
       <Routes>
         <Route path={routes.INDEX} element={<LandingPage />} />
-        <Route
+        {/* <Route
           path={routes.LOGIN}
           element={<PublicRoute component={Login} />}
-        />
-        {/* <Route path={routes.LOGIN} element={<Login />} /> */}
+        /> */}
+        <Route path={routes.LOGIN} element={<Login />} />
 
         <Route path={routes.REGISTER} element={<Register />} />
         <Route path={routes.SIGN_UP} element={<SignUp />} />

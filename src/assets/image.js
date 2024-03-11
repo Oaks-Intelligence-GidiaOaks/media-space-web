@@ -35,3 +35,4 @@ export const users = `${PATH}/users.svg`;
 export const menu = `${PATH}/menu.svg`;
 export const delete_img = `${PATH}/delete.svg`;
 export const approve = `${PATH}/approve.svg`;
+export const empty = `${PATH}/empty.svg`;

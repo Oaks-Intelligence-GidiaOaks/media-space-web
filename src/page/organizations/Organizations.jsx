@@ -1,19 +1,73 @@
 import { OrganizationMetricCard, ViewAllCard } from "../../components";
+import {
+  useGetSuperadminOrgUserStatsQuery,
+  useGetAadminUserStatsQuery,
+} from "../../service/organization.service";
+import { useSelector } from "react-redux";
+import { ShimmerThumbnail } from "react-shimmer-effects";
 
 const Organizations = () => {
+  const {
+    data: superAdminOrgUserStats,
+    isLoading: loadingSuperAdminOrgUserStats,
+  } = useGetSuperadminOrgUserStatsQuery();
+
+  const { data: adminUserStats, isLoading: loadingAdminUserStats } =
+    useGetAadminUserStatsQuery();
+
+  console.log(adminUserStats, superAdminOrgUserStats);
+
+  const user = useSelector((state) => state.user.user);
+
   return (
     <div className="py-4 px-8">
       <h1 className=" font-inter text-xl font-medium pb-8 leading-[24.2px]">
         Registered Users
       </h1>
-      <div className=" grid grid-cols-6 gap-2">
-        <OrganizationMetricCard />
-        <OrganizationMetricCard />
-        <OrganizationMetricCard />
-        <OrganizationMetricCard />
-        <OrganizationMetricCard />
-        <ViewAllCard />
+      <div className="grid grid-cols-6 gap-2">
+        {loadingSuperAdminOrgUserStats || loadingAdminUserStats ? (
+          <ShimmerThumbnail width={400} height={"100%"} />
+        ) : (
+          <>
+            {user && user.role === "SuperAdmin" ? (
+              superAdminOrgUserStats?.data.length > 0 ? (
+                superAdminOrgUserStats?.data
+                  .slice(0, 5)
+                  .map((user, index) => (
+                    <OrganizationMetricCard
+                      key={index}
+                      orgName={user.organization_name}
+                      users={user.users?.count}
+                      image={user.background_photo_url}
+                    />
+                  ))
+              ) : (
+                <div>No data available to show yet</div>
+              )
+            ) : adminUserStats.data.length > 0 ? (
+              adminUserStats.data
+                .slice(0, 5)
+                .map((user, index) => (
+                  <OrganizationMetricCard
+                    key={index}
+                    orgName={user.display_name}
+                    users={user.followers_count}
+                    image={user.photo_url ?? ""}
+                  />
+                ))
+            ) : (
+              <div>No data availableto show yet </div>
+            )}
+          </>
+        )}
+        {((user &&
+          user.role === "SuperAdmin" &&
+          superAdminOrgUserStats?.data.length > 0) ||
+          (user &&
+            user.role !== "SuperAdmin" &&
+            adminUserStats.data.length > 0)) && <ViewAllCard />}
       </div>
+
       <div className="flex flex-col justify-center mx-auto mt-10 max-w-[636px] pb-10">
         <div>
           <h1 className="font-inter text-center mb-6 text-3xl font-semibold leading-[39.94px]">

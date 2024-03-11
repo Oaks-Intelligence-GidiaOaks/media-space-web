@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const MultipleChart = ({ seriesData, xKey, yKeys }) => {
   // Extracting x-axis categories from the first series
   console.log(seriesData);
-  const categories = seriesData[0].data.map((item) => item[xKey]);
+  const categories = seriesData[0]?.data?.map((item) => item[xKey]);
 
   const options = {
     chart: {
@@ -48,7 +48,7 @@ const MultipleChart = ({ seriesData, xKey, yKeys }) => {
 
   const series = seriesData.map((series) => ({
     name: series.name,
-    data: series.data.map((point) => ({ x: point.x, y: point.y })),
+    data: series.data?.map((point) => ({ x: point.x, y: point.y })),
   }));
 
   return (

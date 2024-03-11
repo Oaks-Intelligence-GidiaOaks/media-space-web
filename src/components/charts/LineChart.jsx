@@ -2,6 +2,7 @@ import ReactApexChart from "react-apexcharts";
 import PropTypes from "prop-types";
 
 const LineChart = ({ data, xKey, yKey }) => {
+  console.log(data);
   const formattedData = data.map((item) => ({
     x: item[xKey],
     y: item[yKey],

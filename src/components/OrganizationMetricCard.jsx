@@ -1,30 +1,30 @@
-import React from "react";
 import photo from "../assets/images/Photo.svg";
 import Graphic from "../assets/icons/Graphic.svg";
 import { Link } from "react-router-dom";
 import { ORGANIZATIONS_USERS } from "../routes/CONSTANT";
+import PropTypes from "prop-types";
 
-const OrganizationMetricCard = () => {
+const OrganizationMetricCard = ({ orgName, users, image }) => {
   return (
     <div className=" w-full p-6 max-w-[159.45px] bg-white border border-gray-400 shadow-md rounded-lg">
       <Link to={ORGANIZATIONS_USERS}>
         <div className=" space-y-3">
           <div>
             <img
-              src={photo}
+              src={image || photo}
               alt=""
               className="w-10 h-10 bg-cover rounded-full shadow-lg"
             />
 
             <span className=" font-inter text-xs text-[#000000]">
-              Oaks Intelligence
+              {orgName}
             </span>
           </div>
 
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-[31.26px] mb-3 leading-[40.71px] font-inter font-medium ">
-                0K
+                {users || 0}K
               </h1>
               <span className="text-xs">Users</span>
             </div>
@@ -46,6 +46,12 @@ const OrganizationMetricCard = () => {
       </Link>
     </div>
   );
+};
+
+OrganizationMetricCard.propTypes = {
+  orgName: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  users: PropTypes.number.isRequired,
 };
 
 export default OrganizationMetricCard;

@@ -20,7 +20,7 @@ function Cards({ title, subtitle, img, icon, percentage, text }) {
 }
 
 Cards.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.number.isRequired,
   subtitle: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
