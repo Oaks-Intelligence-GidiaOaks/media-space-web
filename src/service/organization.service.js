@@ -3,6 +3,8 @@ import {
   TOP_ORGANIZATION,
   SUPER_ADMIN_GET_ALL_USERS,
   ADMIN_GET_ALL_USERS,
+  INDIVIDUAL_ORG_STATS,
+  INDIVIDUAL_ADMIN_ORG_STATS,
 } from "./constants";
 import apiSlice from "./api/apiSlice";
 
@@ -41,6 +43,22 @@ export const organizationApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Organization"],
     }),
+
+    getIndividualSuperAdminOrgStats: builder.query({
+      query: (id) => ({
+        url: `${INDIVIDUAL_ORG_STATS}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["SuperAdmin"],
+    }),
+
+    getIndividualAdminOrgStats: builder.query({
+      query: (id) => ({
+        url: `${INDIVIDUAL_ADMIN_ORG_STATS}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Admin"],
+    }),
   }),
 });
 
@@ -49,4 +67,6 @@ export const {
   useGetTopOrganizationQuery,
   useGetSuperadminOrgUserStatsQuery,
   useGetAadminUserStatsQuery,
+  useGetIndividualSuperAdminOrgStatsQuery,
+  useGetIndividualAdminOrgStatsQuery,
 } = organizationApiSlice;

@@ -16,7 +16,6 @@ import {
 import "./style.css";
 import { useSelector } from "react-redux";
 import { Cards } from "../../components/layout/super-admin-layout";
-import { generateDummyData } from "../../utils/data";
 import MultipleChart from "../../components/charts/MultipleChart";
 import CircleCharts from "../../components/charts/CircleCharts";
 import { useGetSubscriptionQuery } from "../../service/superadmin/subscription.service";
@@ -33,8 +32,6 @@ import {
 } from "../../service/admin/statistics.service";
 
 const Overview = () => {
-  const usersData = generateDummyData();
-
   const { data: analyticsData, isLoading: loadingAnalyticsData } =
     useGetAminUserAnalyticsStatsQuery();
 

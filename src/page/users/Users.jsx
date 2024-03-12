@@ -10,92 +10,33 @@ import { useGetAminUserStatsQuery } from "../../service/admin/statistics.service
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import { IoIosCheckmark } from "react-icons/io";
 import { TiDelete } from "react-icons/ti";
+import rtkMutation from "../../utils/rtkMutation";
+import { useDeActivateUserMutation } from "../../service/user.service";
+import { showAlert } from "../../static/alert";
 
 function Users() {
   const user = useSelector((state) => state.user.user);
   const { data: userStats, isLoading: loadStats } = useGetAminUserStatsQuery();
 
-  const data = [
-    {
-      id: 1,
-      date: "2024-02-29",
-      name: "John Doe",
-      organizationName: "ABC Company",
-      emailAddress: "john.doe@example.com",
-      location: "New York",
-      organizationSize: "Medium",
-    },
-    {
-      id: 2,
-      date: "2024-03-01",
-      name: "Jane Smith",
-      organizationName: "XYZ Inc.",
-      emailAddress: "jane.smith@example.com",
-      location: "Los Angeles",
-      organizationSize: "Large",
-    },
-    {
-      id: 3,
-      date: "2024-03-02",
-      name: "Alice Johnson",
-      organizationName: "123 Industries",
-      emailAddress: "alice.johnson@example.com",
-      location: "Chicago",
-      organizationSize: "Small",
-    },
-    {
-      id: 4,
-      date: "2024-03-03",
-      name: "Bob Brown",
-      organizationName: "ACME Corporation",
-      emailAddress: "bob.brown@example.com",
-      location: "Houston",
-      organizationSize: "Large",
-    },
-    {
-      id: 5,
-      date: "2024-03-04",
-      name: "Emily Davis",
-      organizationName: "Sunshine Co.",
-      emailAddress: "emily.davis@example.com",
-      location: "Miami",
-      organizationSize: "Medium",
-    },
-    {
-      id: 6,
-      date: "2024-03-05",
-      name: "Michael Wilson",
-      organizationName: "Tech Solutions Ltd.",
-      emailAddress: "michael.wilson@example.com",
-      location: "Seattle",
-      organizationSize: "Large",
-    },
-    {
-      id: 7,
-      date: "2024-03-06",
-      name: "Sophia Martinez",
-      organizationName: "Smart Innovations",
-      emailAddress: "sophia.martinez@example.com",
-      location: "San Francisco",
-      organizationSize: "Medium",
-    },
-    {
-      id: 8,
-      date: "2024-03-07",
-      name: "William Taylor",
-      organizationName: "Global Ventures",
-      emailAddress: "william.taylor@example.com",
-      location: "Boston",
-      organizationSize: "Large",
-    },
-  ];
-
   const { data: userData, isLoading, refetch } = useGetNewSignupQuery();
   const list = userData?.data;
   console.log(list);
 
-  const handleAction = (id, action) => {
-    console.log(`Performing action '${action}' for ID '${id}'`);
+  const [Deactivate] = useDeActivateUserMutation();
+  const handleAction = async (id, action) => {
+    try {
+      console.log("Deactivating row with ID:", id);
+
+      await rtkMutation(Deactivate, { id: id });
+      showAlert("", "user has been deactivated Successfully", "success");
+    } catch (error) {
+      console.error("Error deleting Asset:", error);
+      showAlert(
+        "Error",
+        "An error occurred while deactivating the User",
+        "error"
+      );
+    }
   };
 
   return (
@@ -220,7 +161,7 @@ function Users() {
                                       />
                                       <small>
                                         <p className="text-green-500">
-                                          Approve
+                                          Activate
                                         </p>
                                       </small>
                                     </div>
@@ -237,7 +178,9 @@ function Users() {
                                       />
                                       &nbsp;
                                       <small>
-                                        <p className="text-red-500">Delete</p>
+                                        <p className="text-red-500">
+                                          Deactivate
+                                        </p>
                                       </small>
                                     </div>
                                   </DropdownItem>

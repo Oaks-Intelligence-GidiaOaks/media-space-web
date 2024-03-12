@@ -5,6 +5,8 @@ import {
 } from "../../service/organization.service";
 import { useSelector } from "react-redux";
 import { ShimmerThumbnail } from "react-shimmer-effects";
+import { Link } from "react-router-dom";
+import { ORGANIZATIONS_USERS } from "../../routes/CONSTANT";
 
 const Organizations = () => {
   const {
@@ -31,32 +33,37 @@ const Organizations = () => {
           <>
             {user && user.role === "SuperAdmin" ? (
               superAdminOrgUserStats?.data.length > 0 ? (
-                superAdminOrgUserStats?.data
-                  .slice(0, 5)
-                  .map((user, index) => (
+                superAdminOrgUserStats?.data.slice(0, 5).map((user, index) => (
+                  <Link to={`${ORGANIZATIONS_USERS}/${user._id}`} key={index}>
                     <OrganizationMetricCard
-                      key={index}
                       orgName={user.organization_name}
                       users={user.users?.count}
                       image={user.background_photo_url}
                     />
-                  ))
+                  </Link>
+                ))
               ) : (
                 <div>No data available to show yet</div>
               )
             ) : adminUserStats.data.length > 0 ? (
-              adminUserStats.data
-                .slice(0, 5)
-                .map((user, index) => (
+              adminUserStats.data.slice(0, 5).map((user, index) => (
+                <Link
+                  to={{
+                    pathname: ORGANIZATIONS_USERS,
+                    state: { id: user._id },
+                  }}
+                  key={index}
+                >
                   <OrganizationMetricCard
                     key={index}
                     orgName={user.display_name}
                     users={user.followers_count}
                     image={user.photo_url ?? ""}
                   />
-                ))
+                </Link>
+              ))
             ) : (
-              <div>No data availableto show yet </div>
+              <div>No data available to show yet </div>
             )}
           </>
         )}
@@ -65,7 +72,7 @@ const Organizations = () => {
           superAdminOrgUserStats?.data.length > 0) ||
           (user &&
             user.role !== "SuperAdmin" &&
-            adminUserStats.data.length > 0)) && <ViewAllCard />}
+            adminUserStats?.data?.length > 0)) && <ViewAllCard />}
       </div>
 
       <div className="flex flex-col justify-center mx-auto mt-10 max-w-[636px] pb-10">

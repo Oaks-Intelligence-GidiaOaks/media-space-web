@@ -14,3 +14,6 @@ export const ADMIN_USER_ACTIVITY_STATS = "admin/user/users-activity-stats";
 export const ADMIN_USER_ANALYTICS_STATS = "admin/user/users-analytics";
 export const ADMIN_GET_ALL_USERS = "admin/user/all-users-stats";
 export const SUPER_ADMIN_GET_ALL_USERS = "superadmin/organization-users-stats";
+export const INDIVIDUAL_ORG_STATS = "superadmin/all-users-stats";
+export const INDIVIDUAL_ADMIN_ORG_STATS = "admin/user/organization-user";
+export const DEACTIVATE_USER = "admin/user/deactivate";

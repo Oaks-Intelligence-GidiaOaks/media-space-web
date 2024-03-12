@@ -1,4 +1,4 @@
-import { GETUSER, LOGIN, REGISTER } from "./constants";
+import { GETUSER, LOGIN, REGISTER, DEACTIVATE_USER } from "./constants";
 import apiSlice from "./api/apiSlice";
 import { updateUser } from "../redux/slices/user.slice";
 
@@ -58,6 +58,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
       providesTags: ["User"],
     }),
 
+    deActivateUser: builder.mutation({
+      query: ({ id }) => ({
+        url: `${DEACTIVATE_USER}/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["User"],
+    }),
+
     // // update user route
     // updateUser: builder.mutation({
     //   query: (data) => ({
@@ -84,4 +92,5 @@ export const {
   useLoginUserMutation,
   useRegisterUserMutation,
   useGetUserQuery,
+  useDeActivateUserMutation,
 } = userApiSlice;
