@@ -1,0 +1,70 @@
+.staff-card {
+  border: 1px solid rgba(222, 222, 222, 1);
+  border-radius: 8px;
+}
+.staff-name {
+  font-family: Poppins;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 23.97px;
+  color: rgba(43, 95, 173, 1);
+}
+.staff-title {
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.97px;
+}
+.joined-date {
+  font-family: Manrope;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 23.97px;
+}
+.staff-email {
+  font-family: Manrope;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 23.97px;
+}
+.avatar-box {
+  border: 1px solid rgb(200 30 30, 1);
+}
+.add-btn {
+  color: rgba(52, 199, 89, 1) !important;
+  font-family: Nunito;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 13.64px;
+}
+.remove-btn {
+  color: rgba(231, 29, 54, 1) !important;
+  font-family: Nunito;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 13.64px;
+}
+.ads-card-list {
+  width: 100%;
+  max-width: 362px;
+  /* max-height: 269px; */
+  /* height: auto; */
+  border-radius: 8px;
+  border: 1px solid rgba(222, 222, 222, 1);
+  background-color: rgba(255, 255, 255, 1);
+}
+.ads-description {
+  font-family: Nunito;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+}
+.ad-input {
+  border: 1.27px solid rgba(217, 217, 217, 0.85) !important;
+  border-radius: 5.08px !important;
+}
+.ad-input-textarea {
+  border: 1.27px solid rgba(217, 217, 217, 0.85) !important;
+  border-radius: 5.08px !important;
+  height: 108.49px;
+}

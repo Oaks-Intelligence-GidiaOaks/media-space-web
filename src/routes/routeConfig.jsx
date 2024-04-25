@@ -12,6 +12,7 @@ import {
   OrganizationUsers,
   UserAcquisition,
   OrganizationsTable,
+  OrganizationStaff,
 } from "../page";
 
 import * as routes from "./CONSTANT";
@@ -52,6 +53,10 @@ const RouterConfig = () => {
             element={<OrganizationsTable />}
           />
           <Route path={routes.USER_ACQUISITION} element={<UserAcquisition />} />
+          <Route
+            path={routes.USER_ACQUISITION_STAFF}
+            element={<OrganizationStaff />}
+          />
           <Route path={routes.ORGANIZATIONS} element={<Organizations />} />
           <Route path={routes.SUBSCRIPTION} element={<Subscription />} />
           <Route path={routes.NOTIFICATIONS} element={<Notifications />} />

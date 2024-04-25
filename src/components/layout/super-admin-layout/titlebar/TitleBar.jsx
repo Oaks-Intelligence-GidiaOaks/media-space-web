@@ -28,13 +28,12 @@ const TitleBar = () => {
   const display_name = useSelector((state) => state.user.user.display_name);
 
   return (
-    <div className="h-10 mb-4 flex justify-between pt-4 w-full pl-1 sm:pl-0 pr-2 sticky top-0 bg-white">
+    <div className="h-10 pb-10 flex justify-between pt-10 w-full pl-1 sm:pl-0 pr-2 sticky top-0 bg-white">
       <div
         className="flex gap-1 flex-nowrap items-center w-fit cursor-pointer"
         onClick={navigateToOverview}
       >
-        <img src={logo} className="w-6" />
-        <p className="text-base sm:text-xl font-pt-serif">Kommunita</p>
+        <img src={logo} className="" />
       </div>
       <div className="flex gap-2 sm:gap-4 items-center">
         <button
@@ -63,7 +62,7 @@ const TitleBar = () => {
           </button>
           {/* Dropdown menu */}
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg z-10">
+            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg z-50">
               <Link
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {

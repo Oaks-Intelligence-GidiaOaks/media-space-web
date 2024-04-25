@@ -37,11 +37,11 @@ const Sidebar = ({ sidebarItems }) => {
     } else if (pathname.includes("users")) {
       setCurrentTabIndex(1);
     } else if (pathname.includes("subscription")) {
-      setCurrentTabIndex(3);
-    } else if (pathname.includes("notifications")) {
       setCurrentTabIndex(4);
-    } else if (pathname.includes("settings")) {
+    } else if (pathname.includes("notifications")) {
       setCurrentTabIndex(5);
+    } else if (pathname.includes("settings")) {
+      setCurrentTabIndex(6);
     }
   }, [pathname]);
 

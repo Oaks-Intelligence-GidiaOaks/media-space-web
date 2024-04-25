@@ -9,4 +9,5 @@ export { default as Notifications } from "./notifications/Notifications";
 export { default as Settings } from "./settings/Settings";
 export { default as OrganizationUsers } from "./organizations/OrganizationUsers";
 export { default as UserAcquisition } from "./users/Users";
+export { default as OrganizationStaff } from "./users/Staff";
 export { default as OrganizationsTable } from "./organizations/OrganizationTable";

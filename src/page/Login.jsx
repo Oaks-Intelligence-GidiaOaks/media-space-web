@@ -16,6 +16,7 @@ import rtkMutation from "../utils/rtkMutation";
 import { showAlert } from "../static/alert";
 import { useLoginUserMutation } from "../service/user.service";
 import { DASHBOARD, REGISTER } from "../routes/CONSTANT";
+
 const constraints = {
   email: {
     presence: true,

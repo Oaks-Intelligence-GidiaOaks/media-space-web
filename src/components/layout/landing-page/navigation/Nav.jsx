@@ -36,7 +36,7 @@ function Nav() {
         <div className="logo">
           <Link to={INDEX} className="flex">
             <img src={images.logo} alt="logo" />
-            <p className="logo-text">Kommunita</p>
+            {/* <p className="logo-text">Kommunita</p> */}
           </Link>
         </div>
 

@@ -23,9 +23,9 @@ Cards.propTypes = {
   title: PropTypes.number.isRequired,
   subtitle: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
-  percentage: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
+  icon: PropTypes.string,
+  percentage: PropTypes.string,
+  text: PropTypes.string,
 };
 
 export default Cards;

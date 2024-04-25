@@ -42,7 +42,7 @@ function Features() {
         </div>
       </div>
 
-      <div className="justify-center flex md:hidden pt-3">
+      <div className="justify-center block md:hidden lg:hidden pt-3">
         <div className="features-board">
           <div className="flex flex-col justify-center items-center pt-10 md:p-20">
             <p className="features-board-head">Transform</p>
