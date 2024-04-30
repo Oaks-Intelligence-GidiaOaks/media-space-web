@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Table, Pagination } from "flowbite-react";
-import organizationData from "../constants/organizationsData.json";
+// import organizationData from "../constants/organizationsData.json";
 import more from "../../assets/more.svg";
 import { MonthDropDown } from "../ui";
 
@@ -33,7 +33,6 @@ const OrgGridSort = ({ data, title, action }) => {
 
   const onPageChange = (page) => setCurrentPage(page);
 
-  //   console.log(columns);
   // Function to handle sorting
   const handleSort = (key) => {
     let direction = "asc";
