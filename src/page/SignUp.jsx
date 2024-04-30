@@ -27,6 +27,9 @@ const constraints = {
   organization_email: {
     presence: true,
   },
+  website_url: {
+    presence: true,
+  },
   email: {
     presence: true,
   },
@@ -182,6 +185,21 @@ const SignUp = () => {
                     form.getState().errors.organization_name && (
                       <small className="text-red-600">
                         {form.getState().errors.organization_name}
+                      </small>
+                    )}
+                  <InputField
+                    id="website_url"
+                    type="text"
+                    name="website_url"
+                    label="Organization Website URL"
+                    component="input"
+                    icon={GoPerson}
+                    placeholder=" "
+                  />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.website_url && (
+                      <small className="text-red-600">
+                        {form.getState().errors.website_url}
                       </small>
                     )}
                   <InputField
