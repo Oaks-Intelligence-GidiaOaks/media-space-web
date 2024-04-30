@@ -47,8 +47,8 @@
 .ads-card-list {
   width: 100%;
   max-width: 362px;
-  /* max-height: 269px; */
-  /* height: auto; */
+  max-height: 269px;
+  height: auto;
   border-radius: 8px;
   border: 1px solid rgba(222, 222, 222, 1);
   background-color: rgba(255, 255, 255, 1);

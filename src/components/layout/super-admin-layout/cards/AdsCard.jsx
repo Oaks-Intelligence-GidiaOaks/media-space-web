@@ -2,7 +2,11 @@ import PropTypes from "prop-types";
 import { Badge, ToggleSwitch } from "flowbite-react";
 
 function AdsCard({ tag, media, description, status, onToggle }) {
-  const isVideo = media && media.endsWith && media.endsWith(".mp4");
+  // Assuming you want to display only the first media URL if present
+  const mediaUrl = media.length > 0 ? media[0].media_url : null;
+  const isVideo =
+    (mediaUrl && mediaUrl.endsWith && mediaUrl.endsWith(".mp4")) ||
+    mediaUrl.includes(".mp4");
 
   return (
     <div className="ads-card-list relative">
@@ -12,13 +16,13 @@ function AdsCard({ tag, media, description, status, onToggle }) {
       <div className="ad-content flex justify-center flex-col p-5">
         {isVideo ? (
           <video className="media w-[314px] h-[139px] mt-5 mb-3" controls>
-            <source src={media} type="video/mp4" />
+            <source src={mediaUrl} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         ) : (
           <div
             className="media w-[314px] h-[139px] bg-cover mt-5 mb-3"
-            style={{ backgroundImage: `url(${media})` }}
+            style={{ backgroundImage: `url(${mediaUrl})` }}
           ></div>
         )}
 
@@ -38,7 +42,12 @@ function AdsCard({ tag, media, description, status, onToggle }) {
 
 AdsCard.propTypes = {
   tag: PropTypes.string.isRequired,
-  media: PropTypes.string.isRequired,
+  media: PropTypes.arrayOf(
+    PropTypes.shape({
+      media_type: PropTypes.string.isRequired,
+      media_url: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   description: PropTypes.string.isRequired,
   status: PropTypes.bool.isRequired,
   onToggle: PropTypes.func.isRequired,

@@ -4,23 +4,20 @@ import { useGetAminUserStatsQuery } from "../../service/admin/statistics.service
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import ads from "../../assets/ads.svg";
 import ads_active from "../../assets/ads_active.svg";
-import bell from "../../assets/bell.svg";
-import speaker from "../../assets/speaker.svg";
 import "./style.css";
 import { useState } from "react";
 import Modals from "../../components/modals/Modal";
 import { Tabs } from "flowbite-react";
 import { GoBell } from "react-icons/go";
 import { HiSpeakerphone } from "react-icons/hi";
-import advert from "../../assets/advert.svg";
-import advert2 from "../../assets/advert2.svg";
-import advert3 from "../../assets/advert3.svg";
 import { Form, Field } from "react-final-form";
 import validate from "validate.js";
 import axios from "axios";
+import { useGetAllAdminAdvertQuery } from "../../service/admin/advert.service";
+import { showAlert } from "../../static/alert";
 
 const constraints = {
-  fileInput: {
+  media: {
     presence: true,
   },
   description: {
@@ -45,57 +42,15 @@ const Subscription = () => {
   const { data: userStats, isLoading: loadStats } = useGetAminUserStatsQuery();
   const [openAdsModal, setOpenAdsModal] = useState(false);
 
-  const [cardsData, setCardsData] = useState([
-    {
-      id: 1,
-      tag: "Staff",
-      description: "This is a short description of this ads",
-      status: true,
-      media: advert,
-    },
-    {
-      id: 2,
-      tag: "Subscribers",
-      description: "This is a short description of this advert3",
-      status: false,
-      media: advert3,
-    },
-    {
-      id: 3,
-      tag: "Public",
-      description: "This is a short description of this ads",
-      status: true,
-      media: advert2,
-    },
-    {
-      id: 4,
-      tag: "Staff",
-      description: "This is a short description of this ads",
-      status: true,
-      media: advert,
-    },
-    {
-      id: 5,
-      tag: "Public",
-      description: "This is a short description of this ads",
-      status: true,
-      media: advert2,
-    },
-    {
-      id: 6,
-      tag: "Subscribers",
-      description: "This is a short description of this advert3",
-      status: false,
-      media: advert3,
-    },
-  ]);
+  const {
+    data: advertdata,
+    isLoading: loadAdvert,
+    refetch,
+  } = useGetAllAdminAdvertQuery();
 
-  const handleToggle = (cardId, isChecked) => {
-    setCardsData((prevCardsData) =>
-      prevCardsData.map((card) =>
-        card.id === cardId ? { ...card, status: isChecked } : card
-      )
-    );
+  const adverts = advertdata?.data || [];
+
+  const handleToggle = (cardId) => {
     console.log(cardId);
   };
 
@@ -104,9 +59,18 @@ const Subscription = () => {
   const onSubmit = async (values) => {
     console.log(values);
     const formData = new FormData();
+
+    // Append other values to formData
     Object.keys(values).forEach((key) => {
-      formData.append(key, values[key]);
+      if (key !== "media") {
+        formData.append(key, values[key]);
+      }
     });
+
+    // Append media files to formData
+    if (values.media && values.media[0]) {
+      formData.append("media", values.media[0]);
+    }
 
     const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
@@ -119,10 +83,13 @@ const Subscription = () => {
       });
 
       console.log("Post submitted successfully:", response.data);
+      showAlert("Great", "Ads created successfully", "success");
+      refetch();
     } catch (error) {
-      console.error("Error submitting post:", error);
+      console.error("Error submitting post:", error.response.data.message);
+      showAlert("", error.response.data.message, "error");
     } finally {
-      // setSubmitting(false);
+      setOpenAdsModal(false);
     }
   };
 
@@ -198,7 +165,7 @@ const Subscription = () => {
                         </select>
 
                         <button
-                          className="ads-btn"
+                          className="ads-btn mr-5"
                           onClick={() => setOpenAdsModal(true)}
                         >
                           Create Ad
@@ -206,19 +173,38 @@ const Subscription = () => {
                       </div>
                     </div>
 
-                    <div className="ad-list flex flex-wrap gap-3">
-                      {cardsData.map((card) => (
-                        <AdsCard
-                          key={card.id}
-                          tag={card.tag}
-                          description={card.description}
-                          status={card.status}
-                          media={card.media}
-                          onToggle={(isChecked) =>
-                            handleToggle(card.id, isChecked)
-                          }
-                        />
-                      ))}
+                    <div className="ad-list flex flex-wrap gap-5">
+                      {adverts && adverts.length > 0 ? (
+                        [...adverts]
+                          .sort(
+                            (a, b) =>
+                              new Date(b.createdAt) - new Date(a.createdAt)
+                          )
+                          .map((card) =>
+                            loadAdvert ? (
+                              <ShimmerThumbnail
+                                key={card._id}
+                                width={362}
+                                height={269}
+                              />
+                            ) : (
+                              <AdsCard
+                                key={card._id}
+                                tag={card.visibility}
+                                description={card.description}
+                                status={card.status === "active" ? true : false}
+                                media={card.media_urls}
+                                onToggle={(isChecked) =>
+                                  handleToggle(card._id, isChecked)
+                                }
+                              />
+                            )
+                          )
+                      ) : (
+                        <p className="flex justify-center text-lg">
+                          Resource is still loading or No data available
+                        </p>
+                      )}
                     </div>
                   </Tabs.Item>
                 </Tabs>
@@ -243,7 +229,7 @@ const Subscription = () => {
                 <label htmlFor="fileInput" className="badge-label pb-2">
                   Upload File
                 </label>
-                <Field name="fileInput">
+                <Field name="media">
                   {({ input: { value, onChange, ...input } }) => (
                     <input
                       {...input}
@@ -254,9 +240,9 @@ const Subscription = () => {
                   )}
                 </Field>
                 {form.getState().submitFailed &&
-                  form.getState().errors.fileInput && (
+                  form.getState().errors.media && (
                     <small className="text-red-600">
-                      {form.getState().errors.fileInput}
+                      {form.getState().errors.media}
                     </small>
                   )}
               </div>
@@ -293,10 +279,10 @@ const Subscription = () => {
                   className="h-[38px] focus:outline-none focus:ring-0 ad-input"
                 >
                   <option value="">select</option>
-                  <option value="public">public</option>
-                  <option value="private">private</option>
-                  <option value="subscribers">subscribers</option>
-                  <option value="followers">followers</option>
+                  <option value="Public">Public</option>
+                  <option value="Staff">Staff</option>
+                  <option value="Subscribers">Subscribers</option>
+                  <option value="Followers">Followers</option>
                 </Field>
                 {form.getState().submitFailed &&
                   form.getState().errors.visibility && (
@@ -315,7 +301,7 @@ const Subscription = () => {
                     name="exposure_time"
                     id="exposure_time"
                     component="input"
-                    type="time"
+                    type="number"
                     className="h-[38px] focus:outline-none focus:ring-0 ad-input"
                   />
                   {form.getState().submitFailed &&
@@ -332,14 +318,11 @@ const Subscription = () => {
                   <Field
                     name="duration"
                     id="duration"
-                    component="select"
-                    type="text"
+                    component="input"
+                    type="number"
                     className="h-[38px] focus:outline-none focus:ring-0 ad-input"
-                  >
-                    <option value="">select</option>
-                    <option value="public">public</option>
-                    <option value="private">private</option>
-                  </Field>
+                  />
+
                   {form.getState().submitFailed &&
                     form.getState().errors.duration && (
                       <small className="text-red-600">
