@@ -4,16 +4,19 @@ import { useGetAminUserStatsQuery } from "../../service/admin/statistics.service
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import { users } from "../../assets";
 import avatar from "../../assets/avatar.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modals from "../../components/modals/Modal";
 import { Form, Field } from "react-final-form";
 import validate from "validate.js";
+import rtkMutation from "../../utils/rtkMutation";
+import { useCreateBadgeMutation } from "../../service/admin/badge.service";
+import { showAlert } from "../../static/alert";
 
 const constraints = {
   department: {
     presence: true,
   },
-  badge_color: {
+  color: {
     presence: true,
     format: {
       pattern: /^#[0-9A-Fa-f]{6}$/, // Regular expression pattern for hex color code
@@ -27,14 +30,27 @@ function Staff() {
   const { data: userStats, isLoading: loadStats } = useGetAminUserStatsQuery();
   const [openBadgesModal, setOpenBadgesModal] = useState(false);
 
+  const [createBadge, { error, isSuccess }] = useCreateBadgeMutation({
+    provideTag: ["Badge"],
+  });
+
   const onSubmit = async (values) => {
-    // await rtkMutation(loginUser, values);
+    await rtkMutation(createBadge, values);
     console.log(values);
   };
 
   const validateForm = (values) => {
     return validate(values, constraints) || {};
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setOpenBadgesModal(false);
+      showAlert("", "Badge created Successfully!", "success");
+    } else if (error) {
+      showAlert("Oops", error.data.message || "An error occurred", "error");
+    }
+  }, [isSuccess, error]);
 
   return (
     <>
@@ -203,16 +219,16 @@ function Staff() {
                   Badge color
                 </label>
                 <Field
-                  name="badge_color"
-                  id="badge_color"
+                  name="color"
+                  id="color"
                   component="input"
                   type="color"
                   className="h-[38px]"
                 />
                 {form.getState().submitFailed &&
-                  form.getState().errors.badge_color && (
+                  form.getState().errors.color && (
                     <small className="text-red-600">
-                      {form.getState().errors.badge_color}
+                      {form.getState().errors.color}
                     </small>
                   )}
               </div>

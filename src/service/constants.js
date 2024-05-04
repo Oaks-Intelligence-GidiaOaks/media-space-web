@@ -18,3 +18,4 @@ export const INDIVIDUAL_ORG_STATS = "superadmin/all-users-stats";
 export const INDIVIDUAL_ADMIN_ORG_STATS = "admin/user/organization-user";
 export const DEACTIVATE_USER = "admin/user/deactivate";
 export const ADMIN_ADVERT = "admin/advert";
+export const CREATE_BADGE = "admin/badge";
