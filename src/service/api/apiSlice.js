@@ -4,7 +4,15 @@ import customBaseQuery from "../query-builder/customQuery";
 const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: customBaseQuery,
-  tagTypes: ["User", "Organization", "Admin", "SuperAdmin", "Badge"],
+  tagTypes: [
+    "User",
+    "Organization",
+    "Admin",
+    "SuperAdmin",
+    "Badge",
+    "Advert",
+    "Survey",
+  ],
   endpoints: (builder) => ({}),
   keepUnusedDataFor: 50000,
 });

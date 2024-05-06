@@ -11,3 +11,4 @@ export { default as OrganizationUsers } from "./organizations/OrganizationUsers"
 export { default as UserAcquisition } from "./users/Users";
 export { default as OrganizationStaff } from "./users/Staff";
 export { default as OrganizationsTable } from "./organizations/OrganizationTable";
+export { default as OrganizationsSurvey } from "./organizations/Survey";

@@ -15,3 +15,4 @@ export const ORGANIZATIONS_USERS = "/dashboard/organizations/users";
 export const USER_ACQUISITION = "/dashboard/users";
 export const USER_ACQUISITION_STAFF = "/dashboard/users/staff";
 export const ORGANIZATIONS_TABLE = "/dashboard/organizations/data";
+export const ORGANIZATIONS_SURVEY = "/dashboard/organizations/survey";
