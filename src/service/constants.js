@@ -24,3 +24,4 @@ export const CREATE_BADGE = "admin/badge";
 export const ASSIGN_BADGE = "admin/badge/assign";
 export const CREATE_SURVEY = "admin/survey";
 export const END_SURVEY = "admin/survey/end";
+export const SURVEY_RESPONSES = "user/survey/response";

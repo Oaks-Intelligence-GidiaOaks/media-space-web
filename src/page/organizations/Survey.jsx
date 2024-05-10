@@ -8,6 +8,7 @@ import {
   useEndSurveyMutation,
   useSurveyHistoryQuery,
   useDeleteSurveyMutation,
+  // useSurveyResponsesQuery,
 } from "../../service/admin/survey.service";
 import { showAlert } from "../../static/alert";
 import rtkMutation from "../../utils/rtkMutation";
@@ -41,6 +42,9 @@ function Survey() {
 
   const [endSurvey, { isSuccess: endSurveySuccess, error: endSurveyError }] =
     useEndSurveyMutation();
+
+  // const { data: surveyResponse, isLoading: surveyResponseloading } =
+  //   useSurveyResponsesQuery();
 
   const handleEndSurvey = async (id) => {
     const confirmDelete = window.confirm(
@@ -155,10 +159,12 @@ function Survey() {
   useEffect(() => {
     if (isSuccess) {
       showAlert("", "Survey created Successfully!", "success");
+      refetch();
+      activeSurveyRefetch();
     } else if (error) {
       showAlert("Oops", error.data.message || "An error occurred", "error");
     }
-  }, [isSuccess, error]);
+  }, [isSuccess, error, refetch, activeSurveyRefetch]);
 
   const handleEditSurvey = (survey) => {
     setEditingSurvey(survey);
@@ -503,7 +509,17 @@ function Survey() {
               </div>
             </div>
           </Tabs.Item>
-          <Tabs.Item title="Survey Responses">Survey Responses</Tabs.Item>
+          <Tabs.Item title="Survey Responses">
+            <div className="w-auto survey-table border rounded-md">
+              <div className="p-2">
+                {/* {surveyResponseloading ? (
+                  <ShimmerThumbnail width={400} height={400} />
+                ) : (
+                  <div className="overflow-x-auto">table</div>
+                )} */}
+              </div>
+            </div>
+          </Tabs.Item>
         </Tabs>
       </div>
 

@@ -1,4 +1,4 @@
-import { CREATE_SURVEY, END_SURVEY } from "../constants";
+import { CREATE_SURVEY, END_SURVEY, SURVEY_RESPONSES } from "../constants";
 import apiSlice from "../api/apiSlice";
 
 export const organizationApiSlice = apiSlice.injectEndpoints({
@@ -42,6 +42,12 @@ export const organizationApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Survey"],
     }),
+    // surveyResponses: builder.query({
+    //   query: () => ({
+    //     url: SURVEY_RESPONSES,
+    //     method: "GET",
+    //   }),
+    // }),
   }),
 });
 
@@ -52,4 +58,5 @@ export const {
   useActiveSurveyQuery,
   useSurveyHistoryQuery,
   useDeleteSurveyMutation,
+  // useSurveyResponsesQuery,
 } = organizationApiSlice;
