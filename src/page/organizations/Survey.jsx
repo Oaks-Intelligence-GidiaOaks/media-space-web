@@ -17,6 +17,8 @@ import { CgTrash } from "react-icons/cg";
 import { RiFileEditLine } from "react-icons/ri";
 import { MdOutlineMobileFriendly } from "react-icons/md";
 import Modal from "../../components/modals/Modal";
+import SurveyResponse from "../../components/survey/SurveyResponse";
+import { useGetResponseQuery } from "../../service/admin/surveyResponse.service";
 
 function Survey() {
   const [openModal, setOpenModal] = useState(false);
@@ -25,11 +27,14 @@ function Survey() {
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState([]);
   const [editingSurvey, setEditingSurvey] = useState(null);
+  const [showResponse, setShowResponse] = useState(false);
+  const [responseId, setResponseId] = useState("");
   const {
     data: surveyData,
     isLoading: surveyLoading,
     refetch,
   } = useGetAllSurveyQuery();
+
   const surveyRows = surveyData?.data;
   const {
     data: activeSurvey,
@@ -54,6 +59,13 @@ function Survey() {
     } catch (error) {
       console.error("Error ending survey:", error);
     }
+  };
+  const showSurveyResponse = async (id) => {
+    setResponseId(id);
+    setShowResponse(true);
+  };
+  const closeResponse = async () => {
+    setShowResponse(false);
   };
 
   useEffect(() => {
@@ -391,6 +403,26 @@ function Survey() {
                               >
                                 <MdOutlineMobileFriendly size={20} />
                               </button>
+                              <button
+                                className="font-medium text-blue-500 hover:underline dark:text-cyan-500"
+                                title="view responses"
+                                onClick={() => showSurveyResponse(data?._id)}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={1.5}
+                                  stroke="currentColor"
+                                  className="w-6 h-6"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                  />
+                                </svg>
+                              </button>
                             </Table.Cell>
                           </Table.Row>
                         ))}
@@ -722,6 +754,11 @@ function Survey() {
           )}
         </>
       </Modal>
+      {showResponse && responseId && (
+        <div className="fixed z-50 bg-gray-300 bg-opacity-50 top-0 left-0 w-screen h-screen">
+          <SurveyResponse id={responseId} onclose={closeResponse} />
+        </div>
+      )}
     </>
   );
 }
