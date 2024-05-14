@@ -542,17 +542,6 @@ function Survey() {
               </div>
             </div>
           </Tabs.Item>
-          <Tabs.Item title="Survey Responses">
-            <div className="w-auto survey-table border rounded-md">
-              <div className="p-2">
-                {/* {surveyResponseloading ? (
-                  <ShimmerThumbnail width={400} height={400} />
-                ) : (
-                  <div className="overflow-x-auto">table</div>
-                )} */}
-              </div>
-            </div>
-          </Tabs.Item>
         </Tabs>
       </div>
 
