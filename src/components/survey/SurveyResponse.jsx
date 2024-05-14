@@ -40,6 +40,7 @@ const SurveyResponse = ({ onclose, id }) => {
         console.log(" successfully:", response.data.data.responses);
         setResponses(response.data.data.responses);
         setShowShimmer(false);
+        console.log(responses, "responses");
       } catch (error) {
         console.error("Error submitting post:", error);
         showAlert(
@@ -59,59 +60,64 @@ const SurveyResponse = ({ onclose, id }) => {
         ) : (
           <div className="overflow-x-auto">
             <Table>
-              <Table.Head>
-                <Table.HeadCell>Responder Name</Table.HeadCell>
-                <Table.HeadCell>Answer-Type</Table.HeadCell>
-                <Table.HeadCell>Answer</Table.HeadCell>
-              </Table.Head>
               <Table.Body className="divide-y">
-                {responses?.map((data) => (
-                  <Table.Row
-                    key={data._id}
-                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                  >
-                    <Table.Cell>{data?.respondent?.display_name}</Table.Cell>
-                    <Table.Cell>
-                      {data?.answers?.map((op) => (
-                        <p className="border-b-2" key={op._id}>
-                          {op.answer_type}
-                        </p>
-                      ))}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {data?.answers?.map((op) => (
-                        <div key={op._id}>
-                          {(() => {
-                            switch (op.answer_type) {
-                              case "multiple_choice":
-                              case "single_choice":
-                                return (
-                                  <div>
-                                    {op.selected_options.map((p) => (
-                                      <p key={p}>{p}</p>
-                                    ))}
-                                  </div>
-                                );
-                              case "text":
-                                return <p>{op.text || " "}</p>;
-                              case "time":
-                                return <p>{op.time || " "}</p>;
-                              case "date":
-                                return (
-                                  <p>{getTimeAgoString(op.date) || " "}</p>
-                                );
-                              case "true_false":
-                                return (
-                                  <p>{op.true_or_false ? "True" : "False"}</p>
-                                );
-                              default:
-                                return null;
-                            }
-                          })()}
-                        </div>
-                      ))}
-                    </Table.Cell>
-                  </Table.Row>
+                {responses?.map((response) => (
+                  <div key={response._id}>
+                    <Table>
+                      <Table.Head>
+                        <Table.HeadCell>Responder Name</Table.HeadCell>
+                        <Table.HeadCell>Question</Table.HeadCell>
+                        <Table.HeadCell>Answer Type</Table.HeadCell>
+                        <Table.HeadCell>Answer</Table.HeadCell>
+                        <Table.HeadCell>Responded</Table.HeadCell>
+                      </Table.Head>
+                      <Table.Body className="divide-y">
+                        {response.answers?.map((answer) => (
+                          <Table.Row key={answer._id}>
+                            <Table.Cell>
+                              {response.respondent.display_name}
+                            </Table.Cell>
+                            <Table.Cell>
+                              {answer.question.question_text}
+                            </Table.Cell>
+                            <Table.Cell>{answer.answer_type}</Table.Cell>
+                            <Table.Cell>
+                              {(() => {
+                                switch (answer.answer_type) {
+                                  case "multiple_choice":
+                                  case "single_choice":
+                                    return (
+                                      <ul>
+                                        {answer.selected_options.map(
+                                          (option) => (
+                                            <li key={option}>{option}</li>
+                                          )
+                                        )}
+                                      </ul>
+                                    );
+                                  case "text":
+                                    return answer.text;
+                                  case "time":
+                                    return answer.time;
+                                  case "date":
+                                    return getTimeAgoString(answer.date);
+                                  case "true_or_false":
+                                    return answer.true_or_false
+                                      ? "True"
+                                      : "False";
+                                  default:
+                                    return null;
+                                }
+                              })()}
+                            </Table.Cell>
+                            <Table.Cell>
+                              {getTimeAgoString(response.createdAt)}
+                            </Table.Cell>
+                          </Table.Row>
+                        ))}
+                      </Table.Body>
+                    </Table>
+                  </div>
                 ))}
               </Table.Body>
             </Table>
