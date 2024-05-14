@@ -25,8 +25,8 @@ const sidebarItems = [
     icon: organizations,
   },
   {
-    title: "Users charts",
-    route: "dashboard/user-charts",
+    title: "Staff",
+    route: "dashboard/users/staff",
     icon: user_charts,
   },
   {
@@ -35,8 +35,8 @@ const sidebarItems = [
     icon: money,
   },
   {
-    title: "Notifications",
-    route: "dashboard/notifications",
+    title: "Survey",
+    route: "dashboard/organizations/survey",
     icon: bell,
   },
   {
