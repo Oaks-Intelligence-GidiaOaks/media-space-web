@@ -65,6 +65,7 @@ function Survey() {
     }
   };
   const showSurveyResponse = async (id) => {
+    console.log(id);
     setResponseId(id);
     setShowResponse(true);
   };
@@ -771,9 +772,14 @@ function Survey() {
         </>
       </Modal>
       {showResponse && responseId && (
-        <div className="fixed z-50 bg-gray-300 bg-opacity-50 top-0 left-0 w-screen h-screen">
+        <Modal
+          title="Survey Responses"
+          openModal={showResponse}
+          modalSize="4xl"
+          onClose={() => setShowResponse(false)}
+        >
           <SurveyResponse id={responseId} onclose={closeResponse} />
-        </div>
+        </Modal>
       )}
     </>
   );

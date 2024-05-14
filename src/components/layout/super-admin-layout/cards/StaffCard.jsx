@@ -4,8 +4,39 @@ import phone from "../../../../assets/phone.svg";
 import eclipse from "../../../../assets/eclipse.svg";
 import { Dropdown } from "flowbite-react";
 import "./style.css";
+import { useEffect } from "react";
+import { useToggleStaffMutation } from "../../../../service/admin/staff.service";
+import { showAlert } from "../../../../static/alert";
+import { useGetAllStaffQuery } from "../../../../service/admin/staff.service";
 
-function StaffCard({ avatar, fullname, join_date, title, email, phoneNumber }) {
+function StaffCard({
+  avatar,
+  fullname,
+  join_date,
+  title,
+  email,
+  phoneNumber,
+  user_id,
+}) {
+  const [addRemoveStaff, { error, isSuccess }] = useToggleStaffMutation({
+    provideTag: ["Staff"],
+  });
+
+  const { refetch } = useGetAllStaffQuery();
+
+  const toggle = async () => {
+    await addRemoveStaff({ user_id });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      showAlert("", "Staff updated Successfully!", "success");
+      refetch();
+    } else if (error) {
+      showAlert("Oops", error.data.message || "An error occurred", "error");
+    }
+  }, [isSuccess, error, refetch]);
+
   return (
     <div className="staff-card w-[366px] h-[auto] bg-white opacity-100 shadow-md">
       <div className="card-content py-5 px-5">
@@ -36,7 +67,10 @@ function StaffCard({ avatar, fullname, join_date, title, email, phoneNumber }) {
 
               <Dropdown.Item>
                 {" "}
-                <button className="remove-btn bg-[rgba(239, 244, 255, 0.6)]">
+                <button
+                  className="remove-btn bg-[rgba(239, 244, 255, 0.6)]"
+                  onClick={toggle}
+                >
                   Remove Staff
                 </button>
               </Dropdown.Item>
@@ -59,12 +93,13 @@ function StaffCard({ avatar, fullname, join_date, title, email, phoneNumber }) {
 }
 
 StaffCard.propTypes = {
-  avatar: PropTypes.string.isRequired,
+  avatar: PropTypes.string,
   fullname: PropTypes.string.isRequired,
   join_date: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   email: PropTypes.string.isRequired,
-  phoneNumber: PropTypes.string.isRequired,
+  phoneNumber: PropTypes.string,
+  user_id: PropTypes.string.isRequired,
 };
 
 export default StaffCard;

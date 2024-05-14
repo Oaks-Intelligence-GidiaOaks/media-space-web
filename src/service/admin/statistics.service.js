@@ -41,6 +41,13 @@ export const statsApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Admin"],
     }),
+    getAminStaffStats: builder.query({
+      query: () => ({
+        url: "admin/staff/stats",
+        method: "GET",
+      }),
+      providesTags: ["Staff"],
+    }),
   }),
 });
 
@@ -49,4 +56,5 @@ export const {
   useGetAminUserStatsQuery,
   useGetAminUserActivityStatsQuery,
   useGetAminUserAnalyticsStatsQuery,
+  useGetAminStaffStatsQuery,
 } = statsApiSlice;

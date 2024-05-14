@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Cards, StaffCard } from "../../components/layout/super-admin-layout";
-import { useGetAminUserStatsQuery } from "../../service/admin/statistics.service";
+import { useGetAminStaffStatsQuery } from "../../service/admin/statistics.service";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import { users } from "../../assets";
 import avatar from "../../assets/avatar.svg";
@@ -11,6 +11,8 @@ import validate from "validate.js";
 import rtkMutation from "../../utils/rtkMutation";
 import { useCreateBadgeMutation } from "../../service/admin/badge.service";
 import { showAlert } from "../../static/alert";
+import { useGetAllStaffQuery } from "../../service/admin/staff.service";
+import { useToggleStaffMutation } from "../../service/admin/staff.service";
 
 const constraints = {
   department: {
@@ -26,8 +28,15 @@ const constraints = {
 };
 
 function Staff() {
+  const [selectedStaffId, setSelectedStaffId] = useState("");
+
   const user = useSelector((state) => state.user.user);
-  const { data: userStats, isLoading: loadStats } = useGetAminUserStatsQuery();
+  const { data: adminStaffStats, isLoading: loadStats } =
+    useGetAminStaffStatsQuery();
+
+  const { data: staffData, isLoading: staffLoading } = useGetAllStaffQuery();
+  console.log(staffData);
+
   const [openBadgesModal, setOpenBadgesModal] = useState(false);
 
   const [createBadge, { error, isSuccess }] = useCreateBadgeMutation({
@@ -52,6 +61,54 @@ function Staff() {
     }
   }, [isSuccess, error]);
 
+  const [filterCriteria, setFilterCriteria] = useState("");
+
+  // Function to handle filter selection change
+  const handleFilterChange = (e) => {
+    setFilterCriteria(e.target.value);
+  };
+
+  // Function to filter staff data based on badge presence
+  const filterStaffByBadge = (staffData, filterCriteria) => {
+    if (filterCriteria === "with_badge") {
+      return staffData.filter((staff) => staff.department.length > 0);
+    } else if (filterCriteria === "without_badge") {
+      return staffData.filter((staff) => staff.department.length === 0);
+    } else {
+      return staffData; // Return original data if no filter criteria is specified
+    }
+  };
+
+  const handleStaffSelectChange = (e) => {
+    setSelectedStaffId(e.target.value);
+  };
+
+  const [
+    addRemoveStaff,
+    { error: staffToggleError, isSuccess: staffToggleSuccess },
+  ] = useToggleStaffMutation({
+    provideTag: ["Staff"],
+  });
+
+  const { refetch } = useGetAllStaffQuery();
+
+  const toggle = async () => {
+    await addRemoveStaff({ user_id: selectedStaffId });
+  };
+
+  useEffect(() => {
+    if (staffToggleSuccess) {
+      showAlert("", "Staff updated Successfully!", "success");
+      refetch();
+    } else if (staffToggleError) {
+      showAlert(
+        "Oops",
+        staffToggleError.data.message || "An error occurred",
+        "error"
+      );
+    }
+  }, [staffToggleSuccess, staffToggleError, refetch]);
+
   return (
     <>
       <div className="px-3">
@@ -65,7 +122,7 @@ function Staff() {
                   <ShimmerThumbnail width={250} height={150} />
                 ) : (
                   <Cards
-                    title={userStats?.data?.total_users_count}
+                    title={adminStaffStats?.data?.total_staff}
                     subtitle={"Total Staff"}
                     img={users}
                   />
@@ -75,8 +132,8 @@ function Staff() {
                   <ShimmerThumbnail width={250} height={150} />
                 ) : (
                   <Cards
-                    title={userStats?.data?.new_users_count}
-                    subtitle={"New Users"}
+                    title={adminStaffStats?.data?.staff_with_badge}
+                    subtitle={"Staff with Badge"}
                     img={users}
                   />
                 )}
@@ -85,22 +142,51 @@ function Staff() {
                   <ShimmerThumbnail width={250} height={150} />
                 ) : (
                   <Cards
-                    title={userStats?.data?.returning_users_count}
-                    subtitle={"Returning Users"}
+                    title={adminStaffStats?.data?.staff_without_badge}
+                    subtitle={"Staff without Badge"}
                     img={users}
                   />
                 )}
               </div>
 
               <div className="staff-section pt-5 pb-5">
-                <div className="flex pb-5 justify-between items-center">
-                  <select
-                    name=""
-                    id=""
-                    className="w-[121px] h-[39px] focus:outline-none focus:ring-0 text-[12px]"
-                  >
-                    <option value="">Total Staff</option>
-                  </select>
+                <div className="flex pb-5 justify-between items-center border rounded-md p-3">
+                  <div className="flex items-center gap-5">
+                    <select
+                      name=""
+                      id=""
+                      className="w-[200px] h-[39px] focus:outline-none focus:ring-0 text-[12px]"
+                      value={filterCriteria}
+                      onChange={handleFilterChange}
+                    >
+                      <option value="">Total Staff</option>
+                      <option value="with_badge">Staff With Badge</option>
+                      <option value="without_badge">Staff Without Badge</option>
+                    </select>
+
+                    <div>
+                      <div className="flex items-center gap-5">
+                        <select
+                          name="staffSelect"
+                          id="staffSelect"
+                          className="w-[200px] h-[39px] focus:outline-none focus:ring-0 text-[12px]"
+                          value={selectedStaffId}
+                          onChange={handleStaffSelectChange}
+                        >
+                          <option value="">Select Staff</option>
+                          {staffData &&
+                            staffData.data.map((staff) => (
+                              <option key={staff._id} value={staff._id}>
+                                {staff.display_name}
+                              </option>
+                            ))}
+                        </select>
+                        <button className="ads-btn" onClick={toggle}>
+                          Add Staff
+                        </button>
+                      </div>
+                    </div>
+                  </div>
 
                   <div className="flex items-center gap-3">
                     <button
@@ -109,74 +195,33 @@ function Staff() {
                     >
                       Create Badge
                     </button>
-                    <button className="ads-btn">Add Staff</button>
+                    {/* <button className="ads-btn">Add Staff</button> */}
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-5">
-                  {loadStats ? (
+                  {staffLoading ? (
                     <ShimmerThumbnail width={366} height={250} />
+                  ) : staffData && staffData?.data?.length > 0 ? (
+                    filterStaffByBadge(staffData.data, filterCriteria).map(
+                      (staff, index) => (
+                        <StaffCard
+                          user_id={staff._id}
+                          key={index}
+                          fullname={staff.display_name}
+                          title={"Project Manager"}
+                          join_date={
+                            "Joined " +
+                            new Date(staff.createdAt).toLocaleDateString()
+                          }
+                          avatar={avatar}
+                          email={staff.email}
+                          phoneNumber={staff.phoneNumber || ""}
+                        />
+                      )
+                    )
                   ) : (
-                    <StaffCard
-                      fullname={"Todd H. Harrison"}
-                      title={"Project Manager"}
-                      join_date={"Joined May/19/2020"}
-                      avatar={avatar}
-                      email={"todd.harrison@pegasus.web"}
-                      phoneNumber={"+1 260 799 9872"}
-                    />
-                  )}
-
-                  {loadStats ? (
-                    <ShimmerThumbnail width={366} height={250} />
-                  ) : (
-                    <StaffCard
-                      fullname={"Todd H. Harrison"}
-                      title={"Project Manager"}
-                      join_date={"Joined May/19/2020"}
-                      avatar={avatar}
-                      email={"todd.harrison@pegasus.web"}
-                      phoneNumber={"+1 260 799 9872"}
-                    />
-                  )}
-
-                  {loadStats ? (
-                    <ShimmerThumbnail width={366} height={250} />
-                  ) : (
-                    <StaffCard
-                      fullname={"Todd H. Harrison"}
-                      title={"Project Manager"}
-                      join_date={"Joined May/19/2020"}
-                      avatar={avatar}
-                      email={"todd.harrison@pegasus.web"}
-                      phoneNumber={"+1 260 799 9872"}
-                    />
-                  )}
-
-                  {loadStats ? (
-                    <ShimmerThumbnail width={366} height={250} />
-                  ) : (
-                    <StaffCard
-                      fullname={"Todd H. Harrison"}
-                      title={"Project Manager"}
-                      join_date={"Joined May/19/2020"}
-                      avatar={avatar}
-                      email={"todd.harrison@pegasus.web"}
-                      phoneNumber={"+1 260 799 9872"}
-                    />
-                  )}
-
-                  {loadStats ? (
-                    <ShimmerThumbnail width={366} height={250} />
-                  ) : (
-                    <StaffCard
-                      fullname={"Todd H. Harrison"}
-                      title={"Project Manager"}
-                      join_date={"Joined May/19/2020"}
-                      avatar={avatar}
-                      email={"todd.harrison@pegasus.web"}
-                      phoneNumber={"+1 260 799 9872"}
-                    />
+                    <p>No staff created</p>
                   )}
                 </div>
               </div>
