@@ -11,8 +11,13 @@ import validate from "validate.js";
 import rtkMutation from "../../utils/rtkMutation";
 import { useCreateBadgeMutation } from "../../service/admin/badge.service";
 import { showAlert } from "../../static/alert";
-import { useGetAllStaffQuery } from "../../service/admin/staff.service";
-import { useToggleStaffMutation } from "../../service/admin/staff.service";
+import {
+  useGetAllStaffQuery,
+  useToggleStaffMutation,
+  useGetOrganizationListQuery,
+} from "../../service/admin/staff.service";
+import { useGetAllBadgeQuery } from "../../service/admin/badge.service";
+import { Table } from "flowbite-react";
 
 const constraints = {
   department: {
@@ -28,6 +33,13 @@ const constraints = {
 };
 
 function Staff() {
+  const {
+    data: adminbadges,
+    isLoading: adminBadgeloading,
+    refetch: badgeRefetch,
+  } = useGetAllBadgeQuery();
+  console.log(adminbadges);
+
   const [selectedStaffId, setSelectedStaffId] = useState("");
 
   const user = useSelector((state) => state.user.user);
@@ -37,7 +49,11 @@ function Staff() {
   const { data: staffData, isLoading: staffLoading } = useGetAllStaffQuery();
   console.log(staffData);
 
+  const { data: userList } = useGetOrganizationListQuery();
+  console.log(userList, "user list");
+
   const [openBadgesModal, setOpenBadgesModal] = useState(false);
+  const [createdBadgesModal, setOpenCreatedBadgesModal] = useState(false);
 
   const [createBadge, { error, isSuccess }] = useCreateBadgeMutation({
     provideTag: ["Badge"],
@@ -55,11 +71,12 @@ function Staff() {
   useEffect(() => {
     if (isSuccess) {
       setOpenBadgesModal(false);
+      badgeRefetch();
       showAlert("", "Badge created Successfully!", "success");
     } else if (error) {
       showAlert("Oops", error.data.message || "An error occurred", "error");
     }
-  }, [isSuccess, error]);
+  }, [isSuccess, error, badgeRefetch]);
 
   const [filterCriteria, setFilterCriteria] = useState("");
 
@@ -174,8 +191,8 @@ function Staff() {
                           onChange={handleStaffSelectChange}
                         >
                           <option value="">Select Staff</option>
-                          {staffData &&
-                            staffData.data.map((staff) => (
+                          {userList &&
+                            userList.data.map((staff) => (
                               <option key={staff._id} value={staff._id}>
                                 {staff.display_name}
                               </option>
@@ -195,11 +212,16 @@ function Staff() {
                     >
                       Create Badge
                     </button>
-                    {/* <button className="ads-btn">Add Staff</button> */}
+                    <button
+                      className="badge-btn"
+                      onClick={() => setOpenCreatedBadgesModal(true)}
+                    >
+                      View created Badges
+                    </button>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-5">
+                <div className="flex flex-wrap gap-5 pt-5">
                   {staffLoading ? (
                     <ShimmerThumbnail width={366} height={250} />
                   ) : staffData && staffData?.data?.length > 0 ? (
@@ -217,6 +239,9 @@ function Staff() {
                           avatar={avatar}
                           email={staff.email}
                           phoneNumber={staff.phoneNumber || ""}
+                          badge={staff?.department?.map(
+                            (dept) => dept.badge.color
+                          )}
                         />
                       )
                     )
@@ -229,6 +254,48 @@ function Staff() {
           )}
         </div>
       </div>
+
+      <Modals
+        title="Created Badges"
+        openModal={createdBadgesModal}
+        modalSize="lg"
+        onClose={() => setOpenCreatedBadgesModal(false)}
+      >
+        {adminBadgeloading ? (
+          <ShimmerThumbnail width={"100%"} height={"100%"} />
+        ) : (
+          <>
+            {adminbadges?.data && adminbadges?.data.length > 0 ? (
+              <Table hoverable>
+                <Table.Head className="users-table-head">
+                  <Table.HeadCell>No.</Table.HeadCell>
+                  <Table.HeadCell>Department</Table.HeadCell>
+                  <Table.HeadCell>Color</Table.HeadCell>
+                </Table.Head>
+                <Table.Body className="divide-y">
+                  {adminbadges?.data.map((row, index) => (
+                    <Table.Row
+                      className="bg-white dark:border-gray-700 dark:bg-gray-800 users-table-row"
+                      key={row._id}
+                    >
+                      <Table.Cell>{index + 1}</Table.Cell>
+                      <Table.Cell>{row.department}</Table.Cell>
+                      <Table.Cell
+                        className={`h-10 w-10 bg-[${row.color}]`}
+                      ></Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
+            ) : (
+              <div className="flex flex-col items-center justify-center text-gray-500 pb-20">
+                <p className="pb-5">No badge created yet</p>
+                {/* <img src={empty} width={200} height={200} alt="" /> */}
+              </div>
+            )}
+          </>
+        )}
+      </Modals>
 
       <Modals
         title="Create Badges"

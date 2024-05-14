@@ -68,3 +68,10 @@
   border-radius: 5.08px !important;
   height: 108.49px;
 }
+.color-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 5px; /* Adjust margin as needed */
+  border-radius: 50%;
+}

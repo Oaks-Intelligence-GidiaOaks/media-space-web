@@ -1,4 +1,4 @@
-import { ADD_REMOVE_STAFF } from "../constants";
+import { ADD_REMOVE_STAFF, ORGANIZATION_USER_LIST } from "../constants";
 import apiSlice from "../api/apiSlice";
 
 export const organizationApiSlice = apiSlice.injectEndpoints({
@@ -18,8 +18,18 @@ export const organizationApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    getOrganizationList: builder.query({
+      query: () => ({
+        url: ORGANIZATION_USER_LIST,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useToggleStaffMutation, useGetAllStaffQuery } =
-  organizationApiSlice;
+export const {
+  useToggleStaffMutation,
+  useGetAllStaffQuery,
+  useGetOrganizationListQuery,
+} = organizationApiSlice;
