@@ -48,6 +48,13 @@ export const organizationApiSlice = apiSlice.injectEndpoints({
     //     method: "GET",
     //   }),
     // }),
+
+    getResponse: builder.query({
+      query: (id) => ({
+        url: `${CREATE_SURVEY}/${id}/response`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -59,4 +66,5 @@ export const {
   useSurveyHistoryQuery,
   useDeleteSurveyMutation,
   // useSurveyResponsesQuery,
+  useGetResponseQuery,
 } = organizationApiSlice;

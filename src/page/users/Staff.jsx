@@ -20,6 +20,9 @@ import { useGetAllBadgeQuery } from "../../service/admin/badge.service";
 import { Table } from "flowbite-react";
 
 const constraints = {
+  title: {
+    presence: true,
+  },
   department: {
     presence: true,
   },
@@ -213,7 +216,7 @@ function Staff() {
                       Create Badge
                     </button>
                     <button
-                      className="badge-btn"
+                      className="badge-btn w-auto p-2"
                       onClick={() => setOpenCreatedBadgesModal(true)}
                     >
                       View created Badges
@@ -308,6 +311,24 @@ function Staff() {
           validate={validateForm}
           render={({ handleSubmit, form, submitting }) => (
             <form onSubmit={handleSubmit}>
+              <div className="mb-3 flex flex-col">
+                <label htmlFor="department" className="badge-label pb-2">
+                  Title
+                </label>
+                <Field
+                  id="title"
+                  type="text"
+                  name="title"
+                  component="input"
+                  className="badge-department"
+                />
+                {form.getState().submitFailed &&
+                  form.getState().errors.title && (
+                    <small className="text-red-600">
+                      {form.getState().errors.title}
+                    </small>
+                  )}
+              </div>
               <div className="mb-3 flex flex-col">
                 <label htmlFor="department" className="badge-label pb-2">
                   Department

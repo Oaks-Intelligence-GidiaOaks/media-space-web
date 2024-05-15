@@ -1,4 +1,4 @@
-import { CREATE_SURVEY, END_SURVEY } from "../constants";
+import { CREATE_SURVEY } from "../constants";
 import apiSlice from "../api/apiSlice";
 
 export const organizationApiSlice = apiSlice.injectEndpoints({

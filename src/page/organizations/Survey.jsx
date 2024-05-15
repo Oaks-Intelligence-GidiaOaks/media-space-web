@@ -20,6 +20,7 @@ import { MdOutlineMobileFriendly } from "react-icons/md";
 import Modal from "../../components/modals/Modal";
 import SurveyResponse from "../../components/survey/SurveyResponse";
 import { useGetResponseQuery } from "../../service/admin/surveyResponse.service";
+import { useNavigate } from "react-router-dom";
 
 function Survey() {
   const [openModal, setOpenModal] = useState(false);
@@ -64,11 +65,12 @@ function Survey() {
       console.error("Error ending survey:", error);
     }
   };
-  const showSurveyResponse = async (id) => {
-    console.log(id);
-    setResponseId(id);
-    setShowResponse(true);
+
+  const navigate = useNavigate();
+  const showSurveyResponse = (id) => {
+    navigate(`/dashboard/survey/survey-response/${id}`, { state: { id } });
   };
+
   const closeResponse = async () => {
     setShowResponse(false);
   };
@@ -760,7 +762,7 @@ function Survey() {
           )}
         </>
       </Modal>
-      {showResponse && responseId && (
+      {/* {showResponse && responseId && (
         <Modal
           title="Survey Responses"
           openModal={showResponse}
@@ -769,7 +771,7 @@ function Survey() {
         >
           <SurveyResponse id={responseId} onclose={closeResponse} />
         </Modal>
-      )}
+      )} */}
     </>
   );
 }

@@ -36,7 +36,7 @@ const sidebarItems = [
   },
   {
     title: "Survey",
-    route: "dashboard/organizations/survey",
+    route: "dashboard/survey",
     icon: bell,
   },
   {

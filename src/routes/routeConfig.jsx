@@ -14,6 +14,7 @@ import {
   OrganizationsTable,
   OrganizationStaff,
   OrganizationsSurvey,
+  SurveyResponses,
 } from "../page";
 
 import * as routes from "./CONSTANT";
@@ -66,6 +67,7 @@ const RouterConfig = () => {
           <Route path={routes.SUBSCRIPTION} element={<Subscription />} />
           <Route path={routes.NOTIFICATIONS} element={<Notifications />} />
           <Route path={routes.SETTINGS} element={<Settings />} />
+          <Route path={routes.SURVEY_RESPONSES} element={<SurveyResponses />} />
           <Route path={"*"} element={<Navigate to={"/dashboard/overview"} />} />
         </Route>
       </Routes>
