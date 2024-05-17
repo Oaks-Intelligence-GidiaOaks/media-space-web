@@ -179,7 +179,7 @@ function Staff() {
                       value={filterCriteria}
                       onChange={handleFilterChange}
                     >
-                      <option value="">Total Staff</option>
+                      <option value="">All Staff</option>
                       <option value="with_badge">Staff With Badge</option>
                       <option value="without_badge">Staff Without Badge</option>
                     </select>
