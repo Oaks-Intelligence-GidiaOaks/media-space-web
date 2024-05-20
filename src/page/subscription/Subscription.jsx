@@ -13,7 +13,10 @@ import { HiSpeakerphone } from "react-icons/hi";
 import { Form, Field } from "react-final-form";
 import validate from "validate.js";
 import axios from "axios";
-import { useGetAllAdminAdvertQuery } from "../../service/admin/advert.service";
+import {
+  useGetAllAdminAdvertQuery,
+  useAdminAdvertStatsQuery,
+} from "../../service/admin/advert.service";
 import { showAlert } from "../../static/alert";
 
 const constraints = {
@@ -47,6 +50,10 @@ const Subscription = () => {
     isLoading: loadAdvert,
     refetch,
   } = useGetAllAdminAdvertQuery();
+
+  const { data: advertStats, isLoading: loadAdvertStats } =
+    useAdminAdvertStatsQuery();
+  console.log(advertStats);
 
   const adverts = advertdata?.data || [];
 
@@ -123,31 +130,31 @@ const Subscription = () => {
                   </Tabs.Item>
                   <Tabs.Item title="Ads" icon={HiSpeakerphone}>
                     <div className="w-full super-admin-card-box items-center justify-center sm:flex-row sm:flex-wrap sm:justify-center sm:gap-10 md:grid md:grid-cols-2 md:justify-between lg:grid lg:grid-cols-4 xl:grid-cols-4">
-                      {loadStats ? (
+                      {loadAdvertStats ? (
                         <ShimmerThumbnail width={250} height={150} />
                       ) : (
                         <Cards
-                          title={userStats?.data?.total_users_count}
+                          title={advertStats?.data?.total_adverts}
                           subtitle={"Total Ads"}
                           img={ads}
                         />
                       )}
 
-                      {loadStats ? (
+                      {loadAdvertStats ? (
                         <ShimmerThumbnail width={250} height={150} />
                       ) : (
                         <Cards
-                          title={userStats?.data?.new_users_count}
+                          title={advertStats?.data?.active_adverts}
                           subtitle={"Active Ads"}
                           img={ads_active}
                         />
                       )}
 
-                      {loadStats ? (
+                      {loadAdvertStats ? (
                         <ShimmerThumbnail width={250} height={150} />
                       ) : (
                         <Cards
-                          title={userStats?.data?.returning_users_count}
+                          title={advertStats?.data?.inactive_adverts}
                           subtitle={"In active Ads"}
                           img={ads_active}
                         />
