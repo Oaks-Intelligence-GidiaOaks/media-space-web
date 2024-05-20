@@ -295,7 +295,7 @@ const Subscription = () => {
               <div className="flex justify-between mb-4 gap-3 w-full">
                 <div className="flex flex-col w-full">
                   <label htmlFor="department" className="badge-label pb-2">
-                    Exposure time
+                    Exposure time (number between 1 and 6 representing hours)
                   </label>
                   <Field
                     name="exposure_time"
@@ -313,7 +313,7 @@ const Subscription = () => {
                 </div>
                 <div className="flex flex-col w-full">
                   <label htmlFor="department" className="badge-label pb-2">
-                    Duration
+                    Duration (number between 1 and 7 representing days) )
                   </label>
                   <Field
                     name="duration"
