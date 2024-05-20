@@ -84,12 +84,12 @@ const Subscription = () => {
 
       console.log("Post submitted successfully:", response.data);
       showAlert("Great", "Ads created successfully", "success");
+      setOpenAdsModal(false);
       refetch();
     } catch (error) {
       console.error("Error submitting post:", error.response.data.message);
       showAlert("", error.response.data.message, "error");
-    } finally {
-      setOpenAdsModal(false);
+      // setOpenAdsModal(false);
     }
   };
 
