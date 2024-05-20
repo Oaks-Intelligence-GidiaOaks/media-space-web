@@ -224,7 +224,7 @@ const Subscription = () => {
       <Modals
         title="Upload Ads"
         openModal={openAdsModal}
-        modalSize="lg"
+        modalSize="xl"
         onClose={() => setOpenAdsModal(false)}
       >
         <Form
@@ -301,8 +301,14 @@ const Subscription = () => {
 
               <div className="flex justify-between mb-4 gap-3 w-full">
                 <div className="flex flex-col w-full">
-                  <label htmlFor="department" className="badge-label pb-2">
-                    Exposure time (number between 1 and 6 representing hours)
+                  <label
+                    htmlFor="department"
+                    className="badge-label pb-2 text-sm"
+                  >
+                    Exposure time{" "}
+                    <span className="text-xs">
+                      (number between 1 and 6 representing hours)
+                    </span>
                   </label>
                   <Field
                     name="exposure_time"
@@ -319,8 +325,14 @@ const Subscription = () => {
                     )}
                 </div>
                 <div className="flex flex-col w-full">
-                  <label htmlFor="department" className="badge-label pb-2">
-                    Duration (number between 1 and 7 representing days) )
+                  <label
+                    htmlFor="department"
+                    className="badge-label pb-2 text-sm"
+                  >
+                    Duration{" "}
+                    <span className="text-xs">
+                      (number between 1 and 7 representing days)
+                    </span>
                   </label>
                   <Field
                     name="duration"
