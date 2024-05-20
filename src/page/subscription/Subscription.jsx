@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
 import { Cards, AdsCard } from "../../components/layout/super-admin-layout";
-import { useGetAminUserStatsQuery } from "../../service/admin/statistics.service";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import ads from "../../assets/ads.svg";
 import ads_active from "../../assets/ads_active.svg";
 import "./style.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modals from "../../components/modals/Modal";
 import { Tabs } from "flowbite-react";
 import { GoBell } from "react-icons/go";
@@ -16,6 +15,7 @@ import axios from "axios";
 import {
   useGetAllAdminAdvertQuery,
   useAdminAdvertStatsQuery,
+  useToggleAdvertByIdMutation,
 } from "../../service/admin/advert.service";
 import { showAlert } from "../../static/alert";
 
@@ -42,7 +42,6 @@ const constraints = {
 
 const Subscription = () => {
   const user = useSelector((state) => state.user.user);
-  const { data: userStats, isLoading: loadStats } = useGetAminUserStatsQuery();
   const [openAdsModal, setOpenAdsModal] = useState(false);
 
   const {
@@ -51,15 +50,36 @@ const Subscription = () => {
     refetch,
   } = useGetAllAdminAdvertQuery();
 
-  const { data: advertStats, isLoading: loadAdvertStats } =
-    useAdminAdvertStatsQuery();
-  console.log(advertStats);
+  const {
+    data: advertStats,
+    isLoading: loadAdvertStats,
+    refetch: refetchAdvertStats,
+  } = useAdminAdvertStatsQuery();
 
   const adverts = advertdata?.data || [];
+  console.log(adverts);
 
-  const handleToggle = (cardId) => {
+  const [toggleAds, { isSuccess, error }] = useToggleAdvertByIdMutation();
+
+  const handleToggle = async (cardId) => {
     console.log(cardId);
+    try {
+      await toggleAds(cardId);
+      console.log("Ads toggled successfully");
+    } catch (error) {
+      console.error("Error deleting ads:", error);
+    }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      showAlert("", "Advert toggled Successfully!", "success");
+      refetchAdvertStats();
+      refetch();
+    } else if (error) {
+      showAlert("Oops", error.data.message || "An error occurred", "error");
+    }
+  }, [isSuccess, error, refetch]);
 
   const token = useSelector((state) => state.user?.token);
 

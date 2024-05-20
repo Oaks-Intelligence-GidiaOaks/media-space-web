@@ -19,11 +19,11 @@ const sidebarItems = [
     route: "dashboard/users",
     icon: user,
   },
-  {
-    title: "Organizations",
-    route: "dashboard/organizations",
-    icon: organizations,
-  },
+  // {
+  //   title: "Organizations",
+  //   route: "dashboard/organizations",
+  //   icon: organizations,
+  // },
   {
     title: "Staff",
     route: "dashboard/users/staff",
@@ -39,11 +39,11 @@ const sidebarItems = [
     route: "dashboard/survey",
     icon: bell,
   },
-  {
-    title: "Settings",
-    route: "dashboard/settings",
-    icon: settings,
-  },
+  // {
+  //   title: "Settings",
+  //   route: "dashboard/settings",
+  //   icon: settings,
+  // },
 ];
 
 export default sidebarItems;

@@ -37,7 +37,7 @@ export const organizationApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Advert"],
     }),
 
-    toggleAdvertById: builder.query({
+    toggleAdvertById: builder.mutation({
       query: (id) => ({
         url: `${TOGGLE_ADVERT}/${id}`,
         method: "GET",
@@ -60,6 +60,6 @@ export const {
   useFindAdveryByStatusQuery,
   useGetSingleAdvertByIdQuery,
   useDeleteSingleAdvertByIdQuery,
-  useToggleAdvertByIdQuery,
+  useToggleAdvertByIdMutation,
   useAdminAdvertStatsQuery,
 } = organizationApiSlice;
