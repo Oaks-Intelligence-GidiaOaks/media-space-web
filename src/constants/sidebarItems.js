@@ -26,7 +26,7 @@ const sidebarItems = [
   // },
   {
     title: "Staff",
-    route: "dashboard/users/staff",
+    route: "dashboard/staff",
     icon: user_charts,
   },
   {

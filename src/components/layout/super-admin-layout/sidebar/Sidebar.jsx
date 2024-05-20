@@ -29,21 +29,35 @@ const Sidebar = ({ sidebarItems }) => {
   };
 
   // calculate currentpageindex on page mount.
+  // useEffect(() => {
+  //   if (pathname.includes("organizations") && pathname.includes("users")) {
+  //     setCurrentTabIndex(2);
+  //   } else if (pathname.includes("overview")) {
+  //     setCurrentTabIndex(0);
+  //   } else if (pathname.includes("users") && pathname.includes("staff")) {
+  //     setCurrentTabIndex(3);
+  //   } else if (pathname.includes("users")) {
+  //     setCurrentTabIndex(1);
+  //   } else if (pathname.includes("subscription")) {
+  //     setCurrentTabIndex(4);
+  //   } else if (pathname.includes("survey")) {
+  //     setCurrentTabIndex(5);
+  //   } else if (pathname.includes("settings")) {
+  //     setCurrentTabIndex(6);
+  //   }
+  // }, [pathname]);
+
   useEffect(() => {
-    if (pathname.includes("organizations") && pathname.includes("users")) {
-      setCurrentTabIndex(2);
-    } else if (pathname.includes("overview")) {
+    if (pathname.includes("overview")) {
       setCurrentTabIndex(0);
     } else if (pathname.includes("users") && pathname.includes("staff")) {
-      setCurrentTabIndex(3);
+      setCurrentTabIndex(2);
     } else if (pathname.includes("users")) {
       setCurrentTabIndex(1);
     } else if (pathname.includes("subscription")) {
-      setCurrentTabIndex(4);
+      setCurrentTabIndex(3);
     } else if (pathname.includes("survey")) {
-      setCurrentTabIndex(5);
-    } else if (pathname.includes("settings")) {
-      setCurrentTabIndex(6);
+      setCurrentTabIndex(4);
     }
   }, [pathname]);
 
