@@ -23,11 +23,12 @@ function Users() {
   console.log(list);
 
   const [Deactivate] = useDeActivateUserMutation();
-  const handleAction = async (id, action) => {
-    try {
-      console.log("Deactivating row with ID:", id);
 
+  const handleAction = async (id, action) => {
+    // console.log(id, action);
+    try {
       await rtkMutation(Deactivate, { id: id });
+      refetch();
       showAlert("", "user has been deactivated Successfully", "success");
     } catch (error) {
       console.error("Error deleting Asset:", error);
@@ -137,7 +138,7 @@ function Users() {
                                 {row.organizationSize ?? ""}
                               </Table.Cell>
                               <Table.Cell>
-                                {row.disabled == "false" ? (
+                                {row.disabled === false ? (
                                   <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                                     Active
                                   </span>
@@ -149,7 +150,7 @@ function Users() {
                               </Table.Cell>
                               <Table.Cell>
                                 <Dropdown>
-                                  <DropdownItem
+                                  {/* <DropdownItem
                                     onClick={() =>
                                       handleAction(row._id, "approve")
                                     }
@@ -165,7 +166,7 @@ function Users() {
                                         </p>
                                       </small>
                                     </div>
-                                  </DropdownItem>
+                                  </DropdownItem> */}
                                   <DropdownItem
                                     onClick={() =>
                                       handleAction(row._id, "delete")

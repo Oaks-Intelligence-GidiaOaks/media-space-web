@@ -113,12 +113,12 @@ const Sidebar = ({ sidebarItems }) => {
         </div>
       </div>
       {/* Sidebar for small screens */}
-      <div className="w-[clamp(50px,10%,119px)] left-2 fixed md:hidden md:sticky h-screen ml-0 top-0">
+      <div className="w-[clamp(50px,10%,119px)] left-2 fixed md:hidden md:sticky h-screen ml-0 top-10">
         {/* menu button */}
         <button
           aria-label="Menu"
           onClick={() => setShowMenu(!showMenu)}
-          className="mb-4 transition-all duration-200 shadow-primary-dark hover:shadow-primary-dark-hovered w-full h-10 py-2 rounded-[1.25rem] relative mt-12 bg-primary-black flex justify-center items-center"
+          className="transition-all duration-200 shadow-primary-dark hover:shadow-primary-dark-hovered w-full h-10 py-2 rounded-[1.25rem] relative mt-12 bg-primary-black flex justify-center items-center"
         >
           <img src={showMenu ? hamburgerMenu : closeMenu} className="h-full" />
         </button>
@@ -131,7 +131,7 @@ const Sidebar = ({ sidebarItems }) => {
           }}
           className="w-full h-fit py-10 rounded-[1.25rem] relative bg-primary-black mt-14 after:content('') after:text-white after:absolute after:w-full after:h-1/2 after:block after:-right-[6px] after:-z-10 after:rounded-[1.25rem] after:bg-gradient-to-b after:from-[#EB9207] after:to-[transparent] after:top-[6%]"
         >
-          <div className="w-full flex flex-col gap-y-8 relative">
+          <div className="w-full flex flex-col gap-y-8 relative h-auto pb-5 z-50">
             {sidebarItems.map((sidebarItem, i) => {
               return (
                 <button

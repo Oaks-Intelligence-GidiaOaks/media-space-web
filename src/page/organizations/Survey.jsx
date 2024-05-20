@@ -374,81 +374,87 @@ function Survey() {
                         <Table.HeadCell>Topic</Table.HeadCell>
                         <Table.HeadCell>Description</Table.HeadCell>
                         <Table.HeadCell>Audience</Table.HeadCell>
-                        <Table.HeadCell>Questons</Table.HeadCell>
+                        <Table.HeadCell>Questions</Table.HeadCell>
                         <Table.HeadCell>Status</Table.HeadCell>
                         <Table.HeadCell>
                           <span className="sr-only">Edit</span>
                         </Table.HeadCell>
                       </Table.Head>
                       <Table.Body className="divide-y">
-                        {surveyRows?.map((data) => (
-                          <Table.Row
-                            key={data._id}
-                            className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                          >
-                            <Table.Cell>{data?.topic}</Table.Cell>
-                            <Table.Cell>{data?.description}</Table.Cell>
-                            <Table.Cell>{data?.audience}</Table.Cell>
-                            <Table.Cell>
-                              {data?.questions?.map((question, index) => (
-                                <span key={index}>
-                                  {question.question_text}
-                                  {index !== data.questions.length - 1 && ", "}
-                                </span>
-                              ))}
-                            </Table.Cell>
-                            <Table.Cell>
-                              {data?.active === true ? (
-                                <Badge color="info">Active</Badge>
-                              ) : (
-                                <Badge color="gray">Inactive</Badge>
-                              )}
-                            </Table.Cell>
-                            <Table.Cell className="flex gap-2">
-                              {/* <button
+                        {[...surveyRows]
+                          .sort(
+                            (a, b) =>
+                              new Date(b.createdAt) - new Date(a.createdAt)
+                          )
+                          ?.map((data) => (
+                            <Table.Row
+                              key={data._id}
+                              className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                            >
+                              <Table.Cell>{data?.topic}</Table.Cell>
+                              <Table.Cell>{data?.description}</Table.Cell>
+                              <Table.Cell>{data?.audience}</Table.Cell>
+                              <Table.Cell>
+                                {data?.questions?.map((question, index) => (
+                                  <span key={index}>
+                                    {question.question_text}
+                                    {index !== data.questions.length - 1 &&
+                                      ", "}
+                                  </span>
+                                ))}
+                              </Table.Cell>
+                              <Table.Cell>
+                                {data?.active === true ? (
+                                  <Badge color="info">Active</Badge>
+                                ) : (
+                                  <Badge color="gray">Inactive</Badge>
+                                )}
+                              </Table.Cell>
+                              <Table.Cell className="flex gap-2">
+                                {/* <button
                                 className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
                                 title="edit this survey"
                                 onClick={() => handleEditSurvey(data)}
                               >
                                 <RiFileEditLine size={20} />
                               </button> */}
-                              <button
-                                className="font-medium text-red-500 hover:underline dark:text-cyan-500"
-                                title="delete this survey"
-                                onClick={() => handleDeleteSurvey(data?._id)}
-                              >
-                                <CgTrash size={20} />
-                              </button>
-                              <button
-                                className="font-medium text-blue-500 hover:underline dark:text-cyan-500"
-                                title="end this survey"
-                                onClick={() => handleEndSurvey(data?._id)}
-                              >
-                                <MdOutlineMobileFriendly size={20} />
-                              </button>
-                              <button
-                                className="font-medium text-blue-500 hover:underline dark:text-cyan-500"
-                                title="view responses"
-                                onClick={() => showSurveyResponse(data?._id)}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  strokeWidth={1.5}
-                                  stroke="currentColor"
-                                  className="w-6 h-6"
+                                <button
+                                  className="font-medium text-red-500 hover:underline dark:text-cyan-500"
+                                  title="delete this survey"
+                                  onClick={() => handleDeleteSurvey(data?._id)}
                                 >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                                  />
-                                </svg>
-                              </button>
-                            </Table.Cell>
-                          </Table.Row>
-                        ))}
+                                  <CgTrash size={20} />
+                                </button>
+                                <button
+                                  className="font-medium text-blue-500 hover:underline dark:text-cyan-500"
+                                  title="end this survey"
+                                  onClick={() => handleEndSurvey(data?._id)}
+                                >
+                                  <MdOutlineMobileFriendly size={20} />
+                                </button>
+                                <button
+                                  className="font-medium text-blue-500 hover:underline dark:text-cyan-500"
+                                  title="view responses"
+                                  onClick={() => showSurveyResponse(data?._id)}
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="w-6 h-6"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                    />
+                                  </svg>
+                                </button>
+                              </Table.Cell>
+                            </Table.Row>
+                          ))}
                       </Table.Body>
                     </Table>
                   </div>
