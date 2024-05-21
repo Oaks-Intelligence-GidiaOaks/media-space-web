@@ -1,22 +1,63 @@
 import { useLocation } from "react-router-dom";
 import { useGetResponseQuery } from "../../service/admin/survey.service";
-import { Breadcrumb } from "flowbite-react";
+import { Breadcrumb, Accordion, Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
-import {
-  Accordion,
-  AccordionPanel,
-  AccordionTitle,
-  AccordionContent,
-} from "flowbite-react";
 import { useState } from "react";
+import { IoMdDownload } from "react-icons/io";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function SurveyResponses() {
   const location = useLocation();
   const { id } = location.state;
 
   const { data: surveyResponse, isLoading, refetch } = useGetResponseQuery(id);
+  const [loadingResponse, setLoadingResponse] = useState(false);
+  const token = useSelector((state) => state.user.token);
+
+  const handleDownloadClick = async () => {
+    setLoadingResponse(true);
+    try {
+      const response = await axios.get(
+        `https://media-space-api-93ae1a0c4354.herokuapp.com/api/v1/admin/survey/export/${id}`,
+        {
+          responseType: "arraybuffer",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Create a Blob from the array buffer
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      // Create a URL for the Blob
+      const url = window.URL.createObjectURL(blob);
+
+      // Create a link element
+      const link = document.createElement("a");
+      link.href = url;
+
+      // Set the filename for the download
+      link.setAttribute("download", "survey_responses.xlsx");
+
+      // Append the link to the body and trigger the click event
+      document.body.appendChild(link);
+      link.click();
+
+      // Clean up
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Failed to download responses", error);
+    } finally {
+      setLoadingResponse(false);
+    }
+  };
+
   const survey = surveyResponse?.data;
-  console.log(survey);
 
   // Function to render answer based on answer type
   function renderAnswer(answer) {
@@ -78,6 +119,22 @@ function SurveyResponses() {
           <Breadcrumb.Item>Survey Responses</Breadcrumb.Item>
         </Breadcrumb>
       </div>
+      <div className="flex justify-end py-2 px-3">
+        <button
+          className="border p-2 rounded-md items-center text-sm flex gap-2"
+          onClick={handleDownloadClick}
+          disabled={loadingResponse}
+        >
+          {loadingResponse ? (
+            <Spinner />
+          ) : (
+            <>
+              Download Responses
+              <IoMdDownload size={20} />
+            </>
+          )}
+        </button>
+      </div>
 
       <div className="survey-details pt-5 px-3">
         {isLoading || !survey ? (
@@ -98,17 +155,16 @@ function SurveyResponses() {
             <Accordion className="mt-4">
               {Object.entries(groupResponsesByRespondent(survey.responses)).map(
                 ([respondentId, responses]) => (
-                  <AccordionPanel key={respondentId}>
-                    <AccordionTitle>
+                  <Accordion.Panel key={respondentId}>
+                    <Accordion.Title>
                       {responses.map((response) => (
                         <div key={response._id} className="flex gap-5">
                           <p>Name: {response.respondent.display_name}</p>
                           <p>Email: {response.respondent.email}</p>
                         </div>
                       ))}
-                    </AccordionTitle>
-
-                    <AccordionContent>
+                    </Accordion.Title>
+                    <Accordion.Content>
                       <div className="ml-6">
                         <ul className="list-disc ml-4">
                           {responses.map((response) => (
@@ -127,8 +183,8 @@ function SurveyResponses() {
                           ))}
                         </ul>
                       </div>
-                    </AccordionContent>
-                  </AccordionPanel>
+                    </Accordion.Content>
+                  </Accordion.Panel>
                 )
               )}
             </Accordion>

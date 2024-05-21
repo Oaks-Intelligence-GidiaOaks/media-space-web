@@ -25,5 +25,6 @@ export const ASSIGN_BADGE = "admin/badge/assign";
 export const CREATE_SURVEY = "admin/survey";
 export const END_SURVEY = "admin/survey/end";
 export const SURVEY_RESPONSES = "user/survey/response";
+export const DOWNLOAD_SURVEY = "admin/survey/export";
 export const ADD_REMOVE_STAFF = "admin/staff";
 export const ORGANIZATION_USER_LIST = "admin/user/organization-users";

@@ -1,4 +1,9 @@
-import { CREATE_SURVEY, END_SURVEY, SURVEY_RESPONSES } from "../constants";
+import {
+  CREATE_SURVEY,
+  END_SURVEY,
+  SURVEY_RESPONSES,
+  DOWNLOAD_SURVEY,
+} from "../constants";
 import apiSlice from "../api/apiSlice";
 
 export const organizationApiSlice = apiSlice.injectEndpoints({
@@ -55,6 +60,13 @@ export const organizationApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    downloadResponse: builder.query({
+      query: (id) => ({
+        url: `${DOWNLOAD_SURVEY}/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -67,4 +79,5 @@ export const {
   useDeleteSurveyMutation,
   // useSurveyResponsesQuery,
   useGetResponseQuery,
+  useDownloadResponseQuery,
 } = organizationApiSlice;
