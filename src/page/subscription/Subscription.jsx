@@ -82,7 +82,7 @@ const Subscription = () => {
 
   // console.log(adverts);
 
-  // console.log(categoryData?.data);
+  console.log(categoryData?.data);
 
   const [toggleAds, { isSuccess, error }] = useToggleAdvertByIdMutation();
 
@@ -151,9 +151,10 @@ const Subscription = () => {
     // console.log("Clicked");
     const formData = new FormData();
 
-    console.log(photo, categoryName, categoryVisibility, categoryPageLink);
+    // console.log(photo, categoryName, categoryVisibility, categoryPageLink);
 
     if (!photo || !categoryName || !categoryVisibility || !categoryPageLink) {
+      setSubmitting(false);
       return;
     }
     // Append other values to formData
@@ -468,7 +469,7 @@ const Subscription = () => {
             />
           </div>
 
-          <div className="flex items-center gap-5 justify-end pt-5 bg-gray-300 mt-8 pb-5">
+          <div className="flex items-center gap-5 justify-end pt-5 mt-8 pb-5">
             <p
               onClick={() => setOpenCreatecategory(false)}
               className="bg-white cursor-pointer p-2 rounded-3xl px-4 font-semibold border-[1px] border-black"
