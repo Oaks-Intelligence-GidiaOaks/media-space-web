@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import upload from "../../assets/upload.png";
-import { useGetCategoryQuery } from "../../service/category.service";
+import {
+  useGetCategoryQuery,
+  useToggleCategoryByIdMutation,
+} from "../../service/category.service";
 import PaginationControls from "../ui/PaginationControls";
 import { CategoryCard } from "../layout/super-admin-layout";
 import { ShimmerThumbnail } from "react-shimmer-effects";
@@ -9,6 +12,7 @@ import Modals from "./../modals/Modal";
 import { showAlert } from "../../static/alert";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useToggleAdvertByIdMutation } from "../../service/admin/advert.service";
 
 const CreateCategory = () => {
   const {
@@ -63,6 +67,20 @@ const CreateCategory = () => {
     currentPage * itemsPerPage
   );
 
+  const [toggleCategory, { isSuccess, error }] =
+    useToggleCategoryByIdMutation();
+
+  const handleToggle = async (catId) => {
+    console.log(catId);
+    try {
+      await toggleCategory(catId);
+      refetchCategory();
+      console.log("Category toggled successfully");
+    } catch (error) {
+      console.error("Error deleting Category:", error);
+    }
+  };
+
   const onSubmitCategory = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -115,8 +133,10 @@ const CreateCategory = () => {
       showAlert("", error.response.data.message, "error");
     }
   };
+
+  // Delete Category
   const onDeleteCategory = async (id) => {
-    console.log(id);
+    // console.log(id);
     // e.preventDefault();
     setSubmitting(true);
     const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
@@ -133,7 +153,7 @@ const CreateCategory = () => {
       );
 
       console.log("Category Deleted successfully:", response.data);
-      showAlert("Great", "Category deleted successfully", "success");
+      showAlert("Deleted", "Category deleted successfully", "success");
       refetchCategory();
       setSubmitting(false);
     } catch (error) {
@@ -206,6 +226,8 @@ const CreateCategory = () => {
                   media={cat?.photo_url}
                   id={cat._id}
                   ondelete={onDeleteCategory}
+                  status={cat.status === "active" ? true : false}
+                  onToggle={(isChecked) => handleToggle(cat._id, isChecked)}
                 />
               )
             )
