@@ -162,7 +162,7 @@ const Subscription = () => {
     formData.append("visibility", categoryVisibility);
     formData.append("category_page_link", categoryPageLink);
 
-    // Append media files to formData
+    // Append media file to formData
     formData.append("photo", photo);
 
     const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
@@ -191,7 +191,9 @@ const Subscription = () => {
       setSubmitting(false);
     } catch (error) {
       console.error("Error Creating Category:", error.response.data.message);
+      setSubmitting(false);
       showAlert("", error.response.data.message, "error");
+      setOpenCreatecategory(false);
       // setOpenAdsModal(false);
     }
   };
