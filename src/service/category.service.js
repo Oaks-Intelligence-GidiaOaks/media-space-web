@@ -1,4 +1,4 @@
-import { CATEGORY } from "./constants";
+import { CATEGORY, TOGGLE_CATEGORY } from "./constants";
 import apiSlice from "./api/apiSlice";
 
 export const categoryApiSlice = apiSlice.injectEndpoints({
@@ -11,7 +11,15 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Category"],
     }),
+    toggleCategoryById: builder.mutation({
+      query: (id) => ({
+        url: `${TOGGLE_CATEGORY}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Category"],
+    }),
   }),
 });
 
-export const { useGetCategoryQuery } = categoryApiSlice;
+export const { useGetCategoryQuery, useToggleCategoryByIdMutation } =
+  categoryApiSlice;

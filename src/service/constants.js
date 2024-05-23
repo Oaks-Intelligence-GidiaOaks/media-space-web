@@ -4,6 +4,7 @@ export const REGISTER = "admin/user";
 export const GETUSER = "admin/user/me";
 export const ORGANIZATIONS = "admin/organization";
 export const CATEGORY = "admin/user/category";
+export const TOGGLE_CATEGORY = "admin/user/category/toggle";
 export const ADMIN_NEW_SIGNUP = "admin/user/all-users-stats";
 export const SUPER_ADMIN_SUBSCRIPTION = "superadmin/subscription-stats";
 export const SUPER_ADMIN_USER_STATISTICS = "superadmin/users-stats";
