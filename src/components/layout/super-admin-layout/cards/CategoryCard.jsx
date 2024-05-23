@@ -1,7 +1,7 @@
 // import PropTypes from "prop-types";
 import { Badge } from "flowbite-react";
 
-function CategoryCard({ tag, media, title }) {
+function CategoryCard({ tag, media, title, ondelete, id }) {
   return (
     <div className="ads-card-list relative">
       <div className="tag absolute top-2 right-2">
@@ -12,6 +12,12 @@ function CategoryCard({ tag, media, title }) {
 
         <div className="flex justify-between mt-5">
           <div className="ads-description flex flex-wrap">{title}</div>
+          <div
+            onClick={() => ondelete(id)}
+            className="tag cursor-pointer bottom-2 right-2"
+          >
+            <Badge color="red">Delete</Badge>
+          </div>
         </div>
       </div>
     </div>

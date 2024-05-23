@@ -4,7 +4,7 @@ import { icon_success, icon_error, users } from "../../assets";
 import "./style.css";
 import { Dropdown, DropdownItem, Table } from "flowbite-react";
 import { menu, delete_img, approve, empty } from "../../assets";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetNewSignupQuery } from "../../service/admin/newSignup.service";
 import { useGetAminUserStatsQuery } from "../../service/admin/statistics.service";
 import { ShimmerThumbnail } from "react-shimmer-effects";
@@ -13,14 +13,31 @@ import { TiDelete } from "react-icons/ti";
 import rtkMutation from "../../utils/rtkMutation";
 import { useDeActivateUserMutation } from "../../service/user.service";
 import { showAlert } from "../../static/alert";
+import PaginationControls from "../../components/ui/PaginationControls";
 
 function Users() {
   const user = useSelector((state) => state.user.user);
   const { data: userStats, isLoading: loadStats } = useGetAminUserStatsQuery();
 
   const { data: userData, isLoading, refetch } = useGetNewSignupQuery();
-  const list = userData?.data;
-  console.log(list);
+  const list = userData?.data || [];
+  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // useEffect(() => {}, [userData]);
+
+  const newList = list?.map((nw, id) => {
+    return { ...nw, index: id + 1 };
+  });
+
+  console.log(newList);
+
+  const totalPages = Math.ceil(newList?.length / itemsPerPage);
+
+  const currentList = newList?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const [Deactivate] = useDeActivateUserMutation();
 
@@ -123,12 +140,12 @@ function Users() {
                           <Table.HeadCell>Action</Table.HeadCell>
                         </Table.Head>
                         <Table.Body className="divide-y">
-                          {list.map((row, index) => (
+                          {currentList.map((row, index) => (
                             <Table.Row
                               className="bg-white dark:border-gray-700 dark:bg-gray-800 users-table-row"
                               key={row._id}
                             >
-                              <Table.Cell>{index + 1}</Table.Cell>
+                              <Table.Cell>{row.index || index + 1}</Table.Cell>
                               <Table.Cell>{row.createdAt}</Table.Cell>
                               <Table.Cell>{row.display_name}</Table.Cell>
                               <Table.Cell>{"N/A"}</Table.Cell>
@@ -190,6 +207,11 @@ function Users() {
                             </Table.Row>
                           ))}
                         </Table.Body>
+                        <PaginationControls
+                          currentPage={currentPage}
+                          totalPages={totalPages}
+                          onPageChange={setCurrentPage}
+                        />
                       </Table>
                     ) : (
                       <div className="flex flex-col items-center justify-center text-gray-500 pb-20">
