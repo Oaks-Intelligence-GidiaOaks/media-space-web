@@ -460,7 +460,7 @@ const Subscription = () => {
 
           <div className=" flex flex-col">
             <label htmlFor="department" className="badge-label pb-2">
-              Landing page link
+              Category page link
             </label>
 
             <input
