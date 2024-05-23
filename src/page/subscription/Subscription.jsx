@@ -13,6 +13,7 @@ import Modals from "../../components/modals/Modal";
 import { Tabs } from "flowbite-react";
 import { GoBell } from "react-icons/go";
 import upload from "../../assets/upload.png";
+import CreateCategory from "./../../components/category/CreateCategory";
 import rectangle from "../../assets/rectangle.png";
 import { HiSpeakerphone } from "react-icons/hi";
 import { Form, Field } from "react-final-form";
@@ -26,6 +27,7 @@ import {
 } from "../../service/admin/advert.service";
 import { showAlert } from "../../static/alert";
 import { useGetCategoryQuery } from "../../service/category.service";
+import PaginationControls from "../../components/ui/PaginationControls";
 
 const constraints = {
   media: {
@@ -51,13 +53,6 @@ const constraints = {
 const Subscription = () => {
   const user = useSelector((state) => state.user.user);
   const [openAdsModal, setOpenAdsModal] = useState(false);
-  const [openCreateCategory, setOpenCreatecategory] = useState(false);
-  const [photo, setPhoto] = useState(null);
-  const [categoryName, setCategoryName] = useState(null);
-  const [categoryVisibility, setCategoryVisibility] = useState("");
-  const [categoryPageLink, setCategoryPageLink] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [previewSrc, setPreviewSrc] = useState("");
 
   const {
     data: advertdata,
@@ -66,23 +61,14 @@ const Subscription = () => {
   } = useGetAllAdminAdvertQuery();
 
   const {
-    data: categoryData,
-    isLoading: loadCategory,
-    refetch: refetchCategory,
-  } = useGetCategoryQuery();
-
-  const {
     data: advertStats,
     isLoading: loadAdvertStats,
     refetch: refetchAdvertStats,
   } = useAdminAdvertStatsQuery();
 
   const adverts = advertdata?.data || [];
-  const category = categoryData?.data || [];
 
   // console.log(adverts);
-
-  console.log(categoryData?.data);
 
   const [toggleAds, { isSuccess, error }] = useToggleAdvertByIdMutation();
 
@@ -145,75 +131,8 @@ const Subscription = () => {
     }
   };
 
-  const onSubmitCategory = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    // console.log("Clicked");
-    const formData = new FormData();
-
-    // console.log(photo, categoryName, categoryVisibility, categoryPageLink);
-
-    if (!photo || !categoryName || !categoryVisibility || !categoryPageLink) {
-      setSubmitting(false);
-      return;
-    }
-    // Append other values to formData
-    formData.append("name", categoryName);
-    formData.append("visibility", categoryVisibility);
-    formData.append("category_page_link", categoryPageLink);
-
-    // Append media files to formData
-    formData.append("photo", photo);
-
-    const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
-
-    try {
-      const response = await axios.post(
-        `${apiUrl}/admin/user/category/single`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            ...(token && { Authorization: `Bearer ${token}` }),
-          },
-        }
-      );
-
-      console.log("Category Created successfully:", response.data);
-      showAlert("Great", "Category created successfully", "success");
-      setOpenCreatecategory(false);
-      setCategoryName("");
-      setCategoryPageLink("");
-      setCategoryVisibility("");
-      setPhoto(null);
-      setPreviewSrc(null);
-      refetchCategory();
-      setSubmitting(false);
-    } catch (error) {
-      console.error("Error Creating Category:", error.response.data.message);
-      showAlert("", error.response.data.message, "error");
-      // setOpenAdsModal(false);
-    }
-  };
-
   const validateForm = (values) => {
     return validate(values, constraints) || {};
-  };
-
-  const handleImageChange = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setPhoto(file);
-      previewImage(file);
-    }
-  };
-
-  const previewImage = (file) => {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setPreviewSrc(event.target.result);
-    };
-    reader.readAsDataURL(file);
   };
 
   return (
@@ -238,60 +157,7 @@ const Subscription = () => {
               <div className="overflow-x-auto">
                 <Tabs aria-label="Full width tabs" style="fullWidth">
                   <Tabs.Item active title="Category" icon={""}>
-                    <div className="flex justify-between items-center">
-                      <div className="mb-4 flex flex-col">
-                        <select
-                          name="visibility"
-                          id="visibility"
-                          component="select"
-                          type="text"
-                          className="h-[38px] focus:outline-none focus:ring-0 ad-input"
-                        >
-                          <option value="">All Categories</option>
-                          <option value="Public">Public</option>
-                          <option value="Staff">Staff</option>
-                          <option value="Subscribers">Subscribers</option>
-                          <option value="Followers">Followers</option>
-                        </select>
-                      </div>
-                      <div>
-                        <button
-                          className="ads-btn mr-5"
-                          onClick={() => setOpenCreatecategory(true)}
-                        >
-                          Create Category
-                        </button>
-                      </div>
-                    </div>
-                    <div className="flex gap-5 flex-wrap">
-                      {category && category.length > 0 ? (
-                        [...category]
-                          .sort(
-                            (a, b) =>
-                              new Date(b.createdAt) - new Date(a.createdAt)
-                          )
-                          .map((cat) =>
-                            loadAdvert ? (
-                              <ShimmerThumbnail
-                                key={cat._id}
-                                width={362}
-                                height={269}
-                              />
-                            ) : (
-                              <CategoryCard
-                                key={cat?._id}
-                                tag={cat?.visibility || "public"}
-                                title={cat?.name}
-                                media={cat?.photo_url}
-                              />
-                            )
-                          )
-                      ) : (
-                        <p className="flex justify-center text-lg">
-                          Resource is still loading or No data available
-                        </p>
-                      )}
-                    </div>
+                    <CreateCategory />
                   </Tabs.Item>
                   <Tabs.Item active title="Subscription" icon={GoBell}>
                     No content for subscription, view ads tab
@@ -389,109 +255,6 @@ const Subscription = () => {
         </div>
       </div>
 
-      {/*  category modal */}
-      <Modals
-        title="Create category"
-        openModal={openCreateCategory}
-        modalSize="xl"
-        onClose={() => setOpenCreatecategory(false)}
-      >
-        <form onSubmit={onSubmitCategory}>
-          <div className="mb-4 flex flex-col">
-            <label className="cursor-pointer">
-              <img src={previewSrc || upload} alt="" />
-
-              <input
-                type="file"
-                onChange={handleImageChange}
-                accept="image/*"
-                style={{ display: "none" }}
-                // className="hidden w-[100px] h-[100px]"
-              />
-            </label>
-          </div>
-          <div className="mb-4 flex flex-col">
-            <label className="badge-label cursor-pointer pb-2">
-              Upload File
-              <input
-                type="file"
-                onChange={handleImageChange}
-                accept="image/*"
-                style={{ display: "none" }}
-                // className="hidden w-[100px] h-[100px]"
-              />
-            </label>
-          </div>
-
-          <div className=" flex flex-col">
-            <label htmlFor="department" className="badge-label pb-2">
-              Title
-            </label>
-            <input
-              value={categoryName}
-              onChange={(e) => setCategoryName(e.target.value)}
-              type="text"
-              className="h-[38px] focus:outline-none focus:ring-0 ad-input"
-            />
-          </div>
-
-          <div className="mb-4 flex flex-col">
-            <label htmlFor="department" className="badge-label pb-2">
-              Visibility
-            </label>
-            <select
-              name="visibility"
-              id="visibility"
-              component="select"
-              value={categoryVisibility}
-              onChange={(e) => setCategoryVisibility(e.target.value)}
-              type="text"
-              className="h-[38px] focus:outline-none focus:ring-0 ad-input"
-            >
-              <option value="">select</option>
-              <option value="Public">Public</option>
-              <option value="Staff">Staff</option>
-              <option value="Subscribers">Subscribers</option>
-              <option value="Followers">Followers</option>
-            </select>
-          </div>
-
-          <div className=" flex flex-col">
-            <label htmlFor="department" className="badge-label pb-2">
-              Landing page link
-            </label>
-
-            <input
-              value={categoryPageLink}
-              onChange={(e) => setCategoryPageLink(e.target.value)}
-              className="h-[38px] focus:outline-none focus:ring-0 ad-input"
-              type="text"
-            />
-          </div>
-
-          <div className="flex items-center gap-5 justify-end pt-5 mt-8 pb-5">
-            <p
-              onClick={() => setOpenCreatecategory(false)}
-              className="bg-white cursor-pointer p-2 rounded-3xl px-4 font-semibold border-[1px] border-black"
-            >
-              Cancel
-            </p>
-            <button type="submit" className="badge-create">
-              {submitting ? (
-                <>
-                  <span className="loading-dots">
-                    <span className="loading-dots-dot"></span>
-                    <span className="loading-dots-dot"></span>
-                    <span className="loading-dots-dot"></span>
-                  </span>
-                </>
-              ) : (
-                "Create Category"
-              )}
-            </button>
-          </div>
-        </form>
-      </Modals>
       <Modals
         title="Upload Ads"
         openModal={openAdsModal}
