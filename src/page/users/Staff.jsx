@@ -276,18 +276,21 @@ function Staff() {
                   <Table.HeadCell>Color</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                  {adminbadges?.data.map((row, index) => (
-                    <Table.Row
-                      className="bg-white dark:border-gray-700 dark:bg-gray-800 users-table-row"
-                      key={row._id}
-                    >
-                      <Table.Cell>{index + 1}</Table.Cell>
-                      <Table.Cell>{row.department}</Table.Cell>
-                      <Table.Cell
-                        className={`h-10 w-10 bg-[${row.color}]`}
-                      ></Table.Cell>
-                    </Table.Row>
-                  ))}
+                  {adminbadges?.data.map((row, index) => {
+                    return (
+                      <Table.Row
+                        className="bg-white dark:border-gray-700 dark:bg-gray-800 users-table-row"
+                        key={row._id}
+                      >
+                        <Table.Cell>{index + 1}</Table.Cell>
+                        <Table.Cell>{row.department}</Table.Cell>
+                        <Table.Cell
+                          className={`h-10 w-10`}
+                          style={{ backgroundColor: row.color }}
+                        ></Table.Cell>
+                      </Table.Row>
+                    );
+                  })}
                 </Table.Body>
               </Table>
             ) : (
