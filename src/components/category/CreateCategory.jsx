@@ -50,7 +50,7 @@ const CreateCategory = () => {
 
   // console.log(adverts);
 
-  console.log(categoryData?.data);
+  // console.log(categoryData?.data);
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
