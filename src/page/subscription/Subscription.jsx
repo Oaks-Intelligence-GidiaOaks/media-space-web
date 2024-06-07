@@ -24,9 +24,10 @@ import {
   useGetAllAdminAdvertQuery,
   useAdminAdvertStatsQuery,
   useToggleAdvertByIdMutation,
+  useDeleteSingleAdvertByIdMutation,
 } from "../../service/admin/advert.service";
 import { showAlert } from "../../static/alert";
-import { useGetCategoryQuery } from "../../service/category.service";
+// import { useGetCategoryQuery } from "../../service/category.service";
 import PaginationControls from "../../components/ui/PaginationControls";
 
 const constraints = {
@@ -61,6 +62,8 @@ const Subscription = () => {
     refetch,
   } = useGetAllAdminAdvertQuery();
 
+  console.log(advertdata?.data);
+
   const {
     data: advertStats,
     isLoading: loadAdvertStats,
@@ -72,6 +75,9 @@ const Subscription = () => {
   // console.log(adverts);
 
   const [toggleAds, { isSuccess, error }] = useToggleAdvertByIdMutation();
+  const [deleteAds, { isSuccess: scs, error: err }] =
+    useDeleteSingleAdvertByIdMutation();
+
   const [previewSrc, setPreviewSrc] = useState("");
 
   const handleToggle = async (cardId) => {
@@ -112,6 +118,8 @@ const Subscription = () => {
       formData.append("media", values.media[0]);
     }
 
+    // console.log(formData);
+
     const apiUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
     try {
@@ -125,6 +133,7 @@ const Subscription = () => {
       console.log("Post submitted successfully:", response.data);
       showAlert("Great", "Ads created successfully", "success");
       setOpenAdsModal(false);
+      setPreviewSrc("");
       refetch();
     } catch (error) {
       console.error("Error submitting post:", error.response.data.message);
@@ -141,7 +150,6 @@ const Subscription = () => {
     // const file = event.target.files[0];
     if (file) {
       console.log(file);
-      // setPhoto(file);
       previewImage(file);
     }
   };
@@ -160,6 +168,18 @@ const Subscription = () => {
       return;
     }
     setPreviewAds(!previewAds);
+  };
+
+  // DELETE ADs FUNCTION
+  const onDeleteAds = async (id) => {
+    try {
+      await deleteAds(id);
+      refetchAdvertStats();
+      refetch();
+      console.log("Ads Deleted successfully");
+    } catch (error) {
+      console.error("Error deleting ads:", error);
+    }
   };
 
   return (
@@ -183,12 +203,17 @@ const Subscription = () => {
 
               <div className="overflow-x-auto">
                 <Tabs aria-label="Full width tabs" style="fullWidth">
+                  {/* CATEGORY SECTION */}
                   <Tabs.Item active title="Category" icon={""}>
                     <CreateCategory />
                   </Tabs.Item>
+
+                  {/* SUBSCRIPTION SECTION */}
                   <Tabs.Item active title="Subscription" icon={GoBell}>
                     No content for subscription, view ads tab
                   </Tabs.Item>
+
+                  {/* ADS SECTION */}
                   <Tabs.Item title="Ads" icon={HiSpeakerphone}>
                     <div className="w-full super-admin-card-box items-center justify-center sm:flex-row sm:flex-wrap sm:justify-center sm:gap-10 md:grid md:grid-cols-2 md:justify-between lg:grid lg:grid-cols-4 xl:grid-cols-4">
                       {loadAdvertStats ? (
@@ -258,10 +283,16 @@ const Subscription = () => {
                             ) : (
                               <AdsCard
                                 key={card._id}
+                                id={card._id}
                                 tag={card.visibility}
                                 description={card.description}
                                 status={card.status === "active" ? true : false}
                                 media={card.media_urls}
+                                onDelete={onDeleteAds}
+                                exposureTime={card.exposure_time}
+                                durationTime={card.duration}
+                                visible={card.visibility}
+                                refetch={refetch}
                                 onToggle={(isChecked) =>
                                   handleToggle(card._id, isChecked)
                                 }

@@ -250,7 +250,7 @@ const CreateCategory = () => {
       <Modals
         title="Create category"
         openModal={openCreateCategory}
-        modalSize="xl"
+        modalSize="lg"
         onClose={() => setOpenCreatecategory(false)}
       >
         <form onSubmit={onSubmitCategory}>

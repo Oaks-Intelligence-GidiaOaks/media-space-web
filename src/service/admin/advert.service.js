@@ -29,7 +29,7 @@ export const organizationApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Advert"],
     }),
 
-    deleteSingleAdvertById: builder.query({
+    deleteSingleAdvertById: builder.mutation({
       query: (id) => ({
         url: `${ADMIN_ADVERT}/${id}`,
         method: "DELETE",
@@ -52,6 +52,15 @@ export const organizationApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Advert"],
     }),
+
+    patchAdvertbyId: builder.mutation({
+      query: (data, id) => ({
+        url: `${ADMIN_ADVERT}/${id}`,
+        body: data,
+        method: "PATCH",
+      }),
+      providesTags: ["Advert"],
+    }),
   }),
 });
 
@@ -59,7 +68,8 @@ export const {
   useGetAllAdminAdvertQuery,
   useFindAdveryByStatusQuery,
   useGetSingleAdvertByIdQuery,
-  useDeleteSingleAdvertByIdQuery,
+  useDeleteSingleAdvertByIdMutation,
   useToggleAdvertByIdMutation,
   useAdminAdvertStatsQuery,
+  usePatchAdvertbyIdMutation,
 } = organizationApiSlice;
