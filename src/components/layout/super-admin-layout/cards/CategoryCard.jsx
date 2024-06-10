@@ -1,9 +1,12 @@
 // import PropTypes from "prop-types";
 import { Badge, ToggleSwitch } from "flowbite-react";
 import { useState } from "react";
+import Modals from "./../../../modals/Modal";
 
 function CategoryCard({ tag, media, title, ondelete, id, onToggle, status }) {
   const [showDelete, setShowDelete] = useState(false);
+
+  const [showDeleteVerification, setShowDeleteVerification] = useState(false);
 
   return (
     <div className="ads-card-list relative">
@@ -50,7 +53,7 @@ function CategoryCard({ tag, media, title, ondelete, id, onToggle, status }) {
           </div>
           {showDelete && (
             <div
-              onClick={() => ondelete(id)}
+              onClick={() => setShowDeleteVerification(true)}
               className="tag absolute top-8 cursor-pointer bottom-2 right-1"
             >
               <Badge color="red">Delete</Badge>
@@ -72,6 +75,38 @@ function CategoryCard({ tag, media, title, ondelete, id, onToggle, status }) {
           </div>
         </div>
       </div>
+
+      {/* verify Delete Modal */}
+      <Modals
+        title="Do you want to Delete this Ads?"
+        openModal={showDeleteVerification}
+        modalSize="xl"
+        onClose={() => setShowDeleteVerification(false)}
+      >
+        <div className="flex justify-end items-center gap-5 pt-5">
+          <p
+            onClick={() => {
+              setShowDeleteVerification(false);
+              setShowDelete(false);
+              return;
+            }}
+            className="cursor-pointer rounded-full border px-5 p-2"
+          >
+            {/* {previewAds ? "Back" : "Preview"} */}
+            {"No"}
+          </p>
+          <p
+            className="cursor-pointer rounded-full bg-red-700 text-white border px-5 p-2"
+            onClick={() => {
+              setShowDeleteVerification(false);
+              setShowDelete(false);
+              ondelete(id);
+            }}
+          >
+            Yes
+          </p>
+        </div>
+      </Modals>
     </div>
   );
 }

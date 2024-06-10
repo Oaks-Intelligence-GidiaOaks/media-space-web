@@ -3,7 +3,7 @@ import { Cards, StaffCard } from "../../components/layout/super-admin-layout";
 import { useGetAminStaffStatsQuery } from "../../service/admin/statistics.service";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import { users } from "../../assets";
-import avatar from "../../assets/avatar.svg";
+import avatar from "../../assets/user-avatar.png";
 import { useState, useEffect } from "react";
 import Modals from "../../components/modals/Modal";
 import { Form, Field } from "react-final-form";
@@ -239,7 +239,7 @@ function Staff() {
                             "Joined " +
                             new Date(staff.createdAt).toLocaleDateString()
                           }
-                          avatar={avatar}
+                          avatar={staff.photo_url || avatar}
                           email={staff.email}
                           phoneNumber={staff.phoneNumber || ""}
                           badge={staff?.department?.map(
@@ -276,18 +276,21 @@ function Staff() {
                   <Table.HeadCell>Color</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                  {adminbadges?.data.map((row, index) => (
-                    <Table.Row
-                      className="bg-white dark:border-gray-700 dark:bg-gray-800 users-table-row"
-                      key={row._id}
-                    >
-                      <Table.Cell>{index + 1}</Table.Cell>
-                      <Table.Cell>{row.department}</Table.Cell>
-                      <Table.Cell
-                        className={`h-10 w-10 bg-[${row.color}]`}
-                      ></Table.Cell>
-                    </Table.Row>
-                  ))}
+                  {adminbadges?.data.map((row, index) => {
+                    return (
+                      <Table.Row
+                        className="bg-white dark:border-gray-700 dark:bg-gray-800 users-table-row"
+                        key={row._id}
+                      >
+                        <Table.Cell>{index + 1}</Table.Cell>
+                        <Table.Cell>{row.department}</Table.Cell>
+                        <Table.Cell
+                          className={`h-10 w-10`}
+                          style={{ backgroundColor: row.color }}
+                        ></Table.Cell>
+                      </Table.Row>
+                    );
+                  })}
                 </Table.Body>
               </Table>
             ) : (

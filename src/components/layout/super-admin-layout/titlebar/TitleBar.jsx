@@ -2,7 +2,7 @@ import { useState } from "react";
 import { logo } from "../../../../assets";
 import search from "../../../../assets/titlebar/search.svg";
 import notification from "../../../../assets/titlebar/notification.svg";
-import placeholder from "../../../../assets/titlebar/placeholder.svg";
+import placeholder from "../../../../assets/user-avatar.png";
 import chevron from "../../../../assets/titlebar/chevron.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle, FaCog, FaSignOutAlt } from "react-icons/fa";
@@ -13,6 +13,8 @@ import { useSelector } from "react-redux";
 const TitleBar = () => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const user = useSelector((state) => state.user.user);
+  // console.log(user);
 
   const navigateToOverview = () => {
     navigate("/dashboard/overview");
@@ -56,7 +58,10 @@ const TitleBar = () => {
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="flex flex-nowrap gap-2 items-center hover:bg-primary-gray rounded p-1"
           >
-            <img src={placeholder} className="w-[18px] sm:w-6 rounded-full" />
+            <img
+              src={user?.photo_url || placeholder}
+              className="w-[18px] sm:w-6 rounded-full"
+            />
             <p className="font-inter hidden sm:block">{display_name}</p>
             <img className="w-3" src={chevron} />
           </button>

@@ -50,7 +50,7 @@ const CreateCategory = () => {
 
   // console.log(adverts);
 
-  console.log(categoryData?.data);
+  // console.log(categoryData?.data);
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -250,7 +250,7 @@ const CreateCategory = () => {
       <Modals
         title="Create category"
         openModal={openCreateCategory}
-        modalSize="xl"
+        modalSize="lg"
         onClose={() => setOpenCreatecategory(false)}
       >
         <form onSubmit={onSubmitCategory}>

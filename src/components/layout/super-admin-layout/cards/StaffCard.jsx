@@ -94,10 +94,16 @@ function StaffCard({
           <div className="flex justify-between">
             <div className="flex items-center gap-3">
               <div
-                className={`rounded-full h-[64px] w-[64px] border-4`}
+                className={`rounded-full h-[64px] w-[64px] border-4 flex items-center justify-center overflow-hidden`}
                 style={{ borderColor: badge }}
               >
-                <img src={avatar} alt="" />
+                <img
+                  src={avatar}
+                  className="object-contain"
+                  width={50}
+                  height={50}
+                  alt=""
+                />
               </div>
               <div className="flex flex-col">
                 <p className="staff-name">{fullname}</p>
