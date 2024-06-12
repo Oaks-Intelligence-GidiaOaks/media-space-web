@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
-import {
-  Cards,
-  AdsCard,
-  CategoryCard,
-} from "../../components/layout/super-admin-layout";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import ads from "../../assets/ads.svg";
+import categoryGray from "../../assets/category_outline.png";
+import categoryActive from "../../assets/categoryActive.svg";
+import surveyActive from "../../assets/surveyActive.svg";
+import survey from "../../assets/survey.svg";
+import post from "../../assets/post.svg";
+import postActive from "../../assets/postActive.svg";
 import ads_active from "../../assets/ads_active.svg";
 import "./style.css";
 import { useState, useEffect } from "react";
@@ -13,22 +14,16 @@ import Modals from "../../components/modals/Modal";
 import { Tabs } from "flowbite-react";
 import { GoBell } from "react-icons/go";
 import upload from "../../assets/upload.png";
-import CreateCategory from "./../../components/category/CreateCategory";
-import rectangle from "../../assets/rectangle.png";
-import { HiSpeakerphone } from "react-icons/hi";
+import CreateCategory from "../../components/category/CreateCategory";
+// import rectangle from "../../assets/rectangle.png";
+// import { HiSpeakerphone } from "react-icons/hi";
 import { Form, Field } from "react-final-form";
 // import cat from "../../assets/category_outline.png";
 import validate from "validate.js";
 import axios from "axios";
-import {
-  useGetAllAdminAdvertQuery,
-  useAdminAdvertStatsQuery,
-  useToggleAdvertByIdMutation,
-  useDeleteSingleAdvertByIdMutation,
-} from "../../service/admin/advert.service";
 import { showAlert } from "../../static/alert";
 // import { useGetCategoryQuery } from "../../service/category.service";
-import PaginationControls from "../../components/ui/PaginationControls";
+// import PaginationControls from "../../components/ui/PaginationControls";
 
 const constraints = {
   media: {
@@ -51,56 +46,20 @@ const constraints = {
   },
 };
 
-const Subscription = () => {
+const Category = () => {
   const user = useSelector((state) => state.user.user);
   const [openAdsModal, setOpenAdsModal] = useState(false);
   const [previewAds, setPreviewAds] = useState(false);
 
-  const {
-    data: advertdata,
-    isLoading: loadAdvert,
-    refetch,
-  } = useGetAllAdminAdvertQuery();
-
-  console.log(advertdata?.data);
-
-  const {
-    data: advertStats,
-    isLoading: loadAdvertStats,
-    refetch: refetchAdvertStats,
-  } = useAdminAdvertStatsQuery();
-
-  const adverts = advertdata?.data || [];
-
-  // console.log(adverts);
-
-  const [toggleAds, { isSuccess, error }] = useToggleAdvertByIdMutation();
-  const [deleteAds, { isSuccess: scs, error: err }] =
-    useDeleteSingleAdvertByIdMutation();
-
   const [previewSrc, setPreviewSrc] = useState("");
 
-  const handleToggle = async (cardId) => {
-    console.log(cardId);
-    try {
-      await toggleAds(cardId);
-      console.log("Ads toggled successfully");
-    } catch (error) {
-      console.error("Error deleting ads:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
-      showAlert("", "Advert toggled Successfully!", "success");
-      refetchAdvertStats();
-      refetch();
-    } else if (error) {
-      showAlert("Oops", error.data.message || "An error occurred", "error");
-    }
-  }, [isSuccess, error, refetch]);
-
   const token = useSelector((state) => state.user?.token);
+
+  const [activeTab, setActiveTab] = useState("category");
+
+  const handleTabClick = (tabId) => {
+    setActiveTab(tabId);
+  };
 
   const onSubmit = async (values) => {
     console.log(values);
@@ -171,16 +130,6 @@ const Subscription = () => {
   };
 
   // DELETE ADs FUNCTION
-  const onDeleteAds = async (id) => {
-    try {
-      await deleteAds(id);
-      refetchAdvertStats();
-      refetch();
-      console.log("Ads Deleted successfully");
-    } catch (error) {
-      console.error("Error deleting ads:", error);
-    }
-  };
 
   return (
     <>
@@ -202,110 +151,124 @@ const Subscription = () => {
               </div> */}
 
               <div className="overflow-x-auto">
+                <div className="mb-[50px]">
+                  <div className="border-gray-200 dark:border-gray-700">
+                    <ul
+                      className="flex flex-wrap -mb-px sm:text-xl text-gray-400 text-center justify-center gap-2 md:gap-5 lg:gap-10"
+                      role="tablist"
+                    >
+                      <li className="me-2" role="presentation">
+                        <button
+                          className={`inline-block p-4 rounded-t-lg  ${
+                            activeTab === "post"
+                              ? "border-[#4C9C25] text-[#4C9C25] md:font-semibold"
+                              : "text-[#8D92AC]"
+                          }`}
+                          onClick={() => handleTabClick("post")}
+                          role="tab"
+                          aria-controls="post"
+                          aria-selected={activeTab === "post"}
+                        >
+                          <div className="flex gap-2 items-center">
+                            <img
+                              src={activeTab === "post" ? postActive : post}
+                              alt=""
+                            />
+                            <p>Post</p>
+                          </div>
+                        </button>
+                      </li>
+                      <li className="me-2" role="presentation">
+                        <button
+                          className={`inline-block p-4 rounded-t-lg  ${
+                            activeTab === "polls"
+                              ? "border-[#4C9C25] text-[#4C9C25] md:font-semibold"
+                              : "text-[#8D92AC]"
+                          }`}
+                          onClick={() => handleTabClick("polls")}
+                          role="tab"
+                          aria-controls="polls"
+                          aria-selected={activeTab === "polls"}
+                        >
+                          <div className="flex gap-2 items-center">
+                            <img
+                              src={
+                                activeTab === "polls" ? surveyActive : survey
+                              }
+                              alt=""
+                            />
+                            <p>Polls and Survey</p>
+                          </div>
+                        </button>
+                      </li>
+                      <li className="me-2" role="presentation">
+                        <button
+                          className={`inline-block p-4 rounded-t-lg ${
+                            activeTab === "category"
+                              ? "border-[#4C9C25] text-[#4C9C25] md:font-semibold"
+                              : "text-[#8D92AC]"
+                          }`}
+                          onClick={() => handleTabClick("category")}
+                          role="tab"
+                          aria-controls="category"
+                          aria-selected={activeTab === "category"}
+                        >
+                          <div className="flex gap-2 items-center">
+                            <img
+                              src={
+                                activeTab === "category"
+                                  ? categoryActive
+                                  : categoryGray
+                              }
+                              alt=""
+                            />
+                            <p>Categories</p>
+                          </div>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div
+                  className={`${activeTab === "post" ? "" : "hidden"}`}
+                  id="post"
+                  role="tabpanel"
+                  aria-labelledby="post-tab"
+                >
+                  No content for post, view category tab
+                </div>
+                <div
+                  className={`${activeTab === "polls" ? "" : "hidden"}`}
+                  id="polls"
+                  role="tabpanel"
+                  aria-labelledby="polls-tab"
+                >
+                  No content for polls, view category tab
+                </div>
+                <div
+                  className={`${activeTab === "category" ? "" : "hidden"}`}
+                  id="category"
+                  role="tabpanel"
+                  aria-labelledby="category-tab"
+                >
+                  <CreateCategory />
+                </div>
                 <Tabs aria-label="Full width tabs" style="fullWidth">
+                  {/* POST SECTION */}
+                  {/* <Tabs.Item active title="Post" icon={GoBell}>
+                    No content for post, view category tab
+                  </Tabs.Item> */}
+
+                  {/* POLLS and SURVEY SECTION */}
+                  {/* <Tabs.Item active title="Polls and Survey" icon={GoBell}>
+                    No content for polls, view category tab
+                  </Tabs.Item> */}
+
                   {/* CATEGORY SECTION */}
                   {/* <Tabs.Item active title="Category" icon={""}>
                     <CreateCategory />
                   </Tabs.Item> */}
-
-                  {/* SUBSCRIPTION SECTION */}
-                  <Tabs.Item active title="Subscription" icon={GoBell}>
-                    No content for subscription, view ads tab
-                  </Tabs.Item>
-
-                  {/* ADS SECTION */}
-                  <Tabs.Item title="Ads" icon={HiSpeakerphone}>
-                    <div className="w-full super-admin-card-box items-center justify-center sm:flex-row sm:flex-wrap sm:justify-center sm:gap-10 md:grid md:grid-cols-2 md:justify-between lg:grid lg:grid-cols-4 xl:grid-cols-4">
-                      {loadAdvertStats ? (
-                        <ShimmerThumbnail width={250} height={150} />
-                      ) : (
-                        <Cards
-                          title={advertStats?.data?.total_adverts}
-                          subtitle={"Total Ads"}
-                          img={ads}
-                        />
-                      )}
-
-                      {loadAdvertStats ? (
-                        <ShimmerThumbnail width={250} height={150} />
-                      ) : (
-                        <Cards
-                          title={advertStats?.data?.active_adverts}
-                          subtitle={"Active Ads"}
-                          img={ads_active}
-                        />
-                      )}
-
-                      {loadAdvertStats ? (
-                        <ShimmerThumbnail width={250} height={150} />
-                      ) : (
-                        <Cards
-                          title={advertStats?.data?.inactive_adverts}
-                          subtitle={"In active Ads"}
-                          img={ads_active}
-                        />
-                      )}
-                    </div>
-
-                    <div className="ads-section pt-5">
-                      <div className="flex justify-between items-center pb-5">
-                        <select
-                          name=""
-                          id=""
-                          className="w-[121px] h-[39px] focus:outline-none focus:ring-0 text-[12px]"
-                        >
-                          <option value="">Total Ads</option>
-                        </select>
-
-                        <button
-                          className="ads-btn mr-5"
-                          onClick={() => setOpenAdsModal(true)}
-                        >
-                          Create Ad
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="ad-list flex flex-wrap gap-5">
-                      {adverts && adverts.length > 0 ? (
-                        [...adverts]
-                          .sort(
-                            (a, b) =>
-                              new Date(b.createdAt) - new Date(a.createdAt)
-                          )
-                          .map((card) =>
-                            loadAdvert ? (
-                              <ShimmerThumbnail
-                                key={card._id}
-                                width={362}
-                                height={269}
-                              />
-                            ) : (
-                              <AdsCard
-                                key={card._id}
-                                id={card._id}
-                                tag={card.visibility}
-                                description={card.description}
-                                status={card.status === "active" ? true : false}
-                                media={card.media_urls}
-                                onDelete={onDeleteAds}
-                                exposureTime={card.exposure_time}
-                                durationTime={card.duration}
-                                visible={card.visibility}
-                                refetch={refetch}
-                                onToggle={(isChecked) =>
-                                  handleToggle(card._id, isChecked)
-                                }
-                              />
-                            )
-                          )
-                      ) : (
-                        <p className="flex justify-center text-lg">
-                          Resource is still loading or No data available
-                        </p>
-                      )}
-                    </div>
-                  </Tabs.Item>
                 </Tabs>
               </div>
             </>
@@ -538,4 +501,4 @@ const Subscription = () => {
   );
 };
 
-export default Subscription;
+export default Category;

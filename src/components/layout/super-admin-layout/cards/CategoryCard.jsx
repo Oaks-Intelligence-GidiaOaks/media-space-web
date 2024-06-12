@@ -78,7 +78,7 @@ function CategoryCard({ tag, media, title, ondelete, id, onToggle, status }) {
 
       {/* verify Delete Modal */}
       <Modals
-        title="Do you want to Delete this Ads?"
+        title="Do you want to Delete this Category?"
         openModal={showDeleteVerification}
         modalSize="xl"
         onClose={() => setShowDeleteVerification(false)}

@@ -7,12 +7,18 @@ import bell from "../assets/sidebar/bell.svg";
 import user from "../assets/sidebar/user.svg";
 import user_charts from "../assets/sidebar/user-charts.svg";
 import money from "../assets/sidebar/money.svg";
+import pen from "../assets/sidebar/pen.svg";
 
 const sidebarItems = [
   {
     title: "Overview",
     route: "dashboard/overview",
     icon: overview,
+  },
+  {
+    title: "Create post",
+    route: "dashboard/category",
+    icon: pen,
   },
   {
     title: "Users Acquisition",
