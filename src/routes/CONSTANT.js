@@ -9,6 +9,7 @@ export const DASHBOARD = "/dashboard";
 export const OVERVIEW = "/dashboard/overview";
 export const ORGANIZATIONS = "/dashboard/organizations";
 export const SUBSCRIPTION = "/dashboard/subscription";
+export const CATEGORY = "/dashboard/category";
 export const NOTIFICATIONS = "/dashboard/notifications";
 export const SETTINGS = "/dashboard/settings";
 export const ORGANIZATIONS_USERS = "/dashboard/organizations/users";

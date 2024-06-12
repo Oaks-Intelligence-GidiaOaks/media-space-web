@@ -50,14 +50,16 @@ const Sidebar = ({ sidebarItems }) => {
   useEffect(() => {
     if (pathname.includes("overview")) {
       setCurrentTabIndex(0);
-    } else if (pathname.includes("users") && pathname.includes("staff")) {
-      setCurrentTabIndex(2);
-    } else if (pathname.includes("users")) {
+    } else if (pathname.includes("category")) {
       setCurrentTabIndex(1);
-    } else if (pathname.includes("subscription")) {
+    } else if (pathname.includes("users") && pathname.includes("staff")) {
       setCurrentTabIndex(3);
-    } else if (pathname.includes("survey")) {
+    } else if (pathname.includes("users")) {
+      setCurrentTabIndex(2);
+    } else if (pathname.includes("subscription")) {
       setCurrentTabIndex(4);
+    } else if (pathname.includes("survey")) {
+      setCurrentTabIndex(5);
     }
   }, [pathname]);
 

@@ -5,6 +5,7 @@ export { default as SignUp } from "./SignUp";
 export { default as Overview } from "./overview/Overview";
 export { default as Organizations } from "./organizations/Organizations";
 export { default as Subscription } from "./subscription/Subscription";
+export { default as Category } from "./category/Category";
 export { default as Notifications } from "./notifications/Notifications";
 export { default as Settings } from "./settings/Settings";
 export { default as OrganizationUsers } from "./organizations/OrganizationUsers";
