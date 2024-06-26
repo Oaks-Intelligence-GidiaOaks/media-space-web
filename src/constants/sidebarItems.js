@@ -8,12 +8,18 @@ import user from "../assets/sidebar/user.svg";
 import user_charts from "../assets/sidebar/user-charts.svg";
 import money from "../assets/sidebar/money.svg";
 import pen from "../assets/sidebar/pen.svg";
+import psychology from "../assets/sidebar/psychology.svg";
 
 const sidebarItems = [
   {
     title: "Overview",
     route: "dashboard/overview",
     icon: overview,
+  },
+  {
+    title: "Sentiment Analysis",
+    route: "dashboard/analysis",
+    icon: psychology,
   },
   {
     title: "Create post",

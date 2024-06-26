@@ -10,11 +10,14 @@ function Cards({ title, subtitle, img, icon, percentage, text }) {
         </div>
         <img src={img} alt="image card" />
       </div>
-      <div className="flex items-center gap-3">
-        <img src={icon} alt="" />
-        <p className="s-card-text">{percentage}</p>
-        <p className="s-card-text">{text}</p>
-      </div>
+
+      {icon || percentage || text ? (
+        <div className="flex items-center gap-3">
+          <img src={icon} alt="" />
+          <p className="s-card-text">{percentage}</p>
+          <p className="s-card-text">{text}</p>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -22,7 +25,7 @@ function Cards({ title, subtitle, img, icon, percentage, text }) {
 Cards.propTypes = {
   title: PropTypes.number.isRequired,
   subtitle: PropTypes.string.isRequired,
-  img: PropTypes.string.isRequired,
+  img: PropTypes.string,
   icon: PropTypes.string,
   percentage: PropTypes.string,
   text: PropTypes.string,

@@ -14,3 +14,4 @@ export { default as OrganizationStaff } from "./users/Staff";
 export { default as OrganizationsTable } from "./organizations/OrganizationTable";
 export { default as OrganizationsSurvey } from "./organizations/Survey";
 export { default as SurveyResponses } from "./organizations/SurveyResponses";
+export { default as SentimentAnalysis } from "./sentiment-analysis/Analysis";

@@ -50,16 +50,18 @@ const Sidebar = ({ sidebarItems }) => {
   useEffect(() => {
     if (pathname.includes("overview")) {
       setCurrentTabIndex(0);
-    } else if (pathname.includes("category")) {
+    } else if (pathname.includes("analysis")) {
       setCurrentTabIndex(1);
-    } else if (pathname.includes("users") && pathname.includes("staff")) {
-      setCurrentTabIndex(3);
-    } else if (pathname.includes("users")) {
+    } else if (pathname.includes("category")) {
       setCurrentTabIndex(2);
-    } else if (pathname.includes("subscription")) {
+    } else if (pathname.includes("users") && pathname.includes("staff")) {
       setCurrentTabIndex(4);
-    } else if (pathname.includes("survey")) {
+    } else if (pathname.includes("users")) {
+      setCurrentTabIndex(3);
+    } else if (pathname.includes("subscription")) {
       setCurrentTabIndex(5);
+    } else if (pathname.includes("survey")) {
+      setCurrentTabIndex(6);
     }
   }, [pathname]);
 
@@ -78,7 +80,9 @@ const Sidebar = ({ sidebarItems }) => {
       {/* Sidebar for big screens */}
       <div className="w-[clamp(50px,10%,119px)] hidden fixed md:block md:sticky h-screen mx-5 top-0">
         {/* sidebar */}
-        <div className="w-full h-[clamp(480px,80%,713px)] pt-10 rounded-[1.25rem] relative bg-primary-black mt-14 after:content('') after:text-white after:absolute after:w-full after:h-1/2 after:block after:-right-[6px] after:-z-10 after:rounded-[1.25rem] after:bg-gradient-to-b after:from-[#EB9207] after:to-[transparent] after:top-[6%]">
+
+        {/* h-[clamp(480px,80%,713px)] */}
+        <div className="w-full h-auto pt-10 rounded-[1.25rem] relative bg-primary-black mt-14 after:content('') after:text-white after:absolute after:w-full after:h-1/2 after:block after:-right-[6px] after:-z-10 after:rounded-[1.25rem] after:bg-gradient-to-b after:from-[#EB9207] after:to-[transparent] after:top-[6%]">
           <div className="w-full flex flex-col gap-y-8 relative">
             {sidebarItems.map((sidebarItem, i) => {
               return (

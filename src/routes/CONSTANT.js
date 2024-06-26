@@ -18,3 +18,4 @@ export const USER_ACQUISITION_STAFF = "/dashboard/staff";
 export const ORGANIZATIONS_TABLE = "/dashboard/organizations/data";
 export const ORGANIZATIONS_SURVEY = "/dashboard/survey";
 export const SURVEY_RESPONSES = "/dashboard/survey/survey-response/:id";
+export const SENTIMENT_ANALYSIS = "/dashboard/analysis";

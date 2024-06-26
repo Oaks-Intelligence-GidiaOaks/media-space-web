@@ -1,0 +1,79 @@
+.analysis-greetings {
+  font-family: Inter;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 36.31px;
+  color: #091001;
+}
+.analysis-greetings-text {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #2d2b2b;
+}
+.analysis-filter-top {
+  font-family: Inter;
+  font-size: 12.15px;
+  font-weight: 400;
+  line-height: 19.09px;
+  color: #07779a;
+}
+.analysis-filter-input {
+  width: 204.14px;
+  height: 37.97px;
+  gap: 0px;
+  opacity: 0px;
+  padding: 0.76px 9.11px 0.76px 9.11px;
+  border-radius: 6.08px;
+  border: 0.76px solid #d9d9d9;
+  font-family: Inter;
+  font-size: 10.63px;
+  font-weight: 400;
+  line-height: 22.78px;
+  color: #000000;
+}
+.word-cloud-text {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.36px;
+  color: #000000;
+}
+.trend-spot {
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+  color: #1e1b39;
+}
+.chart-title {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #9291a5;
+}
+.filter-button-input {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22.78px;
+  color: #000000e0;
+}
+.active-btn {
+  background-color: #1e1b39;
+  color: #fff !important;
+}
+.filter-button {
+  width: auto;
+  height: 29px;
+  padding: 7.49px 11.24px 8.24px 11.24px;
+  border-radius: 5.99px;
+  opacity: 0px;
+  color: #1e1b39;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 11.99px;
+}
