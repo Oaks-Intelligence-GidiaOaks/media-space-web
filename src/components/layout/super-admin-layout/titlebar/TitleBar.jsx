@@ -28,6 +28,7 @@ const TitleBar = () => {
   };
 
   const display_name = useSelector((state) => state.user.user.display_name);
+  // const userProfile = useSelector((state) => state.user.user.photo_url);
 
   return (
     <div className="h-10 pb-10 flex justify-between pt-10 w-full pl-1 sm:pl-0 pr-2 sticky top-0 bg-white">
@@ -60,7 +61,7 @@ const TitleBar = () => {
           >
             <img
               src={user?.photo_url || placeholder}
-              className="w-[18px] sm:w-6 rounded-full"
+              className="w-[25px] h-[25px] rounded-full"
             />
             <p className="font-inter hidden sm:block">{display_name}</p>
             <img className="w-3" src={chevron} />
@@ -78,6 +79,7 @@ const TitleBar = () => {
                 Profile
               </Link>
               <Link
+                to={"/dashboard/settings"}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {
                   setIsDropdownOpen(false);

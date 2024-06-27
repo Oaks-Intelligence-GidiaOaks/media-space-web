@@ -100,7 +100,7 @@ function AdsCard({
       formData.append("media", photo);
     }
 
-    console.log(formData);
+    // console.log(formData);
 
     // try {
     //   await patchAd(bodyData, id);

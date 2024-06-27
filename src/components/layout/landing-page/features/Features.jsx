@@ -19,11 +19,11 @@ function Features() {
               your organization's <br /> communication landscape
             </p>
             <p className="features-board-text pt-5">
-              Discover the revolutionary features of Media <br /> Space, your
-              go-to SaaS solution designed to <br /> effortlessly integrate into
-              your favorite apps <br /> while providing a communication space
-              that <br /> is both familiar yet distinct from anything you <br />{" "}
-              have ever experienced.
+              Discover the revolutionary features of Kommunita, your go-to SaaS
+              solution designed to <br /> effortlessly integrate into your
+              favorite apps <br /> while providing a communication space that{" "}
+              <br /> is both familiar yet distinct from anything you <br /> have
+              ever experienced.
             </p>
             <motion.button
               whileHover={{
@@ -50,11 +50,11 @@ function Features() {
               your organization's communication landscape
             </p>
             <p className="features-board-text pt-5">
-              Discover the revolutionary features of Media <br /> Space, your
-              go-to SaaS solution designed to <br /> effortlessly integrate into
-              your favorite apps <br /> while providing a communication space
-              that <br /> is both familiar yet distinct from anything you <br />{" "}
-              have ever experienced.
+              Discover the revolutionary features of Kommunita, your go-to SaaS
+              solution designed to <br /> effortlessly integrate into your
+              favorite apps <br /> while providing a communication space that{" "}
+              <br /> is both familiar yet distinct from anything you <br /> have
+              ever experienced.
             </p>
             <div className="flex pt-7">
               <Link to={""} className="footer-signup">
@@ -69,7 +69,7 @@ function Features() {
         <div className="features-layer-1 p-2">
           <div className="text-start flex gap-5 pb-5">
             <div className="bar"></div>
-            <p className="feature-title">What is Media Space for?</p>{" "}
+            <p className="feature-title">What is Kommunita for?</p>{" "}
           </div>
 
           <p className="feature-head pb-5">
@@ -78,15 +78,15 @@ function Features() {
               the architect of its <br className="hidden md:flex" />{" "}
               communication future
             </span>{" "}
-            with <br className="hidden md:flex" /> Media Space
+            with <br className="hidden md:flex" /> Kommunita
           </p>
 
           <p className="feature-text">
-            Say goodbye to communication silos as Media{" "}
-            <br className="hidden md:flex" /> Space effortlessly weaves through
-            the digital <br className="hidden md:flex" /> landscape, ensuring
-            that your team stays united <br className="hidden md:flex" /> and
-            your messages resonate across platforms.{" "}
+            Say goodbye to communication silos as Kommunita{" "}
+            <br className="hidden md:flex" /> effortlessly weaves through the
+            digital <br className="hidden md:flex" /> landscape, ensuring that
+            your team stays united <br className="hidden md:flex" /> and your
+            messages resonate across platforms.{" "}
             <br className="hidden md:flex" /> Immerse yourself in a world where
             integration is not <br className="hidden md:flex" /> just a feature,
             but a transformative force that <br className="hidden md:flex" />{" "}
@@ -111,7 +111,7 @@ function Features() {
                     Integration at Your Fingertips
                   </p>
                   <p className="card-text">
-                    Break free from communication silos! Media Space seamlessly
+                    Break free from communication silos! Kommunita seamlessly
                     integrates into your existing apps and workflows, ensuring
                     uninterrupted communication across your organization.
                   </p>
@@ -126,8 +126,8 @@ function Features() {
                   <img src={card_img_2} alt="" />
                   <p className="card-title pt-5 pb-3">Tailor Your Experience</p>
                   <p className="card-text">
-                    Recognizing the uniqueness of every organization, Media
-                    Space allows you to customize your communication spaces and
+                    Recognizing the uniqueness of every organization, Kommunita
+                    allows you to customize your communication spaces and
                     workflows. Adapt our versatile solution to perfectly align
                     with your organizational goals.
                   </p>
@@ -145,7 +145,7 @@ function Features() {
                     Cross-Platform Brilliance
                   </p>
                   <p className="card-text">
-                    Whether you're on desktop or mobile, Media Space ensures a
+                    Whether you're on desktop or mobile, Kommunita ensures a
                     seamless experience. Stay connected and engaged with your
                     team anytime, anywhere.
                   </p>
