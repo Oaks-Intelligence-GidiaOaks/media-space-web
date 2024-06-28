@@ -70,6 +70,7 @@ const TitleBar = () => {
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg z-50">
               <Link
+                to={"/dashboard/settings"}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {
                   setIsDropdownOpen(false);
@@ -78,7 +79,7 @@ const TitleBar = () => {
                 <FaUserCircle className="w-4 h-4 mr-2 inline" />
                 Profile
               </Link>
-              <Link
+              {/* <Link
                 to={"/dashboard/settings"}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {
@@ -87,7 +88,7 @@ const TitleBar = () => {
               >
                 <FaCog className="w-4 h-4 mr-2 inline" />
                 Settings
-              </Link>
+              </Link> */}
               <button
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => logout()}
