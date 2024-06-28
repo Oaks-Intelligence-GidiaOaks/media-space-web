@@ -77,3 +77,38 @@
   font-weight: 500;
   line-height: 11.99px;
 }
+.guage-legend {
+  font-family: Poppins;
+  font-size: 9.65px;
+  font-weight: 400;
+  line-height: 14.47px;
+  color: #000;
+}
+.guage-value-head {
+  font-family: Inter;
+  font-size: 58.78px;
+  font-weight: 600;
+  line-height: 71.14px;
+  color: #2d2b2b;
+}
+.guage-rating {
+  font-family: Inter;
+  font-size: 15.12px;
+  font-weight: 400;
+  line-height: 18.29px;
+  color: #000;
+}
+.guage-period {
+  font-family: Inter;
+  font-size: 8.98px;
+  font-weight: 400;
+  line-height: 13.47px;
+  color: #7c8db5;
+}
+.sentiment {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  color: #000;
+}
