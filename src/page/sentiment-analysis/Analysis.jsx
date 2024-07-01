@@ -11,6 +11,7 @@ import DynamicLineChart from "../../components/charts/DynamicLineChart";
 import data from "./chart-data";
 import words from "./words";
 import ReactWordcloud from "react-wordcloud";
+
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import GaugeComponent from "react-gauge-component";
