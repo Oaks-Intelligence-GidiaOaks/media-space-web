@@ -14,6 +14,8 @@ import GaugeComponent from "react-gauge-component";
 import Legend from "./Legend";
 import arrow from "./arrow.svg";
 import WordCloud from "./WordCloud";
+import TrendingKeywords from "./TrendingKeywords";
+import keywords from "./keywords";
 
 const groupDataByMonth = (data, yKeys) => {
   const groupedData = {};
@@ -215,14 +217,30 @@ const Analysis = () => {
               <DynamicLineChart
                 data={flattenedData}
                 xKey="date"
-                yKeys={yKeys} // Pass the yKeys array
+                yKeys={yKeys}
               />
             </div>
             <div className="net-sentiment w-full max-w-[376px] h-[537.02px] border  rounded-[13.17px] shadow border-[#E6EDFF] bg-white">
-              <div className="p-3">
+              <div className="p-3 h-full">
                 <div className="flex items-center justify-between">
                   <p className="word-cloud-text">Trending keywords</p>
                   <p className="sentiment">Sentiment</p>
+                </div>
+
+                <div className="pt-5 flex flex-col h-full w-full gap-4 relative">
+                  {keywords.slice(0, 10).map((item, index) => (
+                    <TrendingKeywords
+                      key={index}
+                      index={index + 1}
+                      keyword={item.keyword}
+                      usage={item.usage}
+                      sentiments={item.sentiments}
+                    />
+                  ))}
+
+                  <div className="absolute bottom-5 justify-center items-center w-full">
+                    <Legend items={legendItems} />
+                  </div>
                 </div>
               </div>
             </div>

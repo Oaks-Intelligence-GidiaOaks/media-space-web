@@ -29,7 +29,7 @@ const generateRandomData = (startDate, endDate, minVal, maxVal) => {
 
 // Replace the existing data with randomly generated data
 const startDate = "2023-01-01";
-const endDate = "2024-06-25";
+const endDate = "2024-07-5";
 const minVal = 5; // Minimum value for sentiment counts
 const maxVal = 15; // Maximum value for sentiment counts
 
