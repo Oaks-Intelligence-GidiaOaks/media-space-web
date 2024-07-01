@@ -8,6 +8,7 @@ export { default as Subscription } from "./subscription/Subscription";
 export { default as Category } from "./category/Category";
 export { default as Notifications } from "./notifications/Notifications";
 export { default as Settings } from "./settings/Settings";
+export { default as Profile } from "./company-profile/Profile";
 export { default as OrganizationUsers } from "./organizations/OrganizationUsers";
 export { default as UserAcquisition } from "./users/Users";
 export { default as OrganizationStaff } from "./users/Staff";

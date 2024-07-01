@@ -10,37 +10,37 @@ import {
 function Testimonial() {
   const quotes = [
     {
-      text: "Media Space has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Media Space an invaluable asset for our team.",
+      text: "Kommunita has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Kommunita an invaluable asset for our team.",
       username: "Jonathan R.",
       title: "Marketing Director",
       company: "Tech Innovations Corp.",
     },
     {
-      text: "Media Space has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Media Space an invaluable asset for our team.",
+      text: "Kommunita has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Kommunita an invaluable asset for our team.",
       username: "Jonathan R.",
       title: "Marketing Director",
       company: "Tech Innovations Corp.",
     },
     {
-      text: "Media Space has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Media Space an invaluable asset for our team.",
+      text: "Kommunita has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Kommunita an invaluable asset for our team.",
       username: "Jonathan R.",
       title: "Marketing Director",
       company: "Tech Innovations Corp.",
     },
     {
-      text: "Media Space has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Media Space an invaluable asset for our team.",
+      text: "Kommunita has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Kommunita an invaluable asset for our team.",
       username: "Jonathan R.",
       title: "junior Director",
       company: "Tech Innovations Corp.",
     },
     {
-      text: "Media Space has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Media Space an invaluable asset for our team.",
+      text: "Kommunita has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Kommunita an invaluable asset for our team.",
       username: "Jonathan R.",
       title: "Marketing ",
       company: "Tech Innovations Corp.",
     },
     {
-      text: "Media Space has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Media Space an invaluable asset for our team.",
+      text: "Kommunita has transformed the way we communicate within our organization. The seamless integration into our existing tools made the transition smooth, and the customization options allowed us to create a branded communication hub that truly reflects our identity. Real-time collaboration has never been easier, making Kommunita an invaluable asset for our team.",
       username: "Jonathan R.",
       title: " Director",
       company: "Tech Innovations Corp.",
