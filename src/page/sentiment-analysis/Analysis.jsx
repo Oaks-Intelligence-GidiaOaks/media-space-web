@@ -10,9 +10,6 @@ import negative from "../../assets/icons/negative.svg";
 import DynamicLineChart from "../../components/charts/DynamicLineChart";
 import data from "./chart-data";
 import "./WordCloud";
-
-import "tippy.js/dist/tippy.css";
-import "tippy.js/animations/scale.css";
 import GaugeComponent from "react-gauge-component";
 import Legend from "./Legend";
 import arrow from "./arrow.svg";
