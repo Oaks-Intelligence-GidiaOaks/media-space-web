@@ -17,6 +17,7 @@ import {
   SurveyResponses,
   Category,
   SentimentAnalysis,
+  Profile,
 } from "../page";
 
 import * as routes from "./CONSTANT";
@@ -70,6 +71,7 @@ const RouterConfig = () => {
           <Route path={routes.CATEGORY} element={<Category />} />
           <Route path={routes.NOTIFICATIONS} element={<Notifications />} />
           <Route path={routes.SETTINGS} element={<Settings />} />
+          <Route path={routes.COMPANY_PROFILE} element={<Profile />} />
           <Route path={routes.SURVEY_RESPONSES} element={<SurveyResponses />} />
           <Route
             path={routes.SENTIMENT_ANALYSIS}
