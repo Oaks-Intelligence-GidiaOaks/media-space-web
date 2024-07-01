@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", 'node_modules/flowbite-react/lib/esm/**/*.js',],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "node_modules/flowbite-react/lib/esm/**/*.js",
+  ],
   theme: {
     fontFamily: {
       Inter: ["Inter", "san-serif"],
@@ -41,5 +45,5 @@ export default {
       },
     },
   },
-  plugins: [ require('tailwind-scrollbar'), require('flowbite/plugin')],
+  plugins: [require("tailwind-scrollbar"), require("flowbite/plugin")],
 };

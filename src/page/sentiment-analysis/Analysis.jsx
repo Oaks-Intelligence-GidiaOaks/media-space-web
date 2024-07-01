@@ -9,14 +9,14 @@ import positive from "../../assets/icons/positive.svg";
 import negative from "../../assets/icons/negative.svg";
 import DynamicLineChart from "../../components/charts/DynamicLineChart";
 import data from "./chart-data";
-import words from "./words";
-import ReactWordcloud from "react-wordcloud";
+import "./WordCloud";
 
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import GaugeComponent from "react-gauge-component";
 import Legend from "./Legend";
 import arrow from "./arrow.svg";
+import WordCloud from "./WordCloud";
 
 const groupDataByMonth = (data, yKeys) => {
   const groupedData = {};
@@ -61,18 +61,6 @@ const Analysis = () => {
   const yKeys = ["positive", "negative", "neutral"];
   const groupedData = groupDataByMonth(data, yKeys);
   const flattenedData = flattenGroupedData(groupedData);
-  const callbacks = {
-    getWordColor: (word) => (word.value > 40 ? "teal" : "red"),
-    onWordClick: console.log,
-    onWordMouseOver: console.log,
-    getWordTooltip: (word) =>
-      `${word.text} (${word.value}) [${word.value > 50 ? "good" : "bad"}]`,
-  };
-  const options = {
-    rotations: 2,
-    rotationAngles: [0, 0],
-  };
-  const size = [614, 350];
 
   const legendItems = [
     { color: "#FF3A29", label: "Negative" },
@@ -162,12 +150,7 @@ const Analysis = () => {
                   </select>
                 </div>
                 <div className="flex justify-center items-center w-full">
-                  <ReactWordcloud
-                    callbacks={callbacks}
-                    options={options}
-                    size={size}
-                    words={words}
-                  />
+                  <WordCloud height={350} />
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
-const words = [
+const rawWords = [
   { text: "told", value: 64 },
-  { text: "mistake", value: 11 },
+  { text: "mistake", value: 18 },
   { text: "thought", value: 16 },
   { text: "bad", value: 17 },
   { text: "experience", value: 25 },
@@ -54,5 +54,18 @@ const words = [
   { text: "automation", value: 62 },
   { text: "configuration", value: 63 },
 ];
+
+// Normalize the values
+const maxWordValue = Math.max(...rawWords.map((w) => w.value));
+const minWordValue = Math.min(...rawWords.map((w) => w.value));
+
+const words = rawWords.map((word) => {
+  const normalizedValue =
+    ((word.value - minWordValue) / (maxWordValue - minWordValue)) * 100;
+  return {
+    ...word,
+    value: Math.round(normalizedValue),
+  };
+});
 
 export default words;
