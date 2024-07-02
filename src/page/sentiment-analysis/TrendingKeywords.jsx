@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 
 const TrendingKeywords = ({ index, keyword, usage, sentiments }) => {
   const { negative, neutral, positive } = sentiments;
+  // console.log(sentiments);
 
   return (
     <div className="flex items-center justify-between w-full">
@@ -9,7 +10,7 @@ const TrendingKeywords = ({ index, keyword, usage, sentiments }) => {
         <p className="keyword-index">{index}</p>
         <div className="flex flex-col">
           <p className="keyword flex flex-wrap">{keyword}</p>
-          <p className="usage">{usage}</p>
+          <p className="usage">{usage} usage</p>
         </div>
       </div>
       <div className="flex items-center gap-1 w-[195px]">
@@ -26,7 +27,7 @@ const TrendingKeywords = ({ index, keyword, usage, sentiments }) => {
           <div className="flex items-center w-[60px] h-[12px] border bg-[#E6EAFE]">
             <div
               className="w-[60px] h-[12px]"
-              style={{ width: `${neutral}%`, backgroundColor: "#D4BD52" }}
+              style={{ width: `${neutral}%`, backgroundColor: "#4360FA" }}
             ></div>
           </div>
         </div>
@@ -47,11 +48,11 @@ const TrendingKeywords = ({ index, keyword, usage, sentiments }) => {
 TrendingKeywords.propTypes = {
   index: PropTypes.number.isRequired,
   keyword: PropTypes.string.isRequired,
-  usage: PropTypes.string.isRequired,
+  usage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   sentiments: PropTypes.shape({
-    negative: PropTypes.number.isRequired,
     neutral: PropTypes.number.isRequired,
     positive: PropTypes.number.isRequired,
+    negative: PropTypes.number.isRequired,
   }).isRequired,
 };
 

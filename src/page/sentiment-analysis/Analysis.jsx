@@ -15,7 +15,7 @@ import Legend from "./Legend";
 import arrow from "./arrow.svg";
 import WordCloud from "./WordCloud";
 import TrendingKeywords from "./TrendingKeywords";
-import keywords from "./keywords";
+import { useGetTrendingKeywordsQuery } from "../../service/admin/sentiment-analysis";
 
 const groupDataByMonth = (data, yKeys) => {
   const groupedData = {};
@@ -61,11 +61,30 @@ const Analysis = () => {
   const groupedData = groupDataByMonth(data, yKeys);
   const flattenedData = flattenGroupedData(groupedData);
 
-  const legendItems = [
+  const legendItemsNet = [
     { color: "#FF3A29", label: "Negative" },
     { color: "#D4BD52", label: "Neutral" },
     { color: "#4E9C19", label: "Positive" },
   ];
+  const legendItemsTrend = [
+    { color: "#FF3A29", label: "Negative" },
+    { color: "#4360FA", label: "Neutral" },
+    { color: "#4E9C19", label: "Positive" },
+  ];
+
+  const { data: trendingKeywords, isLoading: loadingTrendingWords } =
+    useGetTrendingKeywordsQuery();
+  const transformedData = trendingKeywords?.data?.map((item) => ({
+    keyword: item.keyword,
+    usage: item.usage,
+    sentiments: {
+      neutral: Math.round(item.neutral),
+      positive: Math.round(item.positive),
+      negative: Math.round(item.negative),
+    },
+  }));
+
+  // console.log(transformedData);
 
   return (
     <>
@@ -206,7 +225,7 @@ const Analysis = () => {
                     <p className="guage-period">Previous period: 74.24</p>
                   </div>
 
-                  <Legend items={legendItems} />
+                  <Legend items={legendItemsNet} />
                 </div>
               </div>
             </div>
@@ -228,18 +247,24 @@ const Analysis = () => {
                 </div>
 
                 <div className="pt-5 flex flex-col h-full w-full gap-4 relative">
-                  {keywords.slice(0, 10).map((item, index) => (
-                    <TrendingKeywords
-                      key={index}
-                      index={index + 1}
-                      keyword={item.keyword}
-                      usage={item.usage}
-                      sentiments={item.sentiments}
-                    />
-                  ))}
+                  {loadingTrendingWords ? (
+                    <ShimmerThumbnail width={350} height={400} />
+                  ) : (
+                    transformedData
+                      ?.slice(0, 10)
+                      .map((item, index) => (
+                        <TrendingKeywords
+                          key={index}
+                          index={index + 1}
+                          keyword={item.keyword}
+                          usage={item.usage}
+                          sentiments={item.sentiments}
+                        />
+                      ))
+                  )}
 
                   <div className="absolute bottom-5 justify-center items-center w-full">
-                    <Legend items={legendItems} />
+                    <Legend items={legendItemsTrend} />
                   </div>
                 </div>
               </div>

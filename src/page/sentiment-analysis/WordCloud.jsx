@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Text } from "@visx/text";
 import { scaleLog } from "@visx/scale";
 import Wordcloud from "@visx/wordcloud/lib/Wordcloud";
-import words from "./words"; // Adjust the path accordingly
+import { useGetWordCloudQuery } from "../../service/admin/sentiment-analysis";
+import { ShimmerThumbnail } from "react-shimmer-effects";
 
 const colors = ["#28F473", "#09ABC3", "#000", "#5F0CF3", "#E0092F"];
 
@@ -13,10 +14,10 @@ const fontSizeSetter = (datum) => fontScale(datum.value);
 
 const fixedValueGenerator = () => 0.5;
 
-export default function Example({ height }) {
-  //   console.log(words);
+export default function WordCloud({ height }) {
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
+  const { data: wordclouddata, isLoading } = useGetWordCloudQuery();
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,11 +38,32 @@ export default function Example({ height }) {
     };
   }, []);
 
+  // Transform and normalize the API data
+  const transformedWords =
+    wordclouddata?.data.map((item) => ({
+      text: item.keyword,
+      value: item.usage,
+    })) || [];
+
+  const maxWordValue = Math.max(...transformedWords.map((w) => w.value), 1);
+  const minWordValue = Math.min(...transformedWords.map((w) => w.value), 0);
+
+  const normalizedWords = transformedWords.map((word) => {
+    const normalizedValue =
+      ((word.value - minWordValue) / (maxWordValue - minWordValue)) * 100;
+    return {
+      ...word,
+      value: Math.round(normalizedValue),
+    };
+  });
+
   return (
-    <div className="wordcloud w-full" ref={containerRef}>
-      {width > 0 && words.length > 0 ? (
+    <div className="wordcloud w-full pt-2" ref={containerRef}>
+      {isLoading ? (
+        <ShimmerThumbnail width={width} height={300} />
+      ) : width > 0 && normalizedWords.length > 0 ? (
         <Wordcloud
-          words={words}
+          words={normalizedWords}
           width={width}
           height={height}
           fontSize={fontSizeSetter}
@@ -54,7 +76,7 @@ export default function Example({ height }) {
           {(cloudWords) =>
             cloudWords.map((w, i) => (
               <Text
-                key={w.i}
+                key={w.text}
                 fill={colors[i % colors.length]}
                 textAnchor={"middle"}
                 transform={`translate(${w.x}, ${w.y}) rotate(${w.rotate})`}
