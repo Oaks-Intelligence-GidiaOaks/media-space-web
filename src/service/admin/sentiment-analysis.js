@@ -1,4 +1,10 @@
-import { TRENDING_KEYWORDS, WORD_CLOUD } from "../constants";
+import {
+  TRENDING_KEYWORDS,
+  WORD_CLOUD,
+  SENTIMENT_ANALYSIS_STATISTICS,
+  NET_SENTIMENT,
+  SENTIMENT_TREND,
+} from "../constants";
 import apiSlice from "../api/apiSlice";
 
 export const adminApiSlice = apiSlice.injectEndpoints({
@@ -18,8 +24,37 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["sentimentAnalysis"],
     }),
+
+    getSentimentStats: builder.query({
+      query: () => ({
+        url: SENTIMENT_ANALYSIS_STATISTICS,
+        method: "GET",
+      }),
+      providesTags: ["sentimentAnalysis"],
+    }),
+
+    getNetSentiment: builder.query({
+      query: () => ({
+        url: NET_SENTIMENT,
+        method: "GET",
+      }),
+      providesTags: ["sentimentAnalysis"],
+    }),
+
+    getSentimentTrend: builder.query({
+      query: () => ({
+        url: SENTIMENT_TREND,
+        method: "GET",
+      }),
+      providesTags: ["sentimentAnalysis"],
+    }),
   }),
 });
 
-export const { useGetTrendingKeywordsQuery, useGetWordCloudQuery } =
-  adminApiSlice;
+export const {
+  useGetTrendingKeywordsQuery,
+  useGetWordCloudQuery,
+  useGetSentimentStatsQuery,
+  useGetNetSentimentQuery,
+  useGetSentimentTrendQuery,
+} = adminApiSlice;

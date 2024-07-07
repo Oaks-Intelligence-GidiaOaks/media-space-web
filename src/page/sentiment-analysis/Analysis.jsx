@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import "./style.css";
 import { Cards } from "../../components/layout/super-admin-layout";
 import { ShimmerThumbnail } from "react-shimmer-effects";
-import { useGetPostStatsQuery } from "../../service/admin/statistics.service";
 import neutral from "../../assets/icons/neutral.svg";
 import post from "../../assets/icons/post.svg";
 import positive from "../../assets/icons/positive.svg";
@@ -15,7 +14,12 @@ import Legend from "./Legend";
 import arrow from "./arrow.svg";
 import WordCloud from "./WordCloud";
 import TrendingKeywords from "./TrendingKeywords";
-import { useGetTrendingKeywordsQuery } from "../../service/admin/sentiment-analysis";
+import {
+  useGetTrendingKeywordsQuery,
+  useGetSentimentStatsQuery,
+  useGetNetSentimentQuery,
+  useGetSentimentTrendQuery,
+} from "../../service/admin/sentiment-analysis";
 
 const groupDataByMonth = (data, yKeys) => {
   const groupedData = {};
@@ -56,7 +60,7 @@ const flattenGroupedData = (groupedData) => {
 
 const Analysis = () => {
   const user = useSelector((state) => state.user.user);
-  const { data: postStats, isLoading: loadStats } = useGetPostStatsQuery();
+  const { data: postStats, isLoading: loadStats } = useGetSentimentStatsQuery();
   const yKeys = ["positive", "negative", "neutral"];
   const groupedData = groupDataByMonth(data, yKeys);
   const flattenedData = flattenGroupedData(groupedData);
@@ -84,7 +88,13 @@ const Analysis = () => {
     },
   }));
 
-  // console.log(transformedData);
+  const { data: netSentiment, isLoading: loadNetSentiment } =
+    useGetNetSentimentQuery();
+
+  const { data: trendsData, isLoading: loadTrends } =
+    useGetSentimentTrendQuery();
+
+  console.log(trendsData);
 
   return (
     <>
@@ -119,7 +129,7 @@ const Analysis = () => {
                   <ShimmerThumbnail width={250} height={150} />
                 ) : (
                   <Cards
-                    title={postStats?.data?.posts_count}
+                    title={postStats?.data?.total_sentiments?.count || "--"}
                     subtitle={"Total post"}
                     img={post}
                   />
@@ -129,7 +139,7 @@ const Analysis = () => {
                   <ShimmerThumbnail width={250} height={150} />
                 ) : (
                   <Cards
-                    title={postStats?.data?.impressions_count}
+                    title={postStats?.data?.positive_sentiments?.count || "--"}
                     subtitle={"Total Positive"}
                     img={positive}
                   />
@@ -139,7 +149,7 @@ const Analysis = () => {
                   <ShimmerThumbnail width={250} height={150} />
                 ) : (
                   <Cards
-                    title={postStats?.data?.shares_count}
+                    title={postStats?.data?.negative_sentiments?.count || "--"}
                     subtitle={"Total Negative"}
                     img={negative}
                   />
@@ -149,7 +159,7 @@ const Analysis = () => {
                   <ShimmerThumbnail width={250} height={150} />
                 ) : (
                   <Cards
-                    title={postStats?.data?.reposts_count}
+                    title={postStats?.data?.neutral_sentiments?.count || "--"}
                     subtitle={"Total Neutral"}
                     img={neutral}
                   />
@@ -182,41 +192,47 @@ const Analysis = () => {
                 </div>
 
                 <div className="flex flex-col justify-center mt-8">
-                  <GaugeComponent
-                    value={80}
-                    type="semicircle"
-                    labels={{
-                      tickLabels: {
-                        type: "inner",
-                        ticks: [
-                          { value: 20 },
-                          { value: 40 },
-                          { value: 60 },
-                          { value: 80 },
-                          { value: 100 },
-                        ],
-                      },
-                      valueLabel: {
-                        hide: true,
-                      },
-                    }}
-                    arc={{
-                      colorArray: ["#EA4228", "#5BE12C"],
-                      padding: 0.02,
-                      width: 0.3,
-                      nbSubArcs: 0,
-                    }}
-                    pointer={{
-                      elastic: true,
-                      animationDelay: 0,
-                      color: "#272525",
-                      width: 10,
-                      length: 0.8,
-                    }}
-                  />
+                  {loadNetSentiment ? (
+                    <ShimmerThumbnail width={350} height={400} />
+                  ) : (
+                    <GaugeComponent
+                      value={netSentiment?.data?.net_sentiment}
+                      type="semicircle"
+                      labels={{
+                        tickLabels: {
+                          type: "inner",
+                          ticks: [
+                            { value: 20 },
+                            { value: 40 },
+                            { value: 60 },
+                            { value: 80 },
+                            { value: 100 },
+                          ],
+                        },
+                        valueLabel: {
+                          hide: true,
+                        },
+                      }}
+                      arc={{
+                        colorArray: ["#EA4228", "#5BE12C"],
+                        padding: 0.02,
+                        width: 0.3,
+                        nbSubArcs: 0,
+                      }}
+                      pointer={{
+                        elastic: true,
+                        animationDelay: 0,
+                        color: "#272525",
+                        width: 10,
+                        length: 0.8,
+                      }}
+                    />
+                  )}
 
                   <div className="flex flex-col w-full justify-center items-center mb-40">
-                    <h1 className="guage-value-head">+80</h1>
+                    <h1 className="guage-value-head">
+                      {netSentiment?.data?.net_sentiment}
+                    </h1>
                     <p className="guage-rating">VERY POSITIVE</p>
                     <p className="guage-period flex items-center gap-1 py-2">
                       <img src={arrow} alt="" />
@@ -233,11 +249,17 @@ const Analysis = () => {
 
           <div className="flex gap-10 justify-between">
             <div className="flex w-full border rounded-[13.17px] border-[#E6EDFF] bg-white h-[537.02px] shadow">
-              <DynamicLineChart
-                data={flattenedData}
-                xKey="date"
-                yKeys={yKeys}
-              />
+              {loadTrends ? (
+                <div className="flex justify-center items-center w-full">
+                  <ShimmerThumbnail height={450} width={500} />
+                </div>
+              ) : (
+                <DynamicLineChart
+                  data={flattenedData}
+                  xKey="date"
+                  yKeys={yKeys}
+                />
+              )}
             </div>
             <div className="net-sentiment w-full max-w-[376px] h-[537.02px] border  rounded-[13.17px] shadow border-[#E6EDFF] bg-white">
               <div className="p-3 h-full">

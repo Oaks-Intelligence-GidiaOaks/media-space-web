@@ -32,3 +32,6 @@ export const ADD_REMOVE_STAFF = "admin/staff";
 export const ORGANIZATION_USER_LIST = "admin/user/organization-users";
 export const WORD_CLOUD = "admin/sentiment/word-cloud";
 export const TRENDING_KEYWORDS = "admin/sentiment/trending-keywords";
+export const SENTIMENT_ANALYSIS_STATISTICS = "admin/sentiment/statistics";
+export const NET_SENTIMENT = "admin/sentiment/net-sentiment";
+export const SENTIMENT_TREND = "admin/sentiment/trend";
