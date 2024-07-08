@@ -115,12 +115,30 @@ const Analysis = () => {
                 <p className="analysis-filter-top pr-5">Filter by:</p>
                 <select className="analysis-filter-input focus:outline-none focus:ring-0">
                   <option value="Worldwide">Worldwide</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="South Africa">South Africa</option>
+                  <option value="England">England</option>
+                  <option value="Wales">Wales</option>
                 </select>
                 <select className="analysis-filter-input focus:outline-none focus:ring-0">
+                  <option value="Today">Last 12 hours</option>
                   <option value="Today">Today</option>
+                  <option value="Today">Last 3 days</option>
+                  <option value="Today">Last 7 days</option>
+                  <option value="Today">Last 30 days</option>
+                  <option value="Today">This year</option>
+                  <option value="Today">Custom</option>
                 </select>
                 <select className="analysis-filter-input focus:outline-none focus:ring-0">
                   <option value="All Categories">All Categories</option>
+                  <option value="Education">Education</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Health and Wellness">
+                    Health and Wellness
+                  </option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Carbon footprint">Carbon footprint</option>
+                  <option value="Others">Others</option>
                 </select>
               </div>
 
@@ -174,7 +192,13 @@ const Analysis = () => {
                 <div className="flex justify-between items-center">
                   <p className="word-cloud-text">Word Cloud</p>
                   <select className="w-[173px] h-[37.97px] analysis-filter-input focus:outline-none focus:ring-0">
-                    <option value="This Week">This Week</option>
+                    <option value="Today">Last 12 hours</option>
+                    <option value="Today">Today</option>
+                    <option value="Today">Last 3 days</option>
+                    <option value="Today">Last 7 days</option>
+                    <option value="Today">Last 30 days</option>
+                    <option value="Today">This year</option>
+                    <option value="Today">Custom</option>{" "}
                   </select>
                 </div>
                 <div className="flex justify-center items-center w-full">
@@ -193,55 +217,57 @@ const Analysis = () => {
 
                 <div className="flex flex-col justify-center mt-8">
                   {loadNetSentiment ? (
-                    <ShimmerThumbnail width={350} height={400} />
+                    <ShimmerThumbnail width={350} height={350} />
                   ) : (
-                    <GaugeComponent
-                      value={netSentiment?.data?.net_sentiment}
-                      type="semicircle"
-                      labels={{
-                        tickLabels: {
-                          type: "inner",
-                          ticks: [
-                            { value: 20 },
-                            { value: 40 },
-                            { value: 60 },
-                            { value: 80 },
-                            { value: 100 },
-                          ],
-                        },
-                        valueLabel: {
-                          hide: true,
-                        },
-                      }}
-                      arc={{
-                        colorArray: ["#EA4228", "#5BE12C"],
-                        padding: 0.02,
-                        width: 0.3,
-                        nbSubArcs: 0,
-                      }}
-                      pointer={{
-                        elastic: true,
-                        animationDelay: 0,
-                        color: "#272525",
-                        width: 10,
-                        length: 0.8,
-                      }}
-                    />
+                    <>
+                      <GaugeComponent
+                        value={netSentiment?.data?.net_sentiment}
+                        type="semicircle"
+                        labels={{
+                          tickLabels: {
+                            type: "inner",
+                            ticks: [
+                              { value: 20 },
+                              { value: 40 },
+                              { value: 60 },
+                              { value: 80 },
+                              { value: 100 },
+                            ],
+                          },
+                          valueLabel: {
+                            hide: true,
+                          },
+                        }}
+                        arc={{
+                          colorArray: ["#EA4228", "#5BE12C"],
+                          padding: 0.02,
+                          width: 0.3,
+                          nbSubArcs: 0,
+                        }}
+                        pointer={{
+                          elastic: true,
+                          animationDelay: 0,
+                          color: "#272525",
+                          width: 10,
+                          length: 0.8,
+                        }}
+                      />
+
+                      <div className="flex flex-col w-full justify-center items-center mb-40">
+                        <h1 className="guage-value-head">
+                          {netSentiment?.data?.net_sentiment}
+                        </h1>
+                        <p className="guage-rating">VERY POSITIVE</p>
+                        <p className="guage-period flex items-center gap-1 py-2">
+                          <img src={arrow} alt="" />
+                          7.2%
+                        </p>
+                        <p className="guage-period">Previous period: 74.24</p>
+                      </div>
+
+                      <Legend items={legendItemsNet} />
+                    </>
                   )}
-
-                  <div className="flex flex-col w-full justify-center items-center mb-40">
-                    <h1 className="guage-value-head">
-                      {netSentiment?.data?.net_sentiment}
-                    </h1>
-                    <p className="guage-rating">VERY POSITIVE</p>
-                    <p className="guage-period flex items-center gap-1 py-2">
-                      <img src={arrow} alt="" />
-                      7.2%
-                    </p>
-                    <p className="guage-period">Previous period: 74.24</p>
-                  </div>
-
-                  <Legend items={legendItemsNet} />
                 </div>
               </div>
             </div>
@@ -272,9 +298,8 @@ const Analysis = () => {
                   {loadingTrendingWords ? (
                     <ShimmerThumbnail width={350} height={400} />
                   ) : (
-                    transformedData
-                      ?.slice(0, 10)
-                      .map((item, index) => (
+                    <>
+                      {transformedData?.slice(0, 10).map((item, index) => (
                         <TrendingKeywords
                           key={index}
                           index={index + 1}
@@ -282,12 +307,13 @@ const Analysis = () => {
                           usage={item.usage}
                           sentiments={item.sentiments}
                         />
-                      ))
-                  )}
+                      ))}
 
-                  <div className="absolute bottom-5 justify-center items-center w-full">
-                    <Legend items={legendItemsTrend} />
-                  </div>
+                      <div className="absolute bottom-5 justify-center items-center w-full">
+                        <Legend items={legendItemsTrend} />
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
