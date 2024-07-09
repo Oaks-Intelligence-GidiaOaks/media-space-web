@@ -27,7 +27,9 @@ const TitleBar = () => {
     handleLogout(dispatch);
   };
 
-  const display_name = useSelector((state) => state.user.user.display_name);
+  const display_name = useSelector(
+    (state) => state?.user?.user?.display_name || "NULL"
+  );
 
   return (
     <div className="h-10 pb-10 flex justify-between pt-10 w-full pl-1 sm:pl-0 pr-2 sticky top-0 bg-white">

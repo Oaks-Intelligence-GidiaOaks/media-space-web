@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import {
   LandingPage,
   Login,
+  Plans,
   Notifications,
   Organizations,
   Overview,
@@ -36,6 +37,7 @@ const RouterConfig = () => {
         />
         {/* <Route path={routes.LOGIN} element={<Login />} /> */}
 
+        <Route path={routes.SUBSCRIPTION_PLANS} element={<Plans />} />
         <Route path={routes.REGISTER} element={<Register />} />
         <Route path={routes.SIGN_UP} element={<SignUp />} />
         <Route

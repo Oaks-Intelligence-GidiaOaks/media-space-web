@@ -1,5 +1,6 @@
 export { default as LandingPage } from "./landing-page/LandingPage";
 export { default as Login } from "./Login";
+export { default as Plans } from "./SubscriptionPlans";
 export { default as Register } from "./Register";
 export { default as SignUp } from "./SignUp";
 export { default as Overview } from "./overview/Overview";
