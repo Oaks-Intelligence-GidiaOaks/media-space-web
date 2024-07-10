@@ -2,6 +2,28 @@ body {
   scroll-behavior: smooth;
 }
 
+.heroimg {
+  background-image: url("../../assets/heroimg.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: #112420;
+}
+
+.first-hero-head {
+  font-family: Inter;
+  font-size: 53.42px;
+  font-weight: 400;
+  line-height: 64.66px;
+}
+
+.first-hero-subtitle {
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24.2px;
+  text-align: center;
+}
 .logo-text {
   color: #000;
   font-family: "PT Serif Caption";
@@ -51,7 +73,7 @@ body {
   line-height: normal;
 }
 .spotlight {
-  color: #7add02;
+  color: #3d7100;
   font-family: Inter;
   font-size: 4rem;
   font-style: normal;
@@ -489,4 +511,10 @@ body {
   .quote-company {
     font-size: 10px;
   }
+}
+.menu-links {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
 }
