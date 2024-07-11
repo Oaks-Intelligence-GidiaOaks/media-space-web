@@ -22,7 +22,7 @@ function HowItWorks() {
   return (
     <section className="how-it-works">
       <h1 className="works-head pt-16 pb-10 text-center">
-        How Kommunita works
+        How Media Space works
       </h1>
       <div className="flex flex-col lg:flex-row justify-center lg:justify-evenly gap-10 pt-5 lg:pt-30">
         <motion.div
@@ -40,7 +40,7 @@ function HowItWorks() {
               <div className="blocker-box">
                 <p className="blocker-title pb-3">Seamless Integration</p>
                 <p className="blocker-content">
-                  Integrate Kommunita <br /> effortlessly into your current{" "}
+                  Integrate Media Space <br /> effortlessly into your current{" "}
                   <br /> apps and workflows for a <br /> smooth transition.
                 </p>
               </div>
@@ -63,7 +63,7 @@ function HowItWorks() {
               <div className="blocker-box">
                 <p className="blocker-title pb-3">Customize Your Space</p>
                 <p className="blocker-content">
-                  Integrate Kommunita <br /> effortlessly into your current{" "}
+                  Integrate Media Space <br /> effortlessly into your current{" "}
                   <br /> apps and workflows for a <br /> smooth transition.
                 </p>
               </div>
@@ -85,8 +85,8 @@ function HowItWorks() {
             <div className="blocker-box">
               <p className="blocker-title pb-3">Real-Time Collaboration</p>
               <p className="blocker-content">
-                Integrate Kommunita <br /> effortlessly into your current <br />{" "}
-                apps and workflows for a <br /> smooth transition.
+                Integrate Media Space <br /> effortlessly into your current{" "}
+                <br /> apps and workflows for a <br /> smooth transition.
               </p>
             </div>
           </div>

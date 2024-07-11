@@ -246,7 +246,6 @@ const CreateCategory = () => {
           />
         )}
       </div>
-      
       {/*  category modal */}
       <Modals
         title="Create category"
