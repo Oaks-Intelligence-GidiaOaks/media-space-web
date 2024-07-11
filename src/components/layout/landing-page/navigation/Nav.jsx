@@ -6,6 +6,7 @@ import {
   FAQ,
   ABOUT,
   REGISTER,
+  LOGIN,
 } from "../../../../routes/CONSTANT";
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -47,7 +48,7 @@ function Nav() {
                 <NavLink
                   to={link.path}
                   exact="true"
-                  activeClassName="active"
+                  activeclassname="active"
                   className="block py-2 hover:text-neutral-400 transition-all menu-links"
                   onClick={toggleMenu}
                 >
@@ -63,7 +64,7 @@ function Nav() {
             Sign up for free
           </Link>
           <Link
-            to={REGISTER}
+            to={LOGIN}
             className="flex action-button bg-[#FFFFFF] text-[#3D7100] sm:mr-1 w-auto text-base"
           >
             Log in
