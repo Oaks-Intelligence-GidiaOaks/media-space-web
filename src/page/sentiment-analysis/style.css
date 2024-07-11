@@ -112,3 +112,84 @@
   line-height: 16.94px;
   color: #000;
 }
+.keyword-index {
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  color: #2e2d2d;
+}
+.keyword {
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  color: #2e2d2d;
+}
+.usage {
+  font-family: Inter;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 12.1px;
+  color: #a6a6a6;
+}
+.word-card-header {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.36px;
+  color: #091001;
+}
+.word-card-details {
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 14.52px;
+  color: #80857b;
+}
+.word-cloud-details-val {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  color: #2d2b2b;
+}
+.overall-details-val {
+  font-family: Inter;
+  font-size: 6.67px;
+  font-weight: 400;
+  line-height: 8.07px;
+  color: #2d2b2b;
+}
+.word-cloud-sentiment-val {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.36px;
+}
+.sentiment-category-text {
+  font-family: Inter;
+  font-size: 9.67px;
+  font-weight: 400;
+  line-height: 11.7px;
+  color: #2d2b2b;
+}
+.wordcloud {
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+.wordcloud svg {
+  margin: 1rem 0;
+  cursor: pointer;
+}
+
+.wordcloud label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  margin-right: 8px;
+}
+.wordcloud textarea {
+  min-height: 100px;
+}

@@ -48,7 +48,7 @@ function Nav() {
                   to={link.path}
                   exact="true"
                   activeClassName="active"
-                  className="block py-2 hover:text-neutral-400 transition-all"
+                  className="block py-2 hover:text-neutral-400 transition-all menu-links"
                   onClick={toggleMenu}
                 >
                   {link.name}
@@ -58,9 +58,15 @@ function Nav() {
           </ul>
         </div>
 
-        <div className="ml-auto sm:mr-1">
-          <Link to={REGISTER} className="flex action-button sm:mr-1">
-            Sign up
+        <div className="ml-auto sm:mr-1 flex gap-2">
+          <Link to={REGISTER} className="action-button sm:mr-1 hidden md:flex">
+            Sign up for free
+          </Link>
+          <Link
+            to={REGISTER}
+            className="flex action-button bg-[#FFFFFF] text-[#3D7100] sm:mr-1 w-auto text-base"
+          >
+            Log in
           </Link>
         </div>
 

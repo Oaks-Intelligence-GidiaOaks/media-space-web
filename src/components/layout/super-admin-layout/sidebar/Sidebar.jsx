@@ -153,10 +153,15 @@ const Sidebar = ({ sidebarItems }) => {
         >
           <div className="w-full flex flex-col gap-y-8 relative h-auto pb-5 z-50">
             {sidebarItems.map((sidebarItem, i) => {
+              const isLastItem = i === sidebarItems.length - 1;
+              console.log(`Item ${i} is last: ${isLastItem}`);
+
               return (
                 <button
                   key={sidebarItem.title}
-                  className="flex flex-col gap-1 items-center justify-center h-14 relative z-[1] transition-all duration-300"
+                  className={`flex flex-col gap-1 items-center justify-center h-14 relative z-[1] transition-all duration-300 ${
+                    isLastItem ? "mb-10" : ""
+                  }`}
                   aria-label={sidebarItem.title}
                   onClick={() => {
                     setCurrentTabIndex(i);
@@ -172,20 +177,23 @@ const Sidebar = ({ sidebarItems }) => {
                     style={{
                       transition: "all 300ms ease",
                     }}
+                    alt={sidebarItem.title}
                   />
+                  {/* Uncomment this block to show the text label */}
                   {/* <p
-                    className={`hidden sm:block sm:text-[0.5rem] md:text-[0.65rem] lg::text-xs font-medium font-poppins ${activeTextStyling(
-                      sidebarItem.route
-                    )}`}
-                    style={{
-                      transition: "all 300ms ease",
-                    }}
-                  >
-                    {sidebarItem.title}
-                  </p> */}
+        className={`hidden sm:block sm:text-[0.5rem] md:text-[0.65rem] lg::text-xs font-medium font-poppins ${activeTextStyling(
+          sidebarItem.route
+        )}`}
+        style={{
+          transition: "all 300ms ease",
+        }}
+      >
+        {sidebarItem.title}
+      </p> */}
                 </button>
               );
             })}
+
             {/* indicator */}
             <div
               className={`absolute w-full h-[3.75rem] bg-[rgba(255,255,255,0.2)] left-0`}

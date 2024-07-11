@@ -14,7 +14,7 @@ const TitleBar = () => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const user = useSelector((state) => state.user.user);
-  console.log(user);
+  // console.log(user);
 
   const navigateToOverview = () => {
     navigate("/dashboard/overview");
@@ -28,9 +28,8 @@ const TitleBar = () => {
   };
 
   const display_name = useSelector(
-    (state) => state.user.user.organization_id.organization_name
+    (state) => state?.user?.user?.display_name || "NULL"
   );
-  // const userProfile = useSelector((state) => state.user.user.photo_url);
 
   return (
     <div className="h-10 pb-10 flex justify-between pt-10 w-full pl-1 sm:pl-0 pr-2 sticky top-0 bg-white">
@@ -62,8 +61,8 @@ const TitleBar = () => {
             className="flex flex-nowrap gap-2 items-center hover:bg-primary-gray rounded p-1"
           >
             <img
-              src={user?.organization_id?.logo_url || placeholder}
-              className="w-[25px] h-[25px] rounded-full"
+              src={user?.photo_url || placeholder}
+              className="w-[18px] sm:w-6 rounded-full"
             />
             <p className="font-inter hidden sm:block">{display_name}</p>
             <img className="w-3" src={chevron} />
@@ -72,7 +71,6 @@ const TitleBar = () => {
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg z-50">
               <Link
-                to={"/dashboard/company_profile"}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {
                   setIsDropdownOpen(false);
@@ -82,7 +80,6 @@ const TitleBar = () => {
                 Profile
               </Link>
               <Link
-                to={"/dashboard/settings"}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {
                   setIsDropdownOpen(false);

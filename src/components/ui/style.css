@@ -1,0 +1,53 @@
+.plan-box {
+  width: 228.65px;
+  height: 435.34px;
+}
+.plan-title {
+  font-family: Inter;
+  font-size: 13.63px;
+  font-weight: 600;
+  line-height: 16.49px;
+  color: #171725;
+}
+.plan-description {
+  font-family: Inter;
+  font-size: 9.09px;
+  font-weight: 400;
+  line-height: 13.63px;
+  color: #92929d;
+}
+.plan-amount {
+  font-family: Inter;
+  font-size: 36.34px;
+  font-weight: 600;
+  line-height: 43.98px;
+  letter-spacing: 0.1514216959476471px;
+  color: #171725;
+}
+.plan-discount {
+  font-family: Inter;
+  font-size: 13.63px;
+  font-weight: 500;
+  line-height: 16.49px;
+  color: #92929d;
+}
+.plan-details-text {
+  font-family: Inter;
+  font-size: 10.6px;
+  font-weight: 400;
+  line-height: 12.83px;
+  letter-spacing: 0.07571088522672653px;
+  color: #171725;
+}
+.plan-btn {
+  font-family: Inter;
+  font-size: 9.09px;
+  font-weight: 600;
+  line-height: 11px;
+  text-align: center;
+  color: #fff;
+}
+.plan-separator {
+  border: 0.76px solid #f1f1f5;
+  height: 0.76px;
+}
