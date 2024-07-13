@@ -1,22 +1,27 @@
 import { Plans } from "../components/ui";
-import Data from "./PlansData";
 import { useState } from "react";
-import { logo } from "../assets";
+import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import { useGetPlansQuery } from "../service/admin/plan.service";
+import { handleLogout } from "../static/logout";
 import search from "../assets/titlebar/search.svg";
 import notification from "../assets/titlebar/notification.svg";
 import placeholder from "../assets/user-avatar.png";
 import chevron from "../assets/titlebar/chevron.svg";
-import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle, FaCog, FaSignOutAlt } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { handleLogout } from "../static/logout";
-import { useSelector } from "react-redux";
-import { motion } from "framer-motion";
+import { logo } from "../assets";
+import { Spinner } from "flowbite-react";
 
 const SubscriptionPlans = () => {
+  const { data: availablePlans, isLoading } = useGetPlansQuery();
+  const subscription_plans = availablePlans?.data;
+  // console.log(subscription_plans);
+
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("monthly");
+  const [country, setCountry] = useState("NG"); // Default to Nigeria (NG) or US for United States
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -33,10 +38,33 @@ const SubscriptionPlans = () => {
   const logout = () => {
     setIsDropdownOpen(false);
     handleLogout(dispatch);
+    navigate("/signin");
   };
 
   const display_name = useSelector((state) => state?.user?.user?.display_name);
-  const filteredPlans = Data.filter((plan) => plan.type === activeTab);
+
+  const filteredPlans =
+    subscription_plans?.map((plan, index) => {
+      const priceField = `${activeTab}_price_${
+        country === "NG" ? "naira" : "dollar"
+      }`;
+      const uniqueFeatures = plan.features.filter(
+        (feature) =>
+          !(
+            index > 0 &&
+            subscription_plans[index - 1].features.some(
+              (prevFeature) => prevFeature.module_name === feature.module_name
+            )
+          )
+      );
+
+      return {
+        ...plan,
+        price: plan[priceField],
+        uniqueFeatures,
+        previousPlanName: index > 0 ? subscription_plans[index - 1].name : null,
+      };
+    }) || [];
 
   return (
     <section className="min-h-screen bg-[#F9FAFA]">
@@ -113,56 +141,65 @@ const SubscriptionPlans = () => {
         </div>
       </div>
 
-      <div className="flex justify-center items-center flex-col pt-12 pb-10">
-        <div className="flex gap-2 items-center py-5">
-          <motion.button
-            className={`plan-tab-btn border w-[120px] h-[48px] ${
-              activeTab === "monthly"
-                ? "bg-[#0F5901] text-white"
-                : "bg-transparent text-[#0F5901]"
-            }`}
-            onClick={() => handleTabClick("monthly")}
-            whileHover={{ scale: 1.1 }}
-          >
-            Monthly
-          </motion.button>
-          <motion.button
-            className={`plan-tab-btn border w-[120px] h-[48px] ${
-              activeTab === "yearly"
-                ? "bg-[#0F5901] text-white"
-                : "bg-transparent text-[#0F5901]"
-            }`}
-            onClick={() => handleTabClick("yearly")}
-            whileHover={{ scale: 1.1 }}
-          >
-            Yearly
-          </motion.button>
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          <Spinner />
         </div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="flex justify-center flex-wrap lg:flex-row items-center gap-3"
-        >
-          {filteredPlans.map((plan, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+      ) : (
+        <div className="flex justify-center items-center flex-col pt-12 pb-10">
+          <div className="flex gap-2 items-center py-5">
+            <motion.button
+              className={`plan-tab-btn border w-[120px] h-[48px] ${
+                activeTab === "monthly"
+                  ? "bg-[#0F5901] text-white"
+                  : "bg-transparent text-[#0F5901]"
+              }`}
+              onClick={() => handleTabClick("monthly")}
+              whileHover={{ scale: 1.1 }}
             >
-              <Plans
-                title={plan.title}
-                description={plan.description}
-                amount={plan.amount}
-                discountOff={plan.discountOff}
-                details={plan.details}
-                background={plan.background}
-                currency={plan.currency}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
+              Monthly
+            </motion.button>
+            <motion.button
+              className={`plan-tab-btn border w-[120px] h-[48px] ${
+                activeTab === "yearly"
+                  ? "bg-[#0F5901] text-white"
+                  : "bg-transparent text-[#0F5901]"
+              }`}
+              onClick={() => handleTabClick("yearly")}
+              whileHover={{ scale: 1.1 }}
+            >
+              Yearly
+            </motion.button>
+          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="flex justify-center flex-wrap lg:flex-row items-center gap-3"
+          >
+            {filteredPlans.map((plan, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Plans
+                  id={plan._id}
+                  title={plan.name}
+                  description={plan.description}
+                  amount={plan.price}
+                  discountOff={plan.discountOff}
+                  details={plan.features}
+                  background={plan.background}
+                  currency={country === "NG" ? "₦" : "$"}
+                  previousPlanName={plan.previousPlanName}
+                  uniqueFeatures={plan.uniqueFeatures}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 };

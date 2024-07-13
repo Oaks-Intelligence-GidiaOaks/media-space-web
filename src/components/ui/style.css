@@ -51,3 +51,28 @@
   border: 0.76px solid #f1f1f5;
   height: 0.76px;
 }
+.sub-inputs {
+  height: 47px !important;
+  padding: 0px 8px 0px 12px;
+  gap: 8px;
+  border-radius: 8px !important;
+  border: 1px solid #e6e6e6;
+  opacity: 0px;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.05000000074505806px;
+  text-align: left;
+  color: #0a090b;
+}
+.sub-label {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 475;
+  line-height: 20px;
+  letter-spacing: -0.05000000074505806px;
+  text-align: left;
+  font-variation-settings: "slnt" 0;
+  color: #2d2b32;
+}

@@ -32,7 +32,8 @@ const customBaseQuery = async (args, api, extraOptions) => {
   } else if (result.error && result.error.status === 401) {
     api.dispatch(logoutUser());
     showAlert(
-      "Access Token Expired",
+      // "Access Token Expired",
+      "Not Authorised",
       "Please login again to continue",
       "error"
     );

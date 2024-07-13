@@ -154,7 +154,6 @@ const Sidebar = ({ sidebarItems }) => {
           <div className="w-full flex flex-col gap-y-8 relative h-auto pb-5 z-50">
             {sidebarItems.map((sidebarItem, i) => {
               const isLastItem = i === sidebarItems.length - 1;
-              console.log(`Item ${i} is last: ${isLastItem}`);
 
               return (
                 <button

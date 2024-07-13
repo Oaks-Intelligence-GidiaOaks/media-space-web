@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import {
   Cards,
   AdsCard,
-  CategoryCard,
+  // CategoryCard,
 } from "../../components/layout/super-admin-layout";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import ads from "../../assets/ads.svg";
@@ -13,8 +13,8 @@ import Modals from "../../components/modals/Modal";
 import { Tabs } from "flowbite-react";
 import { GoBell } from "react-icons/go";
 import upload from "../../assets/upload.png";
-import CreateCategory from "./../../components/category/CreateCategory";
-import rectangle from "../../assets/rectangle.png";
+// import CreateCategory from "./../../components/category/CreateCategory";
+// import rectangle from "../../assets/rectangle.png";
 import { HiSpeakerphone } from "react-icons/hi";
 import { Form, Field } from "react-final-form";
 // import cat from "../../assets/category_outline.png";
@@ -28,7 +28,8 @@ import {
 } from "../../service/admin/advert.service";
 import { showAlert } from "../../static/alert";
 // import { useGetCategoryQuery } from "../../service/category.service";
-import PaginationControls from "../../components/ui/PaginationControls";
+// import PaginationControls from "../../components/ui/PaginationControls";
+import SuperAdminSubscription from "./SuperAdminSubscription";
 
 const constraints = {
   media: {
@@ -60,15 +61,17 @@ const Subscription = () => {
     data: advertdata,
     isLoading: loadAdvert,
     refetch,
-  } = useGetAllAdminAdvertQuery();
-
-  console.log(advertdata?.data);
+  } = useGetAllAdminAdvertQuery(undefined, {
+    skip: user?.role !== "Admin",
+  });
 
   const {
     data: advertStats,
     isLoading: loadAdvertStats,
     refetch: refetchAdvertStats,
-  } = useAdminAdvertStatsQuery();
+  } = useAdminAdvertStatsQuery(undefined, {
+    skip: user?.role !== "Admin",
+  });
 
   const adverts = advertdata?.data || [];
 
@@ -98,7 +101,7 @@ const Subscription = () => {
     } else if (error) {
       showAlert("Oops", error.data.message || "An error occurred", "error");
     }
-  }, [isSuccess, error, refetch]);
+  }, [isSuccess, error, refetch, refetchAdvertStats]);
 
   const token = useSelector((state) => state.user?.token);
 
@@ -187,7 +190,7 @@ const Subscription = () => {
       <div className="px-3">
         <div className="">
           {user && user.role == "SuperAdmin" ? (
-            <>super admin section</>
+            <SuperAdminSubscription />
           ) : (
             <>
               {/* <div className="flex justify-center items-center pb-10 gap-10">
