@@ -3,7 +3,9 @@ import "./style.css";
 import tick from "../../assets/icons/tick.svg";
 import { useState } from "react";
 import { Button, Modal } from "flowbite-react";
-import { showAlert } from "../../static/alert";
+import Select from "react-select";
+import { useGetFeaturesQuery } from "../../service/superadmin/plan.service.js";
+import { showAlert } from "../../static/alert.js";
 
 const SuperAdminPlans = ({
   id,
@@ -27,14 +29,34 @@ const SuperAdminPlans = ({
   const [formData, setFormData] = useState({
     name: title,
     description,
-    users: usage,
+    number_of_users: usage,
     monthly_price_naira,
     monthly_price_dollar,
     yearly_price_naira,
     yearly_price_dollar,
-    allFeatures: allFeatures.map((feature) => feature.module_name),
+    trial_period: "",
+    features: allFeatures.map((feature) => feature._id),
   });
-  const [newFeature, setNewFeature] = useState("");
+
+  const { data: featuresList } = useGetFeaturesQuery();
+  const availableFeatures = featuresList?.data;
+
+  const featureOptions = availableFeatures?.map((feature) => ({
+    value: feature._id,
+    label: feature.module_name,
+  }));
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleFeatureChange = (selectedOptions) => {
+    const selectedFeatures = selectedOptions
+      ? selectedOptions.map((option) => option.value)
+      : [];
+    setFormData((prevData) => ({ ...prevData, features: selectedFeatures }));
+  };
 
   const submitPlan = () => {
     if (validateForm()) {
@@ -45,36 +67,15 @@ const SuperAdminPlans = ({
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleFeatureChange = (index, value) => {
-    const updatedFeatures = [...formData.allFeatures];
-    updatedFeatures[index] = value;
-    setFormData((prevData) => ({ ...prevData, allFeatures: updatedFeatures }));
-  };
-
-  const addNewFeature = () => {
-    if (newFeature) {
-      setFormData((prevData) => ({
-        ...prevData,
-        allFeatures: [...prevData.allFeatures, newFeature],
-      }));
-      setNewFeature("");
-    }
-  };
-
   const validateForm = () => {
     return (
       formData.name &&
       formData.description &&
-      formData.users &&
-      formData.yearly_price_dollar &&
-      formData.yearly_price_naira &&
+      formData.number_of_users &&
+      formData.monthly_price_naira &&
       formData.monthly_price_dollar &&
-      formData.monthly_price_naira
+      formData.yearly_price_naira &&
+      formData.yearly_price_dollar
     );
   };
 
@@ -82,7 +83,7 @@ const SuperAdminPlans = ({
     <>
       <div
         className={`rounded-[10px] plan-box shadow hover:border hover:border-[#0f5901] ${
-          background ? `bg-[${background}]` : "bg-[#fbfbfb]"
+          background ? "bg-" + background : "bg-[#fbfbfb]"
         }`}
       >
         <div className="p-3 h-full">
@@ -155,6 +156,7 @@ const SuperAdminPlans = ({
               value={formData.name}
               onChange={handleInputChange}
               required
+              readOnly
             />
           </div>
           <div className="mb-3 flex flex-col gap-1">
@@ -176,13 +178,13 @@ const SuperAdminPlans = ({
             <input
               name="users"
               className="sub-inputs w-full shadow"
-              value={formData.users}
+              value={formData.number_of_users}
               onChange={handleInputChange}
             />
           </div>
 
-          <div className="flex justify-center gap-2 items-center mb-3 w-full">
-            <div className="flex flex-col gap-1 w-full">
+          <div className="flex justify-between gap-2 items-center mb-3">
+            <div className="flex flex-col gap-1">
               <label htmlFor="monthly_price_naira" className="sub-label">
                 Monthly Price in Naira
               </label>
@@ -195,7 +197,7 @@ const SuperAdminPlans = ({
                 required
               />
             </div>
-            <div className="flex flex-col gap-1 w-full">
+            <div className="flex flex-col gap-1">
               <label htmlFor="monthly_price_dollar" className="sub-label">
                 Monthly Price in Dollar
               </label>
@@ -210,8 +212,8 @@ const SuperAdminPlans = ({
             </div>
           </div>
 
-          <div className="flex justify-center gap-2 items-center mb-3 w-full">
-            <div className="flex flex-col gap-1 w-full">
+          <div className="flex justify-between gap-2 items-center mb-3">
+            <div className="flex flex-col gap-1">
               <label htmlFor="yearly_price_naira" className="sub-label">
                 Yearly Price in Naira
               </label>
@@ -224,7 +226,7 @@ const SuperAdminPlans = ({
                 required
               />
             </div>
-            <div className="flex flex-col gap-1 w-full">
+            <div className="flex flex-col gap-1">
               <label htmlFor="yearly_price_dollar" className="sub-label">
                 Yearly Price in Dollar
               </label>
@@ -239,30 +241,31 @@ const SuperAdminPlans = ({
             </div>
           </div>
 
-          <hr className="py-5" />
+          <div className="mb-3 flex flex-col gap-1">
+            <label htmlFor="trial_period" className="sub-label">
+              Trial Period
+            </label>
+            <input
+              name="trial_period"
+              type="number"
+              className="sub-inputs w-full shadow"
+              value={formData.trial_period}
+              onChange={handleInputChange}
+            />
+          </div>
 
           <div className="mb-3 flex flex-col gap-1">
-            <label className="sub-label font-bold pb-3">Feature List</label>
-            {formData.allFeatures.map((feature, index) => (
-              <input
-                key={index}
-                className="sub-inputs w-full shadow mb-2"
-                value={feature}
-                onChange={(e) => handleFeatureChange(index, e.target.value)}
-              />
-            ))}
-            <input
-              className="sub-inputs w-full shadow mb-2"
-              placeholder="Add new feature"
-              value={newFeature}
-              onChange={(e) => setNewFeature(e.target.value)}
+            <label className="sub-label">Features</label>
+            <Select
+              isMulti
+              options={featureOptions}
+              value={featureOptions?.filter((option) =>
+                formData.features?.includes(option.value)
+              )}
+              onChange={handleFeatureChange}
+              className="basic-multi-select"
+              classNamePrefix="select"
             />
-            <button
-              className="p-2 w-[150px] text-sm text-white bg-[#0F5901] rounded-[5px]"
-              onClick={addNewFeature}
-            >
-              Add Feature
-            </button>
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -279,7 +282,7 @@ const SuperAdminPlans = ({
 SuperAdminPlans.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  usage: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  usage: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   description: PropTypes.string.isRequired,
   amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   discountOff: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -289,16 +292,19 @@ SuperAdminPlans.propTypes = {
   uniqueFeatures: PropTypes.arrayOf(PropTypes.object).isRequired,
   allFeatures: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSave: PropTypes.func.isRequired, // prop type for the onSave callback
-  monthly_price_naira: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-    .isRequired,
+  monthly_price_naira: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
   monthly_price_dollar: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
-  ]).isRequired,
-  yearly_price_naira: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-    .isRequired,
-  yearly_price_dollar: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-    .isRequired,
+  ]),
+  yearly_price_naira: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  yearly_price_dollar: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
 };
 
 export default SuperAdminPlans;

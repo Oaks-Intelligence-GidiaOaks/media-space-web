@@ -1,8 +1,11 @@
 import { Spinner } from "flowbite-react";
 import { useGetPlansQuery } from "../../service/superadmin/plan.service";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SuperAdminPlans } from "../../components/ui";
+import { useUpdatePlanMutation } from "../../service/superadmin/plan.service";
+import rtkMutation from "../../utils/rtkMutation";
+import { showAlert } from "../../static/alert";
 
 const SuperAdminSubscription = () => {
   const { data: availablePlans, isLoading } = useGetPlansQuery();
@@ -39,10 +42,21 @@ const SuperAdminSubscription = () => {
       };
     }) || [];
 
-  const handleSave = (id, updatedData) => {
-    // logic to save the updated plan data, e.g., make an API call
-    console.log("Saving data for plan:", id, updatedData);
+  const [updatePlan, { isSuccess, error }] = useUpdatePlanMutation();
+
+  const handleSave = async (id, updatedData) => {
+    const values = { id, ...updatedData };
+    // console.log(values);
+    await rtkMutation(updatePlan, values);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      showAlert("", "Plan updated Successfully!", "success");
+    } else if (error) {
+      showAlert("Oops", error.data.message || "An error occurred", "error");
+    }
+  }, [isSuccess, error]);
 
   return (
     <>

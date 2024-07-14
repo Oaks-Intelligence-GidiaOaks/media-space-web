@@ -36,3 +36,4 @@ export const SENTIMENT_ANALYSIS_STATISTICS = "admin/sentiment/statistics";
 export const NET_SENTIMENT = "admin/sentiment/net-sentiment";
 export const SENTIMENT_TREND = "admin/sentiment/trend";
 export const PLANS = "user/plans";
+export const FEATURES = "superadmin/plan/features";

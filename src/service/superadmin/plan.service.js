@@ -1,4 +1,5 @@
 import apiSlice from "../api/apiSlice";
+import { FEATURES } from "../constants";
 
 export const adminApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,7 +18,29 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Plans"],
     }),
+
+    getFeatures: builder.query({
+      query: () => ({
+        url: FEATURES,
+        method: "GET",
+      }),
+      providesTags: ["Plans"],
+    }),
+
+    updatePlan: builder.mutation({
+      query: (data) => ({
+        url: `superadmin/plan/${data.id}`,
+        body: data,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Plans"],
+    }),
   }),
 });
 
-export const { useGetPlansQuery, useGetPlanQuery } = adminApiSlice;
+export const {
+  useGetPlansQuery,
+  useGetPlanQuery,
+  useGetFeaturesQuery,
+  useUpdatePlanMutation,
+} = adminApiSlice;
