@@ -71,6 +71,7 @@ const TitleBar = () => {
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg z-50">
               <Link
+                to={"/dashboard/company_profile"}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {
                   setIsDropdownOpen(false);
@@ -80,6 +81,7 @@ const TitleBar = () => {
                 Profile
               </Link>
               <Link
+                to={"/dashboard/settings"}
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {
                   setIsDropdownOpen(false);
