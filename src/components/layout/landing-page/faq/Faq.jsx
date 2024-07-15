@@ -1,12 +1,25 @@
-import { faq } from "../../../../assets";
+// import { faq } from "../../../../assets";
 import { questions } from "./questions";
 import Accordion from "./Accordion";
+import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+import * as images from "../../../../assets";
+
 
 function Faq() {
   console.table(questions);
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
 
   return (
-    <section className="bg-[#F7FEEE]">
+    <section className="bg-[#F7FEEE] relative" id="faq">
       <div className="faq-outer">
         <div className="block md:flex faq-box mt-10 mb-20">
           <h5 className="faq-title p-5 md:block">
@@ -23,6 +36,7 @@ function Faq() {
           </div>
         </div>
       </div>
+      <img src={images.half2} alt="" className="absolute left-32 bottom-0"/>
     </section>
   );
 }

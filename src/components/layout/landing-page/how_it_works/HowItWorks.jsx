@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import { useLocation } from 'react-router-dom';
+import * as images from "../../../../assets";
+
 
 function HowItWorks() {
   const controls = useAnimation();
@@ -19,8 +22,20 @@ function HowItWorks() {
       controls.start("hidden");
     }
   }, [controls, inView]);
+
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
   return (
-    <section className="how-it-works">
+    <section className="how-it-works relative" id="pricing">
+      <img src={images.rectangle} alt="" className="absolute right-0 -top-0"/>
+
       <h1 className="works-head pt-16 pb-10 text-center">
         How Kommunita works
       </h1>

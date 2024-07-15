@@ -7,6 +7,9 @@ import {
   ABOUT,
   REGISTER,
   LOGIN,
+  FEATURES,
+  SUPPORT,
+  PRICING,
 } from "../../../../routes/CONSTANT";
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,9 +24,9 @@ function Nav() {
   };
 
   const links = [
-    { name: "Home", path: INDEX },
-    { name: "About", path: ABOUT },
-    { name: "Contact us", path: CONTACT_US },
+    { name: "Features", path: FEATURES },
+    { name: "Pricing", path: PRICING },
+    { name: "Support", path: SUPPORT },
     { name: "FAQ", path: FAQ },
   ];
 
@@ -32,16 +35,17 @@ function Nav() {
   useClickAway(ref, () => setMenuOpen(false));
 
   return (
-    <section className="landing-nav-section sticky top-0 w-full bg-[#F7FEEE]">
+    <section className="landing-nav-section sticky top-0 w-full bg-[#F7FEEE] z-50">
       <div className="w-full container mx-auto max-w-screen-xl py-4 flex items-center gap-5">
         <div className="logo">
-          <Link to={INDEX} className="flex">
-            <img src={images.logo} alt="logo" />
+          <Link to={INDEX} className="flex" smooth={true}>
+            <img src={images.logo_new} alt="logo" />
+            {/* <img src={images.logo} alt="logo" /> */}
             {/* <p className="logo-text">Kommunita</p> */}
           </Link>
         </div>
 
-        <div className="nav-links ml-auto hidden md:flex lg:flex">
+        <div className="nav-links ml-12 hidden md:flex lg:flex">
           <ul className="flex gap-x-12">
             {links.map((link) => (
               <li key={link.path}>
