@@ -36,7 +36,7 @@ function Faq() {
           </div>
         </div>
       </div>
-      <img src={images.half2} alt="" className="absolute left-32 bottom-0"/>
+      <img src={images.half2} alt="" className="hidden md:block absolute md:-left-10 lg:left-18 xl:left-32 bottom-0"/>
     </section>
   );
 }
