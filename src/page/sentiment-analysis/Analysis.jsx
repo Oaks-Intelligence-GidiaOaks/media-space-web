@@ -1,13 +1,8 @@
 import { useSelector } from "react-redux";
 import "./style.css";
-import { Cards } from "../../components/layout/super-admin-layout";
+
 import { ShimmerThumbnail } from "react-shimmer-effects";
-import neutral from "../../assets/icons/neutral.svg";
-import post from "../../assets/icons/post.svg";
-import positive from "../../assets/icons/positive.svg";
-import negative from "../../assets/icons/negative.svg";
-import DynamicLineChart from "../../components/charts/DynamicLineChart";
-import data from "./chart-data";
+
 import "./WordCloud";
 import GaugeComponent from "react-gauge-component";
 import Legend from "./Legend";
@@ -16,54 +11,14 @@ import WordCloud from "./WordCloud";
 import TrendingKeywords from "./TrendingKeywords";
 import {
   useGetTrendingKeywordsQuery,
-  useGetSentimentStatsQuery,
   useGetNetSentimentQuery,
-  useGetSentimentTrendQuery,
 } from "../../service/admin/sentiment-analysis";
-
-const groupDataByMonth = (data, yKeys) => {
-  const groupedData = {};
-
-  data.forEach((item) => {
-    const [year, month] = item.date.split("-").slice(0, 2); // Extract year and month
-    if (!groupedData[year]) {
-      groupedData[year] = {}; // Initialize the year if it doesn't exist
-    }
-    if (!groupedData[year][month]) {
-      groupedData[year][month] = { positive: 0, negative: 0, neutral: 0 }; // Initialize the month if it doesn't exist
-    }
-    yKeys.forEach((key) => {
-      groupedData[year][month][key] += parseFloat(item[key]);
-    });
-  });
-
-  return groupedData;
-};
-
-const flattenGroupedData = (groupedData) => {
-  const flattenedData = [];
-
-  Object.keys(groupedData).forEach((year) => {
-    Object.keys(groupedData[year]).forEach((month) => {
-      const date = `${year}-${month}-01`; // Or any other day of the month
-      flattenedData.push({
-        date: date,
-        positive: groupedData[year][month].positive,
-        negative: groupedData[year][month].negative,
-        neutral: groupedData[year][month].neutral,
-      });
-    });
-  });
-
-  return flattenedData;
-};
+import LineChart from "./LineChart";
+import Stats from "./Stats";
 
 const Analysis = () => {
   const user = useSelector((state) => state.user.user);
-  const { data: postStats, isLoading: loadStats } = useGetSentimentStatsQuery();
-  const yKeys = ["positive", "negative", "neutral"];
-  const groupedData = groupDataByMonth(data, yKeys);
-  const flattenedData = flattenGroupedData(groupedData);
+  // const { data: postStats, isLoading: loadStats } = useGetSentimentStatsQuery();
 
   const legendItemsNet = [
     { color: "#FF3A29", label: "Negative" },
@@ -90,11 +45,7 @@ const Analysis = () => {
 
   const { data: netSentiment, isLoading: loadNetSentiment } =
     useGetNetSentimentQuery();
-
-  const { data: trendsData, isLoading: loadTrends } =
-    useGetSentimentTrendQuery();
-
-  console.log(trendsData);
+  // console.log(netSentiment);
 
   return (
     <>
@@ -111,7 +62,7 @@ const Analysis = () => {
                 </p>
               </div>
 
-              <div className="flex w-full gap-2 justify-start items-center py-4">
+              {/* <div className="flex w-full gap-2 justify-start items-center py-4">
                 <p className="analysis-filter-top pr-5">Filter by:</p>
                 <select className="analysis-filter-input focus:outline-none focus:ring-0">
                   <option value="Worldwide">Worldwide</option>
@@ -182,7 +133,9 @@ const Analysis = () => {
                     img={neutral}
                   />
                 )}
-              </div>
+              </div> */}
+
+              <Stats />
             </>
           ) : null}
 
@@ -191,7 +144,7 @@ const Analysis = () => {
               <div className="px-10 pt-3">
                 <div className="flex justify-between items-center">
                   <p className="word-cloud-text">Word Cloud</p>
-                  <select className="w-[173px] h-[37.97px] analysis-filter-input focus:outline-none focus:ring-0">
+                  {/* <select className="w-[173px] h-[37.97px] analysis-filter-input focus:outline-none focus:ring-0">
                     <option value="Today">Last 12 hours</option>
                     <option value="Today">Today</option>
                     <option value="Today">Last 3 days</option>
@@ -199,7 +152,7 @@ const Analysis = () => {
                     <option value="Today">Last 30 days</option>
                     <option value="Today">This year</option>
                     <option value="Today">Custom</option>{" "}
-                  </select>
+                  </select> */}
                 </div>
                 <div className="flex justify-center items-center w-full">
                   <WordCloud height={350} />
@@ -210,9 +163,9 @@ const Analysis = () => {
               <div className="p-3">
                 <div className="flex items-center justify-between">
                   <p className="word-cloud-text">Net Sentiment</p>
-                  <select className="w-[106.97px] h-[23.21px] analysis-filter-input focus:outline-none focus:ring-0">
+                  {/* <select className="w-[106.97px] h-[23.21px] analysis-filter-input focus:outline-none focus:ring-0">
                     <option value="Today">Today</option>
-                  </select>
+                  </select> */}
                 </div>
 
                 <div className="flex flex-col justify-center mt-8">
@@ -257,7 +210,13 @@ const Analysis = () => {
                         <h1 className="guage-value-head">
                           {netSentiment?.data?.net_sentiment}
                         </h1>
-                        <p className="guage-rating">VERY POSITIVE</p>
+                        <p className="guage-rating">
+                          {netSentiment?.data?.net_sentiment === 0
+                            ? "NEUTRAL"
+                            : netSentiment?.data?.net_sentiment > 0
+                            ? "POSITIVE"
+                            : "NEGATIVE"}
+                        </p>
                         <p className="guage-period flex items-center gap-1 py-2">
                           <img src={arrow} alt="" />
                           7.2%
@@ -274,19 +233,8 @@ const Analysis = () => {
           </div>
 
           <div className="flex gap-10 justify-between">
-            <div className="flex w-full border rounded-[13.17px] border-[#E6EDFF] bg-white h-[537.02px] shadow">
-              {loadTrends ? (
-                <div className="flex justify-center items-center w-full">
-                  <ShimmerThumbnail height={450} width={500} />
-                </div>
-              ) : (
-                <DynamicLineChart
-                  data={flattenedData}
-                  xKey="date"
-                  yKeys={yKeys}
-                />
-              )}
-            </div>
+            <LineChart />
+
             <div className="net-sentiment w-full max-w-[376px] h-[537.02px] border  rounded-[13.17px] shadow border-[#E6EDFF] bg-white">
               <div className="p-3 h-full">
                 <div className="flex items-center justify-between">

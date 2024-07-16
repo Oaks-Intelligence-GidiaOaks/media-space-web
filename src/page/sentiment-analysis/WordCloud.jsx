@@ -48,7 +48,7 @@ const WordCard = ({ word, details }) => {
         <div className="word-card-details flex justify-between items-center pb-2 w-full">
           <p className="word-cloud-sentiment-val">
             <span style={{ color: sentimentColors[sentiment_category] }}>
-              {sentiment_score}
+              {Math.round(sentiment_score)}
             </span>
             /<span className="overall-details-val">100</span>
           </p>
@@ -97,6 +97,7 @@ export default function WordCloud({ height }) {
     y: 0,
   }); // State for card position
   const { data: wordclouddata, isLoading } = useGetWordCloudQuery();
+  // console.log(wordclouddata);
 
   useEffect(() => {
     const handleResize = () => {
