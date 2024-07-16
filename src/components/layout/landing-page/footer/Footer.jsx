@@ -1,11 +1,22 @@
 import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
 
 function Footer() {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
 
   return (
-    <section className="footer w-full">
+    <section className="footer w-full" id="support">
       <div className="pt-[64px] pb-[64px]">
         <h1 className="footer-head text-center">
           Get started for free, <br /> and create a new account

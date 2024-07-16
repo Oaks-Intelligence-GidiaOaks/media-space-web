@@ -2,6 +2,7 @@ import { useState } from "react";
 import { quote_img, user } from "../../../../assets";
 import { motion, AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
+import * as images from "../../../../assets";
 import {
   IoArrowForwardCircleOutline,
   IoArrowBackCircleOutline,
@@ -65,7 +66,9 @@ function Testimonial() {
   };
 
   return (
-    <section className="testimonial bg-[#F7FEEE]">
+    <section className="testimonial relative bg-[#F7FEEE]">
+      <img src={images.circle} alt="" className="absolute left-12 -top-36"/>
+
       <p className="testimonial-head pt-10 pb-10">What our Users say</p>
       <div className="carousel-content flex justify-center items-center gap-6">
         <button onClick={goToPrevSlide}>

@@ -7,16 +7,30 @@ import {
   card_img_4,
 } from "../../../../assets";
 import { motion } from "framer-motion";
+import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+import * as images from "../../../../assets";
+
 
 function Features() {
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
   return (
-    <section className="features">
+    <section className="features relative" id="features">
+      <img src={images.half} alt="" className="absolute left-12 -top-36"/>
       <div className="justify-center hidden md:flex pt-3">
         <div className="features-board">
           <div className="flex flex-col sm:justify-center sm:items-center md:justify-start md:items-start pt-10 md:p-20">
             <p className="features-board-head">Transform</p>
             <p className="features-board-title">
-              your organization's <br /> communication landscape
+              your organization&apos;s <br /> communication landscape
             </p>
             <p className="features-board-text pt-5">
               Discover the revolutionary features of Kommunita, <br /> your

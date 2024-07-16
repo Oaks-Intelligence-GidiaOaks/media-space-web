@@ -1,7 +1,10 @@
 export const INDEX = "/";
+export const FEATURES = "#features";
+export const SUPPORT = "#support";
+export const PRICING = "#pricing";
 export const ABOUT = "/about";
 export const CONTACT_US = "/contact";
-export const FAQ = "/faq";
+export const FAQ = "#faq";
 export const LOGIN = "/signin";
 export const REGISTER = "/register";
 export const SIGN_UP = "/signup";

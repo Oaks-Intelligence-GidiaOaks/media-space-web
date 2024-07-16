@@ -14,7 +14,7 @@ const Accordion = ({ items }) => {
   };
 
   return (
-    <div>
+    <div className="bg-[#7ADD020D] p-5 rounded-[calc(1rem+4px)]">
       {items.map((item, index) => (
         <div key={index} className="border rounded-lg p-4 mb-4">
           <div
