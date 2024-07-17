@@ -2,10 +2,12 @@ const PATH = "/images";
 
 export const logo = `${PATH}/logo.svg`;
 export const logo_new = `${PATH}/Kommunita-logo.svg`;
+export const logo_new2 = `${PATH}/Kommunita-logo2.svg`;
 export const hero = `${PATH}/hero.svg`;
 export const half = `${PATH}/half.svg`;
 export const half2 = `${PATH}/half2.svg`;
 export const circle = `${PATH}/circle.svg`;
+export const footerimg = `${PATH}/footerimg.svg`;
 export const rectangle = `${PATH}/Rectangle.svg`;
 export const footer = `${PATH}/footer.svg`;
 export const howitworks = `${PATH}/howitworks.svg`;

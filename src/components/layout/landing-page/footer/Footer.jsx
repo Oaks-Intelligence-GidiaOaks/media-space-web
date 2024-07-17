@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { useEffect } from "react";
+import * as images from "../../../../assets";
+import { INDEX } from "../../../../routes/CONSTANT";
+
 
 function Footer() {
   const currentDate = new Date();
@@ -16,7 +19,12 @@ function Footer() {
   }, [location]);
 
   return (
-    <section className="footer w-full" id="support">
+    <section className="footer w-full relative" id="support">
+         <div className="logo mx-20 pt-16">
+          <Link to={INDEX} className="flex" smooth={true}>
+            <img src={images.logo_new2} alt="logo" />
+          </Link>
+        </div>
       <div className="pt-[64px] pb-[64px]">
         <h1 className="footer-head text-center">
           Get started for free, <br /> and create a new account
@@ -79,6 +87,7 @@ function Footer() {
         </div>
         <p className="copyright pt-10">© {currentYear}. Oaks Intelligence</p>
       </div>
+      <img src={images.footerimg} alt="" className="hidden md:block absolute left-0 bottom-0"/>
     </section>
   );
 }
