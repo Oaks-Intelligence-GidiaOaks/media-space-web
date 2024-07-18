@@ -17,8 +17,9 @@ import { showAlert } from "../static/alert";
 import rtkMutation from "../utils/rtkMutation";
 import { useRegisterUserMutation } from "../service/user.service";
 import { updateFormdata } from "../redux/slices/register.slice";
-import { LOGIN } from "../routes/CONSTANT";
+// import { SUBSCRIPTION_PLANS } from "../routes/CONSTANT";
 import { FormSpy } from "react-final-form";
+import SubscriptionPlans from "./SubscriptionPlans";
 
 const constraints = {
   organization_name: {
@@ -54,6 +55,8 @@ const SignUp = () => {
     provideTag: ["User"],
   });
 
+  const [organization, setOrganization] = useState(null);
+
   const onSubmit = async () => {
     try {
       const formData = {
@@ -62,7 +65,13 @@ const SignUp = () => {
         industry_type,
       };
       console.log(formData);
-      await rtkMutation(registerUser, formData);
+
+      const response = await rtkMutation(registerUser, formData);
+
+      // Extract and store the organization_id
+      if (response && response?.data && response?.data?.organization_id) {
+        setOrganization(response.data.organization_id);
+      }
     } catch (error) {
       // console.log(error);
       showAlert("Oops", error.message || "An error occurred", "error");
@@ -71,10 +80,10 @@ const SignUp = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(LOGIN);
+      // navigate(SUBSCRIPTION_PLANS);
       showAlert(
         "Account created successfully!",
-        "Pls login to continue",
+        "Pls select a plan to continue",
         "success"
       );
     } else if (error) {
@@ -114,7 +123,9 @@ const SignUp = () => {
     "Other",
   ];
 
-  // const companySizes = ["Micro", "Small", "Medium", "Large", "Enterprise"];
+  if (isSuccess && organization) {
+    return <SubscriptionPlans organization={organization} />;
+  }
 
   return (
     <div className="flex lg:h-screen bg-[#001900]  flex-col lg:flex-row ">

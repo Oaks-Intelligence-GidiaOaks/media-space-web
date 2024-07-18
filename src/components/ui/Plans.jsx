@@ -12,9 +12,11 @@ const Plans = ({
   currency,
   previousPlanName,
   uniqueFeatures,
+  organization_id,
+  userLocation,
 }) => {
   const submitplan = () => {
-    console.log(id);
+    console.log(id, organization_id, userLocation);
   };
 
   return (
@@ -89,6 +91,8 @@ Plans.propTypes = {
   currency: PropTypes.string,
   previousPlanName: PropTypes.string,
   uniqueFeatures: PropTypes.arrayOf(PropTypes.object).isRequired,
+  organization_id: PropTypes.string,
+  userLocation: PropTypes.string,
 };
 
 export default Plans;
