@@ -154,6 +154,7 @@ const SubscriptionPlans = ({ organization }) => {
                   uniqueFeatures={plan.uniqueFeatures}
                   organization_id={organization?._id}
                   userLocation={organization?.location}
+                  plan_type={activeTab}
                 />
               </motion.div>
             ))}

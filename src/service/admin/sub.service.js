@@ -1,4 +1,4 @@
-import { PLANS } from "../constants";
+import { PLANS, PAYMENT_INIT } from "../constants";
 import apiSlice from "../api/apiSlice";
 
 export const AdminApiSlice = apiSlice.injectEndpoints({
@@ -10,7 +10,16 @@ export const AdminApiSlice = apiSlice.injectEndpoints({
       }),
       // providesTags: ["Plans"],
     }),
+    initializePayment: builder.mutation({
+      query: (body) => ({
+        url: PAYMENT_INIT,
+        method: "POST",
+        body: body,
+      }),
+      // providesTags: ["Plans"],
+    }),
   }),
 });
 
-export const { useGetUserPlansQuery } = AdminApiSlice;
+export const { useGetUserPlansQuery, useInitializePaymentMutation } =
+  AdminApiSlice;
