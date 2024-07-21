@@ -21,7 +21,13 @@ export default {
         "primary-red": "#FF3A29",
         "secondary-white": "#7C8DB5",
       },
-
+      backgroundImage: {
+        'gradient-custom': 'linear-gradient(to bottom, #CAFFC6 0%, #F9FBFF 100%)',
+        'gradient-custom2': 'linear-gradient(to bottom, #FFFFE0 0%, #F9FBFF 100%)',
+        'gradient-custom3': 'linear-gradient(to bottom, #FBE9FF 0%, #F9FBFF 100%)',
+        'gradient-custom4': 'linear-gradient(to bottom, #FFF4EF 0%, #F9FBFF 100%)',
+        'gradient-custom5': 'linear-gradient(to bottom, #7ADD0280 0%, #294D0080 100%)',
+      },
       borderColor: {
         "primary-dark-green": "#3D7100",
         "primary-bright-green": "#7ADD02",

@@ -7,20 +7,20 @@ import {
   card_img_4,
 } from "../../../../assets";
 import { motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+// import { useLocation } from "react-router-dom";
+// import { useEffect } from "react";
 import * as images from "../../../../assets";
 
 function Features() {
-  const location = useLocation();
-  useEffect(() => {
-    if (location.hash) {
-      const element = document.querySelector(location.hash);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, [location]);
+  // const location = useLocation();
+  // useEffect(() => {
+  //   if (location.hash) {
+  //     const element = document.querySelector(location.hash);
+  //     if (element) {
+  //       element.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   }
+  // }, [location]);
   return (
     <section className="features relative" id="features">
       <img

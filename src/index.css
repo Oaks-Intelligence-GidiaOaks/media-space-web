@@ -40,3 +40,8 @@
 .loading-dots-dot:nth-child(3) {
   animation-delay: 0.4s;
 }
+
+/* .gradient-custom3{
+  background: linear-gradient(to bottom, #FFFFE0 0%, #F9FBFF 100%);
+  
+} */

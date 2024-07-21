@@ -5,9 +5,12 @@ import {
   Footer,
   Features,
   Faq,
-  HowItWorks,
-  Testimonial,
+  // HowItWorks,
+  HowItWorks2,
+  // Testimonial,
   FeatureCard,
+  WhoisKommunitaFor,
+  KommunitaIntegration
 } from "../../components";
 
 
@@ -18,8 +21,11 @@ function LandingPage() {
       <Hero />
       <Features />
       <FeatureCard />
-      <HowItWorks />
-      <Testimonial />
+      {/* <HowItWorks /> */}
+      <HowItWorks2 />
+      <WhoisKommunitaFor />
+      {/* <Testimonial /> */}
+      <KommunitaIntegration />
       <Faq />
       <Footer />
     </>
