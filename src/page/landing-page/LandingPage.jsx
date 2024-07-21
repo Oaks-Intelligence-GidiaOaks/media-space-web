@@ -7,7 +7,9 @@ import {
   Faq,
   HowItWorks,
   Testimonial,
+  FeatureCard,
 } from "../../components";
+
 
 function LandingPage() {
   return (
@@ -15,6 +17,7 @@ function LandingPage() {
       <Nav />
       <Hero />
       <Features />
+      <FeatureCard />
       <HowItWorks />
       <Testimonial />
       <Faq />

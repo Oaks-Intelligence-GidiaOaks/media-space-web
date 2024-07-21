@@ -36,7 +36,7 @@ function Nav() {
 
   return (
     <section className="sticky top-0 w-full bg-[#112420]  z-50">
-      <div className="w-full mx-auto px-5 md:px-10 py-4 flex justify-between items-center gap-5">
+      <div className="w-full mx-auto px-5 md:px-20 lg:px-10 xl:px-20 py-4 flex justify-between items-center gap-5">
         <div className="logo">
           <Link to={INDEX} className="flex" smooth={true}>
             <img src={images.logo} alt="logo" />
