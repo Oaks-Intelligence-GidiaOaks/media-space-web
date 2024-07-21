@@ -35,48 +35,47 @@ function Nav() {
   useClickAway(ref, () => setMenuOpen(false));
 
   return (
-    <section className="landing-nav-section sticky top-0 w-full bg-[#F7FEEE] z-50">
-      <div className="w-full container mx-auto max-w-screen-xl py-4 flex items-center gap-5">
+    <section className="sticky top-0 w-full bg-[#112420]  z-50">
+      <div className="w-full mx-auto px-5 md:px-10 py-4 flex justify-between items-center gap-5">
         <div className="logo">
           <Link to={INDEX} className="flex" smooth={true}>
-            <img src={images.logo_new} alt="logo" />
-            {/* <img src={images.logo} alt="logo" /> */}
-            {/* <p className="logo-text">Kommunita</p> */}
+            <img src={images.logo} alt="logo" />
           </Link>
         </div>
 
-        <div className="nav-links ml-12 hidden md:flex lg:flex">
-          <ul className="flex gap-x-12">
-            {links.map((link) => (
-              <li key={link.path}>
-                <NavLink
-                  to={link.path}
-                  exact="true"
-                  activeclassname="active"
-                  className="block py-2 hover:text-neutral-400 transition-all menu-links"
-                  onClick={toggleMenu}
-                >
-                  {link.name}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="ml-auto sm:mr-1 flex gap-2">
-          <Link to={REGISTER} className="action-button sm:mr-1 hidden md:flex">
-            Sign up for free
-          </Link>
-          <Link
-            to={LOGIN}
-            className="flex action-button bg-[#FFFFFF] text-[#3D7100] sm:mr-1 w-auto text-base"
-          >
-            Log in
-          </Link>
+        <div className="flex gap-x-5">
+          <div className="nav-links hidden md:flex lg:flex">
+            <ul className="flex justify-end gap-x-12">
+              {links.map((link) => (
+                <li key={link.path}>
+                  <NavLink
+                    to={link.path}
+                    exact="true"
+                    activeclassname="active"
+                    className="block py-2 hover:text-neutral-400 text-[1rem] text-white transition-all menu-links"
+                    onClick={toggleMenu}
+                  >
+                    {link.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="ml-auto hidden lg:flex  sm:mr-1 gap-2">
+            <Link to={REGISTER} className="action-button sm:mr-1 ">
+              Sign up for free
+            </Link>
+            <Link
+              to={LOGIN}
+              className="flex action-button bg-[#FFFFFF] text-[#3D7100] sm:mr-1 w-auto text-base"
+            >
+              Log in
+            </Link>
+          </div>
         </div>
 
         <div ref={ref} className="block md:hidden lg:hidden">
-          <Hamburger toggled={isMenuOpen} size={22} toggle={setMenuOpen} />
+          <Hamburger toggled={isMenuOpen} size={22} toggle={setMenuOpen} color="#FFFFFF" />
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
@@ -116,6 +115,29 @@ function Nav() {
                     );
                   })}
                 </ul>
+                <motion.li
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
+                    delay: 0.1 + 6 / 10,
+                  }}
+                  className="w-full p-[0.08rem] rounded-xl bg-gradient-to-tr from-neutral-800 via-neutral-950 to-neutral-700 mt-5"
+                >
+                  <Link
+                    to={LOGIN}
+                    onClick={() => setMenuOpen((prev) => !prev)}
+                    exact="true"
+                    activeClassName="active"
+                    className="flex items-center justify-between w-full p-5 rounded-xl bg-neutral-950"
+                  >
+                    <span className="flex gap-1 text-lg text-white">
+                      Log in
+                    </span>
+                  </Link>
+                </motion.li>
               </motion.div>
             )}
           </AnimatePresence>

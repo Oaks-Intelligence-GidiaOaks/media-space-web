@@ -1,6 +1,6 @@
 const PATH = "/images";
 
-export const logo = `${PATH}/logo.svg`;
+export const logo = `${PATH}/Logo.svg`;
 export const logo_new = `${PATH}/Kommunita-logo.svg`;
 export const logo_new2 = `${PATH}/Kommunita-logo2.svg`;
 export const hero = `${PATH}/hero.svg`;
