@@ -51,6 +51,7 @@ export const map3 = `${PATH}/map3.svg`;
 export const map4 = `${PATH}/map4.svg`;
 export const map5 = `${PATH}/map5.svg`;
 export const map6 = `${PATH}/map6.svg`;
+export const map7 = `${PATH}/map7.svg`;
 export const calender = `${PATH}/calender.svg`;
 export const quote_img = `${PATH}/quote.svg`;
 export const user = `${PATH}/user.svg`;
