@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { showAlert } from "../static/alert";
 import rtkMutation from "../utils/rtkMutation";
 import { useRegisterUserMutation } from "../service/user.service";
-import { updateFormdata } from "../redux/slices/register.slice";
+import { updateFormdata, clearFormData } from "../redux/slices/register.slice";
 // import { SUBSCRIPTION_PLANS } from "../routes/CONSTANT";
 import { FormSpy } from "react-final-form";
 import SubscriptionPlans from "./SubscriptionPlans";
@@ -26,9 +26,6 @@ const constraints = {
     presence: true,
   },
   organization_email: {
-    presence: true,
-  },
-  website_url: {
     presence: true,
   },
   email: {
@@ -55,7 +52,7 @@ const SignUp = () => {
     provideTag: ["User"],
   });
 
-  const [organization, setOrganization] = useState(null);
+  const [organization, setOrganization] = useState({});
 
   const onSubmit = async () => {
     try {
@@ -71,6 +68,7 @@ const SignUp = () => {
       // Extract and store the organization_id
       if (response && response?.data && response?.data?.organization_id) {
         setOrganization(response.data.organization_id);
+        dispatch(clearFormData);
       }
     } catch (error) {
       // console.log(error);

@@ -12,11 +12,8 @@ import { Spinner } from "flowbite-react";
 import PropTypes from "prop-types";
 
 const SubscriptionPlans = ({ organization }) => {
-  // console.log(organization);
-
   const { data: availablePlans, isLoading } = useGetUserPlansQuery();
   const subscription_plans = availablePlans?.data;
-  console.log(subscription_plans);
 
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -80,7 +77,6 @@ const SubscriptionPlans = ({ organization }) => {
               <img src={notification} className="w-[14px] sm:w-4" />
               <div className="w-1 h-1 rounded-full absolute bg-red-500 top-[2px] right-[2px]" />
             </button>
-            {/* Dropdown button */}
             <div className="relative inline-block text-left">
               <button
                 aria-label="Profile"
@@ -170,20 +166,7 @@ SubscriptionPlans.propTypes = {
     _id: PropTypes.string.isRequired,
     organization_name: PropTypes.string,
     location: PropTypes.string,
-    industry_type: PropTypes.string,
-    admin_name: PropTypes.string,
-    admin_email: PropTypes.string,
-    organization_email: PropTypes.string,
-    website_url: PropTypes.string,
-    admin_phone: PropTypes.string,
-    isVerified: PropTypes.bool,
-    isSubscribed: PropTypes.bool,
-    plan_id: PropTypes.string,
-    createdAt: PropTypes.string,
-    updatedAt: PropTypes.string,
-    __v: PropTypes.number,
-    apiKey: PropTypes.string,
-  }).isRequired,
+  }),
 };
 
 export default SubscriptionPlans;

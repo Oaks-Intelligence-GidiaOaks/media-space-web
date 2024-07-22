@@ -1,0 +1,47 @@
+.billing-text {
+  font-family: Inter;
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 24px;
+  color: #787878;
+}
+.billing-period {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 475;
+  line-height: 20px;
+  letter-spacing: -0.05000000074505806px;
+  color: #2d2b32;
+}
+.billing-option {
+  width: 300px;
+  height: 47px;
+  padding: 0px 8px 0px 12px;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid #e6e6e6;
+  opacity: 0px;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.05000000074505806px;
+  color: #0a090b;
+}
+.plan-title {
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.02em;
+  color: #0a0d13;
+}
+.cart-title {
+  font-family: Inter;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.02em;
+  color: #0a0d13;
+}
