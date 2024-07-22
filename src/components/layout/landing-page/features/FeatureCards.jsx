@@ -10,8 +10,8 @@ const FeatureCards = () => {
         Kommunita features
       </h2>
       <div className="flex flex-col gap-y-5 pt-10">
-        <div className="flex justify-between gap-5 items-center">
-          <div className="border rounded pt-10 pl-5 w-[45%] h-[28rem] flex flex-col">
+        <div className="md:flex justify-between gap-5 items-center">
+          <div className="border rounded pt-10 pl-5 md:w-[45%] h-[28rem] flex flex-col">
             <div className="flex-grow">
               <h4 className="text-[calc(1rem+3px)] font-semibold text-[#2D2B2B]">
                 Targeted Advertising
@@ -28,7 +28,7 @@ const FeatureCards = () => {
               />
             </div>
           </div>
-          <div className="border rounded pt-10 pl-5 w-[55%] h-[28rem] flex flex-col">
+          <div className="border rounded mt-3 md:mt-0 pt-10 pl-5 md:w-[55%] h-[28rem] flex flex-col">
             <div className="flex-grow">
               <h4 className="text-[calc(1rem+3px)] font-semibold text-[#2D2B2B]">
                 Sentiment Analysis
@@ -46,8 +46,8 @@ const FeatureCards = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-between gap-x-5 items-center">
-          <div className="border rounded pb-10 pl-5 w-[55%] h-[28rem] md:flex  md:flex-col-reverse">
+        <div className="md:flex justify-between gap-x-5 items-center">
+          <div className="border rounded pb-10 pl-5 md:w-[55%] h-[28rem] md:flex  md:flex-col-reverse">
             <div className="flex-grow pt-10">
               <h4 className="text-[calc(1rem+3px)] font-semibold text-[#2D2B2B]">
               Surveys and Polls
@@ -64,7 +64,7 @@ const FeatureCards = () => {
               />
             </div>
           </div>
-          <div className="border rounded pb-10 pl-5 w-[45%] h-[28rem] flex flex-col-reverse">
+          <div className="border rounded pb-10 mt-3 md:mt-0 pl-5 md:w-[45%] h-[28rem] flex flex-col-reverse">
             <div className="flex-grow pt-10">
               <h4 className="text-[calc(1rem+3px)] font-semibold text-[#2D2B2B]">
               Performance and Analytics

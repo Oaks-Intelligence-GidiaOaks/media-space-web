@@ -61,7 +61,7 @@ function Hero() {
           <img src={images.map4} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute top-32 right-[8%] mx-auto zoom" />
           <img src={images.map5} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute top-32 md:top-60 right-[45%] mx-auto zoom" />
           <img src={images.map6} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute bottom-52 left-[5%] mx-auto zoom" />
-          <img src={images.map6} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute bottom-52 right-[5%] mx-auto zoom" />
+          <img src={images.map7} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute bottom-52 right-[5%] mx-auto zoom" />
         </div>
       </section>
     </>
