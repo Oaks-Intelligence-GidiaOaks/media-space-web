@@ -14,11 +14,11 @@ const Accordion = ({ items }) => {
   };
 
   return (
-    <div className="bg-[#7ADD020D] p-5 rounded-[calc(1rem+4px)]">
+    <div className="bg-[] p-5 rounded-[calc(1rem+4px)] w-full">
       {items.map((item, index) => (
-        <div key={index} className="border rounded-lg p-4 mb-4">
+        <div key={index} className="border-b-2 py-4 mb-4">
           <div
-            className="flex justify-between items-center cursor-pointer"
+            className="flex justify-between w-full items-center cursor-pointer"
             onClick={() => toggleAccordion(index)}
           >
             <h2 className="faq-accordion">{item.question}</h2>

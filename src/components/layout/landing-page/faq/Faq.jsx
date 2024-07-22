@@ -1,42 +1,42 @@
 // import { faq } from "../../../../assets";
 import { questions } from "./questions";
 import Accordion from "./Accordion";
-import { useLocation } from 'react-router-dom';
-import { useEffect } from "react";
+// import { useLocation } from 'react-router-dom';
+// import { useEffect } from "react";
 import * as images from "../../../../assets";
 
 
 function Faq() {
-  console.table(questions);
-  const location = useLocation();
-  useEffect(() => {
-    if (location.hash) {
-      const element = document.querySelector(location.hash);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  }, [location]);
+  // console.table(questions);
+  // const location = useLocation();
+  // useEffect(() => {
+  //   if (location.hash) {
+  //     const element = document.querySelector(location.hash);
+  //     if (element) {
+  //       element.scrollIntoView({ behavior: 'smooth' });
+  //     }
+  //   }
+  // }, [location]);
 
   return (
-    <section className="bg-[#F7FEEE] relative" id="faq">
-      <div className="faq-outer">
-        <div className="block md:flex faq-box mt-10 mb-20">
-          <h5 className="faq-title p-5 md:block">
-            Answers to <br className="hidden md:flex" /> Frequently{" "}
-            <br className="hidden md:flex" /> Asked{" "}
-            <br className="hidden md:flex" /> Questions
+    <section className="bg-[] relative  px-5 md:px-20" id="faq">
+      <div className="faq-outer w-full">
+        <div className="block md:flex justify-between w-full  mb-20">
+          <div className="md:w-1/3">
+          <h5 className="faq-title text-[3.75rem] md:block text-[#3D7100]">
+          FAQS
           </h5>
-          <div className="pt-5">
-            <div className="">
+            <p className="block text-center md:hidden">Here are answers to some of the <br /> questions you may have</p>
+            <p className="hidden md:block">Here are answers to some of the <br /> questions you may have</p>
+          </div>
+          <div className="pt-5 md:w-2/3">
               <div className="faq-questions p-5">
                 <Accordion items={questions} />
               </div>
-            </div>
           </div>
         </div>
       </div>
-      <img src={images.half2} alt="" className="hidden md:block absolute md:-left-10 lg:left-18 xl:left-32 bottom-0"/>
+      <img src={images.Question_mark} alt="" className="hidden md:block absolute left-0 bottom-0 dance"/>
     </section>
   );
 }

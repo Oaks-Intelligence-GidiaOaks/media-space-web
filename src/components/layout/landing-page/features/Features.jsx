@@ -7,37 +7,41 @@ import {
   card_img_4,
 } from "../../../../assets";
 import { motion } from "framer-motion";
-import { useLocation } from 'react-router-dom';
-import { useEffect } from "react";
+// import { useLocation } from "react-router-dom";
+// import { useEffect } from "react";
 import * as images from "../../../../assets";
 
-
 function Features() {
-  const location = useLocation();
-  useEffect(() => {
-    if (location.hash) {
-      const element = document.querySelector(location.hash);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  }, [location]);
+  // const location = useLocation();
+  // useEffect(() => {
+  //   if (location.hash) {
+  //     const element = document.querySelector(location.hash);
+  //     if (element) {
+  //       element.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   }
+  // }, [location]);
   return (
-    <section className="features relative" id="features">
-      <img src={images.half} alt="" className="absolute left-12 -top-36"/>
+    <section className="features mt-10 relative" id="features">
+      <img
+        src={images.circle}
+        alt=""
+        className="absolute -left-24 xl:left-[14.75rem] -top-36 w-[16rem]"
+      />
       <div className="justify-center hidden md:flex pt-3">
         <div className="features-board">
           <div className="flex flex-col sm:justify-center sm:items-center md:justify-start md:items-start pt-10 md:p-20">
-            <p className="features-board-head">Transform</p>
-            <p className="features-board-title">
-              your organization&apos;s <br /> communication landscape
+            <p className="features-board-head text-[#A6D651]">
+              Community Management <br /> Solution in One Platform
             </p>
+            {/* <p className="features-board-title">
+              your organization&apos;s <br /> communication landscape
+            </p> */}
             <p className="features-board-text pt-5">
-              Discover the revolutionary features of Kommunita, <br /> your
-              go-to SaaS solution designed to <br /> effortlessly integrate into
-              your favorite apps <br /> while providing a communication space
-              that <br /> is both familiar yet distinct from anything you <br />{" "}
-              have ever experienced.
+              Kommunita is a versatile, cross-platform solution tool <br /> for
+              individuals, groups, businesses, and organizations to <br />{" "}
+              connect with users who share an interest in their <br /> service,
+              product, or industry.
             </p>
             <motion.button
               whileHover={{
@@ -79,7 +83,7 @@ function Features() {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-center items-center gap-28 pt-12 pb-20">
+      {/* <div className="flex flex-wrap justify-center items-center gap-28 pt-12 pb-20">
         <div className="features-layer-1 p-2">
           <div className="text-start flex gap-5 pb-5">
             <div className="bar"></div>
@@ -112,9 +116,9 @@ function Features() {
               Get started
             </Link>
           </div>
-        </div>
+        </div> */}
 
-        <div className="features-layer-2">
+      {/* <div className="features-layer-2">
           <div className="flex flex-wrap justify-center items-center gap-6">
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <div className="feature-card relative">
@@ -184,8 +188,8 @@ function Features() {
               </div>
             </motion.div>
           </div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
     </section>
   );
 }

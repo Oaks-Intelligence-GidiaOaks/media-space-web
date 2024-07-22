@@ -1,0 +1,10 @@
+.how_it_work_mobile{
+    background-image: url("/images/how_it_work_web.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.gradient-custom3{
+    background-color:  'linear-gradient(to bottom, #FFFFE0 0%, ##F9FBFF 100%)';
+    
+}

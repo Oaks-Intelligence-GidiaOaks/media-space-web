@@ -12,7 +12,7 @@ body {
 
 .first-hero-head {
   font-family: Inter;
-  font-size: 53.42px;
+  font-size: 3.34rem;
   font-weight: 400;
   line-height: 64.66px;
 }
@@ -22,7 +22,7 @@ body {
   font-size: 20px;
   font-weight: 500;
   line-height: 24.2px;
-  text-align: center;
+  /* text-align: center; */
 }
 .logo-text {
   color: #000;
@@ -59,7 +59,7 @@ body {
 /* hero section */
 
 .hero {
-  background: url("/images/hero.svg") no-repeat;
+  background: url("/images/hero-background.svg") no-repeat;
   background-size: cover;
 }
 
@@ -116,10 +116,9 @@ body {
   .hero-title {
     font-size: 1.25rem;
   }
-  .spotlight,
-  .hero-subtitle {
+  /* .spotlight {
     font-size: 1.5rem;
-  }
+  } */
   .hero-lead {
     font-size: 0.875rem;
   }
@@ -324,9 +323,9 @@ body {
 
 .faq-outer {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
-  padding: 1rem;
+  /* padding: 1rem; */
 }
 .answer {
   color: #010101;
@@ -426,7 +425,7 @@ body {
 .features-board-head {
   color: #3d7100;
   font-family: Inter;
-  font-size: 33px;
+  font-size: calc(2rem + 1px);
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -434,7 +433,7 @@ body {
 .features-board-title {
   color: #3d7100;
   font-family: Inter;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -442,16 +441,16 @@ body {
 .features-board-text {
   color: #fff;
   font-family: Inter;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 130%;
+  line-height: 1.5rem;
 }
 .testimonial-head {
   color: #2d2b2b;
   text-align: center;
   font-family: Inter;
-  font-size: 36px;
+  font-size: calc(2rem + 4px);
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -460,7 +459,7 @@ body {
 .quote-text {
   color: #2d2b2b;
   font-family: Inter;
-  font-size: 20px;
+  font-size: calc(1rem + 4px);
   font-style: normal;
   font-weight: 500;
   line-height: 130%;

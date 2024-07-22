@@ -41,3 +41,35 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* .gradient-custom3{
+  background: linear-gradient(to bottom, #FFFFE0 0%, #F9FBFF 100%);
+  
+} */
+
+.dance{
+  animation: dance 3s infinite ease alternate;
+}
+@keyframes dance {
+  from {
+    transform: translateY(-12px);
+  } to{ 
+    transform: translateY(12px);
+  }
+}
+
+.zoom {
+  animation: zoomInOut 5s infinite;
+}
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
