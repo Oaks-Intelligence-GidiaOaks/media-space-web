@@ -9,3 +9,4 @@ export { default as HowItWorks2 } from "./landing-page/how_it_works/HowItWorks2"
 export { default as Testimonial } from "./landing-page/testimonial/Testimonial";
 export { default as WhoisKommunitaFor } from "./landing-page/who-is-kommunita-for/WhoisKommunitaFor";
 export { default as KommunitaIntegration } from "./landing-page/kommunita-integration/KommunitaIntegration";
+export { default as ReadyToJourney } from "./landing-page/ready-to-journey/ReadyToJourney";

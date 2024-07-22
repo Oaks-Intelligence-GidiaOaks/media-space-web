@@ -10,7 +10,8 @@ import {
   // Testimonial,
   FeatureCard,
   WhoisKommunitaFor,
-  KommunitaIntegration
+  KommunitaIntegration,
+  ReadyToJourney
 } from "../../components";
 
 
@@ -27,6 +28,7 @@ function LandingPage() {
       {/* <Testimonial /> */}
       <KommunitaIntegration />
       <Faq />
+      <ReadyToJourney />
       <Footer />
     </>
   );

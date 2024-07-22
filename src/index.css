@@ -45,3 +45,14 @@
   background: linear-gradient(to bottom, #FFFFE0 0%, #F9FBFF 100%);
   
 } */
+
+.dance{
+  animation: dance 3s infinite ease alternate;
+}
+@keyframes dance {
+  from {
+    transform: translateY(-12px);
+  } to{ 
+    transform: translateY(12px);
+  }
+}
