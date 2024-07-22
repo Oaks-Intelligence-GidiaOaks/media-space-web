@@ -35,8 +35,8 @@ function Hero() {
           <img src={imagehero} className="hidden lg:flex" alt="" />
         </div>
       </section>
-      <section className="hero bg-[#F7FEEE] h-screen flex justify-center items-center">
-        <div className="container">
+      <section className="hero bg-[#F7FEEE] h-screen pt-36 flex justify-center items-center">
+        <div className="container relative">
           <img src={images.hero_map} alt="hero map" className=" mx-auto" />
           <div className="hero-content text-center">
             <h5 className="hero-subtitle pb-3">
@@ -54,6 +54,13 @@ function Hero() {
               </Link>
             </div>
           </div>
+          <img src={images.map1} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute -top-10 right-[20%] mx-auto zoom" />
+          <img src={images.map2} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute -top-10 left-[20%] mx-auto zoom" />
+          <img src={images.map3} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute top-32 left-[8%] mx-auto zoom" />
+          <img src={images.map4} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute top-32 right-[8%] mx-auto zoom" />
+          <img src={images.map5} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute top-32 md:top-60 right-[45%] mx-auto zoom" />
+          <img src={images.map6} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute bottom-52 left-[5%] mx-auto zoom" />
+          <img src={images.map6} alt="hero map" className="w-10 h-10 lg:w-20 lg:h-20 rounded absolute bottom-52 right-[5%] mx-auto zoom" />
         </div>
       </section>
     </>
