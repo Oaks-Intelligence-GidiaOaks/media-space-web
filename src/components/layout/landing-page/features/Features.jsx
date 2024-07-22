@@ -22,7 +22,7 @@ function Features() {
   //   }
   // }, [location]);
   return (
-    <section className="features relative" id="features">
+    <section className="features mt-10 relative" id="features">
       <img
         src={images.circle}
         alt=""

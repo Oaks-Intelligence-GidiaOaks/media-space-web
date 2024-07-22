@@ -4,6 +4,7 @@ import imagehero from "../../../../assets/imagehero.svg";
 import { REGISTER } from "../../../../routes/CONSTANT";
 import { CiPlay1 } from "react-icons/ci";
 import * as images from "../../../../assets";
+import TypingEffect from "../../../ui/TypingEffect";
 
 
 function Hero() {
@@ -35,20 +36,20 @@ function Hero() {
           <img src={imagehero} className="hidden lg:flex" alt="" />
         </div>
       </section>
-      <section className="hero bg-[#F7FEEE] h-screen pt-36 flex justify-center items-center">
+      <section className="hero bg-[#F7FEEE] min-h-screen pt-36 flex justify-center items-center">
         <div className="container relative">
           <img src={images.hero_map} alt="hero map" className=" mx-auto" />
           <div className="hero-content text-center">
             <h5 className="hero-subtitle pb-3">
-              <span className="spotlight">Build</span> your community <br />
+              <span className="spotlight"> <TypingEffect /></span> your community <br />
               with people around the world
-               
+              
             </h5>
             <h5 className="hero-lead pt-5 pb-8">
             Do more with Kommunita and grow your Ideal reach
             </h5>
 
-            <div className="flex justify-center">
+            <div className="flex pb-32 justify-center">
               <Link to={INDEX} className="hero-btn">
                 Get started
               </Link>

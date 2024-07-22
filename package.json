@@ -37,6 +37,7 @@
     "react-shimmer-effects": "^1.0.3",
     "react-slick": "^0.30.1",
     "react-spinners": "^0.13.8",
+    "react-type-animation": "^3.2.0",
     "react-use": "^17.5.0",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
