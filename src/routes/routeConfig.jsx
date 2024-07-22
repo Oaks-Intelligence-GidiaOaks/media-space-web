@@ -18,6 +18,8 @@ import {
   SurveyResponses,
   Category,
   SentimentAnalysis,
+  Profile,
+  PaymentSuccess,
 } from "../page";
 
 import * as routes from "./CONSTANT";
@@ -40,6 +42,8 @@ const RouterConfig = () => {
         <Route path={routes.SUBSCRIPTION_PLANS} element={<Plans />} />
         <Route path={routes.REGISTER} element={<Register />} />
         <Route path={routes.SIGN_UP} element={<SignUp />} />
+        <Route path={routes.PAYMENT_SUCCESS} element={<PaymentSuccess />} />
+
         <Route
           path={routes.DASHBOARD}
           element={<ProtectedRoute component={SuperAdminLayout} />}
@@ -72,6 +76,7 @@ const RouterConfig = () => {
           <Route path={routes.CATEGORY} element={<Category />} />
           <Route path={routes.NOTIFICATIONS} element={<Notifications />} />
           <Route path={routes.SETTINGS} element={<Settings />} />
+          <Route path={routes.COMPANY_PROFILE} element={<Profile />} />
           <Route path={routes.SURVEY_RESPONSES} element={<SurveyResponses />} />
           <Route
             path={routes.SENTIMENT_ANALYSIS}

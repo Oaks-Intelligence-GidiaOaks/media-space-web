@@ -26,10 +26,13 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     }),
 
     getSentimentStats: builder.query({
-      query: () => ({
-        url: SENTIMENT_ANALYSIS_STATISTICS,
-        method: "GET",
-      }),
+      query: ({ country, category, start_date, end_date }) => {
+        // You can adjust the query string based on the parameters
+        return {
+          url: `/admin/sentiment/statistics`,
+          params: { country, category, start_date, end_date },
+        };
+      },
       providesTags: ["sentimentAnalysis"],
     }),
 

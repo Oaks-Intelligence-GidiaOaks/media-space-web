@@ -8,7 +8,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import BgGroup from "../assets/BgGroup.svg";
 import Ellipse from "../assets/Ellipse.svg";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { InputField, PasswordField } from "../components/ui";
 import { Form, Field } from "react-final-form";
 import validate from "validate.js";

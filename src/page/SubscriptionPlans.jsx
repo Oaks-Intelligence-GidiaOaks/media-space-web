@@ -1,52 +1,42 @@
 import { Plans } from "../components/ui";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useGetPlansQuery } from "../service/admin/plan.service";
-import { handleLogout } from "../static/logout";
+import { useGetUserPlansQuery } from "../service/admin/sub.service";
 import search from "../assets/titlebar/search.svg";
 import notification from "../assets/titlebar/notification.svg";
 import placeholder from "../assets/user-avatar.png";
 import chevron from "../assets/titlebar/chevron.svg";
-import { FaUserCircle, FaCog, FaSignOutAlt } from "react-icons/fa";
 import { logo } from "../assets";
 import { Spinner } from "flowbite-react";
+import PropTypes from "prop-types";
 
-const SubscriptionPlans = () => {
-  const { data: availablePlans, isLoading } = useGetPlansQuery();
+const SubscriptionPlans = ({ organization }) => {
+  // console.log(organization);
+
+  const { data: availablePlans, isLoading } = useGetUserPlansQuery();
   const subscription_plans = availablePlans?.data;
-  // console.log(subscription_plans);
+  console.log(subscription_plans);
 
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("monthly");
-  const [country, setCountry] = useState("NG"); // Default to Nigeria (NG) or US for United States
+  const [country, setCountry] = useState(organization?.location);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
-  const user = useSelector((state) => state.user.user);
-
   const navigateToOverview = () => {
     navigate("/dashboard/overview");
   };
 
-  const dispatch = useDispatch();
-
-  const logout = () => {
-    setIsDropdownOpen(false);
-    handleLogout(dispatch);
-    navigate("/signin");
-  };
-
-  const display_name = useSelector((state) => state?.user?.user?.display_name);
+  const display_name = organization?.organization_name;
 
   const filteredPlans =
     subscription_plans?.map((plan, index) => {
       const priceField = `${activeTab}_price_${
-        country === "NG" ? "naira" : "dollar"
+        country === "Nigeria" ? "naira" : "dollar"
       }`;
       const uniqueFeatures = plan.features.filter(
         (feature) =>
@@ -98,44 +88,12 @@ const SubscriptionPlans = () => {
                 className="flex flex-nowrap gap-2 items-center hover:bg-primary-gray rounded p-1"
               >
                 <img
-                  src={user?.photo_url || placeholder}
+                  src={placeholder}
                   className="w-[18px] sm:w-6 rounded-full"
                 />
-                <p className="font-inter hidden sm:block">
-                  {display_name || "Yarri Sandra"}
-                </p>
+                <p className="font-inter hidden sm:block">{display_name}</p>
                 <img className="w-3" src={chevron} />
               </button>
-              {/* Dropdown menu */}
-              {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg z-50">
-                  <Link
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                    onClick={() => {
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    <FaUserCircle className="w-4 h-4 mr-2 inline" />
-                    Profile
-                  </Link>
-                  <Link
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                    onClick={() => {
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    <FaCog className="w-4 h-4 mr-2 inline" />
-                    Settings
-                  </Link>
-                  <button
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                    onClick={() => logout()}
-                  >
-                    <FaSignOutAlt className="w-4 h-4 mr-2 inline" />
-                    Logout
-                  </button>
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -191,9 +149,12 @@ const SubscriptionPlans = () => {
                   discountOff={plan.discountOff}
                   details={plan.features}
                   background={plan.background}
-                  currency={country === "NG" ? "₦" : "$"}
+                  currency={country === "Nigeria" ? "₦" : "$"}
                   previousPlanName={plan.previousPlanName}
                   uniqueFeatures={plan.uniqueFeatures}
+                  organization_id={organization?._id}
+                  userLocation={organization?.location}
+                  plan_type={activeTab}
                 />
               </motion.div>
             ))}
@@ -202,6 +163,27 @@ const SubscriptionPlans = () => {
       )}
     </section>
   );
+};
+
+SubscriptionPlans.propTypes = {
+  organization: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    organization_name: PropTypes.string,
+    location: PropTypes.string,
+    industry_type: PropTypes.string,
+    admin_name: PropTypes.string,
+    admin_email: PropTypes.string,
+    organization_email: PropTypes.string,
+    website_url: PropTypes.string,
+    admin_phone: PropTypes.string,
+    isVerified: PropTypes.bool,
+    isSubscribed: PropTypes.bool,
+    plan_id: PropTypes.string,
+    createdAt: PropTypes.string,
+    updatedAt: PropTypes.string,
+    __v: PropTypes.number,
+    apiKey: PropTypes.string,
+  }).isRequired,
 };
 
 export default SubscriptionPlans;
