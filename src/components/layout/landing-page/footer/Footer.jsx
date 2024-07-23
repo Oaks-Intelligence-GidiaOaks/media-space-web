@@ -35,7 +35,7 @@ function Footer() {
           </p>
         </div>
 
-        <div className="md:flex flex-row flex-wrap justify-evenly gap-10 pt-4">
+        <div className="md:flex flex-row flex-wrap justify-between pt-4">
           <div className="flex flex-col gap-5">
             <p className="link-head text-[#3D7100]">Company</p>
             <Link to={""} className="footer-link text-black">
@@ -48,20 +48,23 @@ function Footer() {
               FAQ
             </Link>
             <Link to={""} className="footer-link text-black">
-              Newsletter
+            Download Product Brochure
             </Link>
+            <form className="flex gap-1">
+              <input type="text" className="rounded" placeholder="Enter Your Email" /><button className="action-button rounded">Download</button>
+            </form>
           </div>
 
           <div className="flex flex-col gap-5">
             <p className="link-head text-[#3D7100]">Legal</p>
             <Link to={""} className="footer-link text-black">
-              Privacy
+            Privacy Policy
             </Link>
             <Link to={""} className="footer-link text-black">
-              License
+            Terms of service
             </Link>
             <Link to={""} className="footer-link text-black">
-              Contacts
+            License
             </Link>
           </div>
 
@@ -75,6 +78,12 @@ function Footer() {
             </Link>
             <Link to={""} className="footer-link text-black">
               Linkedin
+            </Link>
+            <Link to={""} className="footer-link text-black">
+            Facebook
+            </Link>
+            <Link to={""} className="footer-link text-black">
+            Tiktok
             </Link>
           </div>
 

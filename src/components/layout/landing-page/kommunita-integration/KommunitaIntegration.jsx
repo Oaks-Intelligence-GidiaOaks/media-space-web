@@ -37,7 +37,7 @@ const KommunitaIntegration = () => {
           <div className="flex flex-col justify-center items xl:px-36 py-6  ">
             <img src={images.messaging} alt="" className="mx-auto" />
             <p className="text-white text-center">
-              PI integration for CRM, email marketing tools
+              API integration for CRM, email marketing tools
             </p>
             <small className="text-white text-center">(Coming soon)</small>
           </div>
@@ -52,7 +52,10 @@ const KommunitaIntegration = () => {
         </div>
 
         <div className="flex flex-col pb-24 justify-center items-center pt-10">
-          <img src={images.message_Icon} alt="" />
+          <div className="relative">
+          <img src={images.messages_1} alt="" className="w-full" />
+          <img src={images.messages} alt="" className="absolute transform inset-1/2 -translate-x-1/2 -translate-y-1/2" />
+          </div>
           <p className="text-white text-center">
             Unified social media management Tool
           </p>

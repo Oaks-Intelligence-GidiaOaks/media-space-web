@@ -20,6 +20,8 @@ import {
   SentimentAnalysis,
   Profile,
   PaymentSuccess,
+  LoginAs,
+  SignUpAs,
 } from "../page";
 
 import * as routes from "./CONSTANT";
@@ -33,6 +35,8 @@ const RouterConfig = () => {
     <>
       <Routes>
         <Route path={routes.INDEX} element={<LandingPage />} />
+        <Route path={routes.SIGN_UP_AS} element={<SignUpAs />} />
+        <Route path={routes.LOGIN_AS} element={<LoginAs />} />
         <Route
           path={routes.LOGIN}
           element={<PublicRoute component={Login} />}

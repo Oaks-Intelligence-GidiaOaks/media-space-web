@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { INDEX } from "../../../../routes/CONSTANT";
+import { INDEX, SIGN_UP_AS } from "../../../../routes/CONSTANT";
 import imagehero from "../../../../assets/imagehero.svg";
 import { REGISTER } from "../../../../routes/CONSTANT";
 import { CiPlay1 } from "react-icons/ci";
@@ -14,7 +14,7 @@ function Hero() {
         <div className="w-full bg-[#112420] text-[#FBFBFB] px-5 md:px-20 h-full flex justify-center items-center">
           <div className="flex flex-col">
             <h3 className="first-hero-head hero-subtitle text-[#fff]">
-            Discover <span className="text-[#7ADD02] "> Seamless <br /> Community Management <br />
+            Discover <span className="text-[#7ADD02] font-semibold "> Seamless <br /> Community Management <br />
               </span> in one Place
             </h3>
             <p className="first-hero-subtitle w-full pt-6 pb-14">
@@ -22,11 +22,11 @@ function Hero() {
             </p>
 
             <div className="flex gap-5">
-              <Link to={REGISTER} className=" action-button sm:mr-1">
+              <Link to={SIGN_UP_AS} className=" action-button sm:mr-1">
                 Get started
               </Link>
               <Link
-                to={REGISTER}
+                to={SIGN_UP_AS}
                 className=" action-button border border-[#3D7100] bg-transparent text-[#FBFBFB]  sm:mr-1"
               >
                 Watch Demo <CiPlay1 className="inline" />
@@ -41,7 +41,7 @@ function Hero() {
           <img src={images.hero_map} alt="hero map" className=" mx-auto" />
           <div className="hero-content text-center">
             <h5 className="hero-subtitle pb-3">
-              <span className="spotlight"> <TypingEffect /></span> your community <br />
+              <span className="spotlight inline"> <TypingEffect /></span> your community <br />
               with people around the world
               
             </h5>
@@ -50,7 +50,7 @@ function Hero() {
             </h5>
 
             <div className="flex pb-32 justify-center">
-              <Link to={INDEX} className="hero-btn">
+              <Link to={SIGN_UP_AS} className="hero-btn">
                 Get started
               </Link>
             </div>

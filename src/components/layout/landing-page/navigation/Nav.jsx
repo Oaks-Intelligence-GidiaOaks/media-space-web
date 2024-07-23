@@ -10,6 +10,8 @@ import {
   FEATURES,
   SUPPORT,
   PRICING,
+  SIGN_UP_AS,
+  LOGIN_AS,
 } from "../../../../routes/CONSTANT";
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -43,7 +45,7 @@ function Nav() {
           </Link>
         </div>
 
-        <div className="flex gap-x-5">
+        <div className="flex gap-x-10">
           <div className="nav-links hidden md:flex lg:flex">
             <ul className="flex justify-end gap-x-12">
               {links.map((link) => (
@@ -62,11 +64,11 @@ function Nav() {
             </ul>
           </div>
           <div className="ml-auto hidden lg:flex  sm:mr-1 gap-2">
-            <Link to={REGISTER} className="action-button sm:mr-1 ">
+            <Link to={SIGN_UP_AS} className="action-button sm:mr-1 ">
               Sign up for free
             </Link>
             <Link
-              to={LOGIN}
+              to={LOGIN_AS}
               className="flex action-button bg-[#FFFFFF] text-[#3D7100] sm:mr-1 w-auto text-base"
             >
               Log in
@@ -127,7 +129,7 @@ function Nav() {
                   className="w-full p-[0.08rem] rounded-xl bg-gradient-to-tr from-neutral-800 via-neutral-950 to-neutral-700 mt-5"
                 >
                   <Link
-                    to={LOGIN}
+                    to={LOGIN_AS}
                     onClick={() => setMenuOpen((prev) => !prev)}
                     exact="true"
                     activeClassName="active"

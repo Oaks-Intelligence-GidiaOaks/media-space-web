@@ -1,65 +1,47 @@
 export const questions = [
   {
     question:
-      "How do I integrate Media Space into my existing apps and workflows?",
-    answer: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia
-      molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-      numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-      optio, eaque rerum! Provident similique accusantium nemo autem.`,
+      "Do I need to have an existing community to join Kommunita?",
+    answer: `No, Kommunita supports new and existing communities of any size or type.`,
   },
   {
     question:
-      "Can I customize the appearance of my communication space with Media Space?",
-    answer: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia
-      molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-      numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-      optio, eaque rerum! Provident similique accusantium nemo autem.`,
+      "What unique features does Kommunita offer?",
+    answer: `Kommunita allows you to run unlimited targeted adverts for the price of one Licence. It also provides real-time insights based on user interaction and engagement.
+`,
   },
   {
     question:
-      "Is Media Space compatible with both desktop and mobile platforms?",
-    answer: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-      molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-      numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-      optio, eaque rerum! Provident similique accusantium nemo autem.`,
+      " Do I have to pay to start using Kommunita?",
+    answer: `No, Kommunita offers a lifetime free plan as well as premium packages to accommodate brands with different needs and budgets.`,
   },
   {
     question:
-      "What security measures does Media Space have in place to protect our data?",
-    answer: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-      molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-      numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-      optio, eaque rerum! Provident similique accusantium nemo autem.`,
+      " How does Kommunita integrate with other applications?",
+    answer: `Kommunita easily integrates with popular social media platforms, CRM systems, email marketing tools, and other third-party applications to streamline community management and engagement.`,
   },
   {
-    question: "How does real-time collaboration work within Media Space?",
-    answer: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-      molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-      numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-      optio, eaque rerum! Provident similique accusantium nemo autem.`,
+    question: "Is Kommunita suitable for large organizations?",
+    answer: `Yes, Kommunita is designed to handle communities of any size, making it suitable for both small groups and large organizations.`,
   },
   {
     question:
-      "Can I invite external partners or clients to join our Media Space communication hub?",
-    answer: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-      molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-      numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-      optio, eaque rerum! Provident similique accusantium nemo autem.`,
+      "Can I customize Kommunita to fit my community’s needs?",
+    answer: `Yes, Kommunita offers customization options for user profiles, branding, and community settings to tailor the platform to your specific needs.`,
   },
   {
     question:
-      "Are there any limits to the number of users that can be added to Media Space?",
-    answer: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-      molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-      numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-      optio, eaque rerum! Provident similique accusantium nemo autem.`,
+      "What kind of support does Kommunita provide?",
+    answer: `Kommunita offers comprehensive support including documentation, tutorials, customer service, and a dedicated support team to assist with any questions or issues.`,
   },
   {
     question:
-      "Is there a trial period available for testing Media Space before committing?",
-    answer: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-      molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-      numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-      optio, eaque rerum! Provident similique accusantium nemo autem.`,
+      " Is there a mobile app for Kommunita?",
+    answer: `Yes, Kommunita is available on Web and Mobile Applications for iOS and Android ensuring you can manage and engage with your community on the go.`,
+  },
+  {
+    question:
+      "How secure is my data with Kommunita?",
+    answer: `Kommunita employs robust security measures when providing services and processing personal data in line with GDPR requirements`,
   },
 ];
