@@ -110,9 +110,13 @@ const Register = () => {
 
           <div className="absolute right-0 left-0 top-0 h-full w-full scale-100">
             <motion.img
-              initial={{ y: -400, x: -400 }}
-              animate={{ y: 0, x: 0 }}
-              transition={{ delay: 1.5, duration: 1, ease: "easeOut" }}
+              // initial={{ y: -400, x: -400 }}
+              // animate={{ y: 0, x: 0 }}
+              // transition={{ delay: 1.5, duration: 1, ease: "easeOut" }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              transition={{ duration: 3, ease: "easeOut" }}
               src={images.world_2}
               alt=""
               className="mt-24 w- mx-auto   "
@@ -136,7 +140,7 @@ const Register = () => {
               validate={validateForm}
               render={({ handleSubmit, form, submitting }) => (
                 <form onSubmit={handleSubmit}>
-                  <h1 className="font-Inter mb-7 flex justify-center items-center lg:py-0 text-primary-dark-green font-medium text-3xl">
+                  <h1 className="font-Inter mb-7 flex justify-center items-center lg:py-0 text-primary-dark-green font-bold text-3xl">
                     Create Account
                   </h1>
 
@@ -228,9 +232,9 @@ const Register = () => {
                     </div>
                     <span className="text-xs font-Inter font-normal pt-1">
                       I accept the{" "}
-                      <span className=" text-primary-red">terms of use</span>{" "}
+                      <span className=" text-[#3D7100]">terms of use</span>{" "}
                       and{" "}
-                      <span className=" text-primary-red">privacy policy</span>
+                      <span className=" text-[#3D7100]">privacy policy</span>
                     </span>
                   </div>
                   {form.getState().errors.terms && (
@@ -302,7 +306,7 @@ const Register = () => {
           <div className="flex items-center justify-center mt-4">
             <button className="font-Inter font-medium text-base text-primary-gray ">
               Already have an account?{" "}
-              <Link to="/signin" className=" text-primary-red">
+              <Link to="/signin" className=" text-[#3D7100]">
                 Sign In
               </Link>
             </button>
