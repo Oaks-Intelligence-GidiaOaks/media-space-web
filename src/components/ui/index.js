@@ -3,5 +3,5 @@ export { default as PasswordField } from "./PasswordField.jsx";
 export { default as DropDownMenu } from "./DropDownMenu.jsx";
 export { default as MonthDropDown } from "./MonthDropDown.jsx";
 export { default as SizedBox } from "./SizedBox.jsx";
-export { default as Plans } from "./Plans.jsx";
+export { default as Plans } from "./plans/Plans.jsx";
 export { default as SuperAdminPlans } from "./SuperAdminPlans.jsx";

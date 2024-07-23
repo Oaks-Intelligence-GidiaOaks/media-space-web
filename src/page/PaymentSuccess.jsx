@@ -1,5 +1,15 @@
+import { Link } from "react-router-dom";
+
 const PaymentSuccess = () => {
-  return <div>Thank you for Subscribing!</div>;
+  return (
+    <div className="flex justify-center items-center min-h-screen">
+      Thank you for subscribing, click{" "}
+      <Link className="text-blue-700 px-1" to="/signin">
+        here
+      </Link>{" "}
+      to login
+    </div>
+  );
 };
 
 export default PaymentSuccess;

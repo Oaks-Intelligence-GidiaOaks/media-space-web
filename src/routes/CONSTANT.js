@@ -26,4 +26,4 @@ export const ORGANIZATIONS_SURVEY = "/dashboard/survey";
 export const SURVEY_RESPONSES = "/dashboard/survey/survey-response/:id";
 export const SENTIMENT_ANALYSIS = "/dashboard/analysis";
 export const SUBSCRIPTION_PLANS = "/subscription-plans";
-export const PAYMENT_SUCCESS = "https://kommunita.com/payment-success";
+export const PAYMENT_SUCCESS = "/payment-success";
