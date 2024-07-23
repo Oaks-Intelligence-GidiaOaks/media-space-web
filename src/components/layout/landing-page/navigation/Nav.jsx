@@ -129,7 +129,7 @@ function Nav() {
                   className="w-full p-[0.08rem] rounded-xl bg-gradient-to-tr from-neutral-800 via-neutral-950 to-neutral-700 mt-5"
                 >
                   <Link
-                    to={LOGIN}
+                    to={LOGIN_AS}
                     onClick={() => setMenuOpen((prev) => !prev)}
                     exact="true"
                     activeClassName="active"

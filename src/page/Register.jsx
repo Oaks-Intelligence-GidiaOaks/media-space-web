@@ -19,7 +19,6 @@ import { showAlert } from "../static/alert";
 import { INDEX, SIGN_UP } from "../routes/CONSTANT";
 import * as images from "../assets";
 
-
 const constraints = {
   display_name: {
     presence: true,
@@ -80,27 +79,24 @@ const Register = () => {
         <div className="relative">
           <div className="h-screen w-full flex justify-center items-center bg-[#001900] bg-no-repeat overflow-hidden relative">
             <Link to={INDEX} className="flex" smooth={true}>
-            <motion.img
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 3, duration: 1, ease: "easeIn" }}
-              className="absolute top-0 left-10 transform  text-white  mt-5"
-              // className="absolute text-center font-Inter top-0 left-1/2 transform -translate-x-1/2 text-white text-3xl  mt-10"
-              style={{
-                // backgroundImage:
-                //   "linear-gradient(90deg, #6E9D37 0%, #74A12D 52%, #97B24C 99.99%, #94B04A 100%)",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent",
-              }}
-              src={images.logo}
+              <motion.img
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 3, duration: 1, ease: "easeIn" }}
+                className="absolute top-0 left-10 transform  text-white  mt-5"
+                // className="absolute text-center font-Inter top-0 left-1/2 transform -translate-x-1/2 text-white text-3xl  mt-10"
+                style={{
+                  // backgroundImage:
+                  //   "linear-gradient(90deg, #6E9D37 0%, #74A12D 52%, #97B24C 99.99%, #94B04A 100%)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+                src={images.logo}
+              />
 
-            />
-                
-            {/* <img src={images.logo} alt="logo" /> */}
-     
-         
-          </Link>
+              {/* <img src={images.logo} alt="logo" /> */}
+            </Link>
             <motion.img
               initial={{ y: 200, opacity: 0, scale: 1 }}
               animate={{ y: 0, opacity: 1, scale: 1.1 }}
@@ -127,6 +123,14 @@ const Register = () => {
       <div className="w-full h-screen flex-1 rounded-tl-[10%]  lg:rounded-tl-[20%] mx-auto pt-20 px-8 lg:p-16 bg-white overflow-y-scroll scrollbar-thin bar  scrollbar-thumb-[#AEAEAE] scrollbar-track-gray-200">
         <div className=" mx-auto w-[80%] lg:mt-10 2xl:mt-40">
           <div className="">
+          <div className="flex justify-center items-center mb-10">
+          <div className="flex font-[500] mx-auto text-xs items-center">
+              <p className=" bg-[#F7F7F8] text-sm w-[8.8rem] text-center rounded-lg text-[#757682]">
+                Built for you
+              </p>
+              <p className="text-[#3D7100]">Change</p>
+            </div>
+          </div>
             <Form
               onSubmit={onSubmit}
               validate={validateForm}

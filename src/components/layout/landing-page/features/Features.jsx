@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 // import { useLocation } from "react-router-dom";
 // import { useEffect } from "react";
 import * as images from "../../../../assets";
+import { SIGN_UP_AS } from "../../../../routes/CONSTANT";
 
 function Features() {
   // const location = useLocation();
@@ -51,7 +52,7 @@ function Features() {
               whileTap={{ scale: 0.9 }}
             >
               <div className="flex pt-7">
-                <Link to={""} className="footer-signup">
+                <Link to={SIGN_UP_AS} className="footer-signup">
                   Get started
                 </Link>
               </div>
@@ -75,7 +76,7 @@ function Features() {
               have ever experienced.
             </p>
             <div className="flex pt-7">
-              <Link to={""} className="footer-signup">
+              <Link to={SIGN_UP_AS} className="footer-signup">
                 Get started
               </Link>
             </div>

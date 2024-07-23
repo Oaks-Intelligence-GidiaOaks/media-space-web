@@ -52,7 +52,10 @@ const KommunitaIntegration = () => {
         </div>
 
         <div className="flex flex-col pb-24 justify-center items-center pt-10">
-          <img src={images.message_Icon} alt="" />
+          <div className="relative">
+          <img src={images.messages_1} alt="" className="w-full" />
+          <img src={images.messages} alt="" className="absolute transform inset-1/2 -translate-x-1/2 -translate-y-1/2" />
+          </div>
           <p className="text-white text-center">
             Unified social media management Tool
           </p>

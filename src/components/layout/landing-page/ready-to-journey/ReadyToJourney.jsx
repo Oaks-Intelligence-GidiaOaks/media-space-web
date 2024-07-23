@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import * as images from "../../../../assets";
-import { REGISTER } from "../../../../routes/CONSTANT";
+import { REGISTER, SIGN_UP_AS } from "../../../../routes/CONSTANT";
 
 const ReadyToJourney = () => {
   return (
@@ -25,11 +25,11 @@ const ReadyToJourney = () => {
         </h2>
         <div className="flex pb-24 gap-5">
         <div className="flex mx-auto gap-5">
-          <Link to={REGISTER} className=" action-button sm:mr-1">
+          <Link to={SIGN_UP_AS} className=" action-button sm:mr-1">
             Get started
           </Link>
           <Link
-            to={REGISTER}
+            to={SIGN_UP_AS}
             className=" action-button border border-[#3D7100] bg-transparent text-[#FBFBFB]  sm:mr-1"
           >
             Speak to Support

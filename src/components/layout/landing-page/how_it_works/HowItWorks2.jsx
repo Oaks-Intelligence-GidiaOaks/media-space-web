@@ -33,7 +33,7 @@ const HowItWorks2 = () => {
         <div className=" rounded pt-10 pl-5 w-full xl:w-[55%] flex flex-col">
           <div className="w-full h-[80%] mt-auto">
             <img
-              src={images.how_it_work_web}
+              src={images.Account_Management}
               className="w-full h-full object-cover"
               alt="Sentiment Analysis"
             />

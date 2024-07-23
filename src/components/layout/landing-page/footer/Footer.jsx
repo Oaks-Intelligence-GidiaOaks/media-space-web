@@ -35,7 +35,7 @@ function Footer() {
           </p>
         </div>
 
-        <div className="md:flex flex-row flex-wrap justify-evenly gap-10 pt-4">
+        <div className="md:flex flex-row flex-wrap justify-between pt-4">
           <div className="flex flex-col gap-5">
             <p className="link-head text-[#3D7100]">Company</p>
             <Link to={""} className="footer-link text-black">
@@ -50,9 +50,9 @@ function Footer() {
             <Link to={""} className="footer-link text-black">
             Download Product Brochure
             </Link>
-            <div className="flex gap-1">
-              <input type="text" className="rounded" /><button className="action-button rounded">Download</button>
-            </div>
+            <form className="flex gap-1">
+              <input type="text" className="rounded" placeholder="Enter Your Email" /><button className="action-button rounded">Download</button>
+            </form>
           </div>
 
           <div className="flex flex-col gap-5">

@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 import * as images from "../../../../assets";
+import { SIGN_UP_AS } from "../../../../routes/CONSTANT";
 
 
 function HowItWorks() {
@@ -108,10 +109,10 @@ function HowItWorks() {
         </motion.div>
       </div>
       <div className="flex justify-center gap-10 pt-20 pb-20">
-        <Link to={""} className="footer-signup">
+        <Link to={SIGN_UP_AS} className="footer-signup">
           Get started
         </Link>
-        <Link to={""} className="footer-signin">
+        <Link to={SIGN_UP_AS} className="footer-signin">
           Learn more
         </Link>
       </div>

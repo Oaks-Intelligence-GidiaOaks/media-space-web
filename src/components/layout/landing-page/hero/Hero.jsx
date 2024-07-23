@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { INDEX } from "../../../../routes/CONSTANT";
+import { INDEX, SIGN_UP_AS } from "../../../../routes/CONSTANT";
 import imagehero from "../../../../assets/imagehero.svg";
 import { REGISTER } from "../../../../routes/CONSTANT";
 import { CiPlay1 } from "react-icons/ci";
@@ -22,11 +22,11 @@ function Hero() {
             </p>
 
             <div className="flex gap-5">
-              <Link to={REGISTER} className=" action-button sm:mr-1">
+              <Link to={SIGN_UP_AS} className=" action-button sm:mr-1">
                 Get started
               </Link>
               <Link
-                to={REGISTER}
+                to={SIGN_UP_AS}
                 className=" action-button border border-[#3D7100] bg-transparent text-[#FBFBFB]  sm:mr-1"
               >
                 Watch Demo <CiPlay1 className="inline" />
@@ -50,7 +50,7 @@ function Hero() {
             </h5>
 
             <div className="flex pb-32 justify-center">
-              <Link to={INDEX} className="hero-btn">
+              <Link to={SIGN_UP_AS} className="hero-btn">
                 Get started
               </Link>
             </div>
