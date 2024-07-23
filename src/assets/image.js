@@ -1,9 +1,12 @@
 const PATH = "/images";
 
-export const logo = `${PATH}/Logo.svg`;
+export const logo = `${PATH}/Logo1.svg`;
 export const logo_new = `${PATH}/Kommunita-logo.svg`;
 export const logo_new2 = `${PATH}/Kommunita-logo2.svg`;
 export const hero = `${PATH}/hero.svg`;
+export const register_bg = `${PATH}/register_bg.svg`;
+export const world_2 = `${PATH}/world_2.svg`;
+export const user_phone = `${PATH}/user_phone.svg`;
 export const hero_bg = `${PATH}/hero-background.svg`;
 export const hero_map = `${PATH}/hero-map.svg`;
 export const half = `${PATH}/half.svg`;
@@ -14,7 +17,7 @@ export const rectangle = `${PATH}/Rectangle.svg`;
 export const footer = `${PATH}/footer.svg`;
 export const howitworks = `${PATH}/howitworks.svg`;
 export const faq = `${PATH}/faq.svg`;
-export const favicon_2 = `${PATH}/favicon_2.png`;
+export const favicon_2 = `${PATH}/favicon_3.png`;
 export const card_img = `${PATH}/card-img.svg`;
 export const card_img_1 = `${PATH}/card-img-1.svg`;
 export const card_img_2 = `${PATH}/card-img-2.svg`;

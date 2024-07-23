@@ -14,7 +14,7 @@ function Hero() {
         <div className="w-full bg-[#112420] text-[#FBFBFB] px-5 md:px-20 h-full flex justify-center items-center">
           <div className="flex flex-col">
             <h3 className="first-hero-head hero-subtitle text-[#fff]">
-            Discover <span className="text-[#7ADD02] "> Seamless <br /> Community Management <br />
+            Discover <span className="text-[#7ADD02] font-semibold "> Seamless <br /> Community Management <br />
               </span> in one Place
             </h3>
             <p className="first-hero-subtitle w-full pt-6 pb-14">
@@ -41,7 +41,7 @@ function Hero() {
           <img src={images.hero_map} alt="hero map" className=" mx-auto" />
           <div className="hero-content text-center">
             <h5 className="hero-subtitle pb-3">
-              <span className="spotlight"> <TypingEffect /></span> your community <br />
+              <span className="spotlight inline"> <TypingEffect /></span> your community <br />
               with people around the world
               
             </h5>

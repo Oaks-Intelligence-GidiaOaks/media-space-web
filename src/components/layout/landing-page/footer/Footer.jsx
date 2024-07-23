@@ -48,20 +48,23 @@ function Footer() {
               FAQ
             </Link>
             <Link to={""} className="footer-link text-black">
-              Newsletter
+            Download Product Brochure
             </Link>
+            <div className="flex gap-1">
+              <input type="text" className="rounded" /><button className="action-button rounded">Download</button>
+            </div>
           </div>
 
           <div className="flex flex-col gap-5">
             <p className="link-head text-[#3D7100]">Legal</p>
             <Link to={""} className="footer-link text-black">
-              Privacy
+            Privacy Policy
             </Link>
             <Link to={""} className="footer-link text-black">
-              License
+            Terms of service
             </Link>
             <Link to={""} className="footer-link text-black">
-              Contacts
+            License
             </Link>
           </div>
 
@@ -75,6 +78,12 @@ function Footer() {
             </Link>
             <Link to={""} className="footer-link text-black">
               Linkedin
+            </Link>
+            <Link to={""} className="footer-link text-black">
+            Facebook
+            </Link>
+            <Link to={""} className="footer-link text-black">
+            Tiktok
             </Link>
           </div>
 

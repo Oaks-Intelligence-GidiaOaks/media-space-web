@@ -37,7 +37,7 @@ const KommunitaIntegration = () => {
           <div className="flex flex-col justify-center items xl:px-36 py-6  ">
             <img src={images.messaging} alt="" className="mx-auto" />
             <p className="text-white text-center">
-              PI integration for CRM, email marketing tools
+              API integration for CRM, email marketing tools
             </p>
             <small className="text-white text-center">(Coming soon)</small>
           </div>
