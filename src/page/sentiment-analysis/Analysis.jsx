@@ -70,7 +70,7 @@ const Analysis = () => {
 
           <div className="flex justify-between gap-10 pb-10">
             <div className="wordcloud w-full h-[449px] rounded-[13.17px] border shadow border-[#E6EDFF] bg-white">
-              <div className="px-10 pt-3">
+              <div className="px-3 pt-3">
                 <div className="flex justify-between items-center">
                   <p className="word-cloud-text">Word Cloud</p>
                   <select
