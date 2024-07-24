@@ -111,7 +111,7 @@ const Analysis = () => {
                   </select>
                 </div>
 
-                <div className="flex flex-col justify-center mt-8">
+                <div className="flex flex-col justify-center mt-5">
                   {loadNetSentiment ? (
                     <div className="flex items-center justify-center h-full">
                       <Spinner />

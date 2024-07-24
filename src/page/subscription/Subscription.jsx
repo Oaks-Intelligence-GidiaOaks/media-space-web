@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import {
   Cards,
-  AdsCard,
+  AdsCard
   // CategoryCard,
 } from "../../components/layout/super-admin-layout";
 import { ShimmerThumbnail } from "react-shimmer-effects";
@@ -24,32 +24,33 @@ import {
   useGetAllAdminAdvertQuery,
   useAdminAdvertStatsQuery,
   useToggleAdvertByIdMutation,
-  useDeleteSingleAdvertByIdMutation,
+  useDeleteSingleAdvertByIdMutation
 } from "../../service/admin/advert.service";
 import { showAlert } from "../../static/alert";
 // import { useGetCategoryQuery } from "../../service/category.service";
 // import PaginationControls from "../../components/ui/PaginationControls";
 import SuperAdminSubscription from "./SuperAdminSubscription";
+import History from "./History";
 
 const constraints = {
   media: {
-    presence: true,
+    presence: true
   },
   description: {
-    presence: true,
+    presence: true
   },
   visibility: {
-    presence: true,
+    presence: true
   },
   exposure_time: {
-    presence: true,
+    presence: true
   },
   duration: {
-    presence: true,
+    presence: true
   },
   landing_page_link: {
-    presence: true,
-  },
+    presence: true
+  }
 };
 
 const Subscription = () => {
@@ -60,17 +61,17 @@ const Subscription = () => {
   const {
     data: advertdata,
     isLoading: loadAdvert,
-    refetch,
+    refetch
   } = useGetAllAdminAdvertQuery(undefined, {
-    skip: user?.role !== "Admin",
+    skip: user?.role !== "Admin"
   });
 
   const {
     data: advertStats,
     isLoading: loadAdvertStats,
-    refetch: refetchAdvertStats,
+    refetch: refetchAdvertStats
   } = useAdminAdvertStatsQuery(undefined, {
-    skip: user?.role !== "Admin",
+    skip: user?.role !== "Admin"
   });
 
   const adverts = advertdata?.data || [];
@@ -129,8 +130,8 @@ const Subscription = () => {
       const response = await axios.post(`${apiUrl}/admin/advert`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
+          ...(token && { Authorization: `Bearer ${token}` })
+        }
       });
 
       console.log("Post submitted successfully:", response.data);
@@ -213,7 +214,7 @@ const Subscription = () => {
 
                   {/* SUBSCRIPTION SECTION */}
                   <Tabs.Item active title="Subscription" icon={GoBell}>
-                    No content for subscription, view ads tab
+                    <History />
                   </Tabs.Item>
 
                   {/* ADS SECTION */}

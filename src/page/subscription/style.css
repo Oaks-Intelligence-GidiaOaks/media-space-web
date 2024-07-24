@@ -26,10 +26,17 @@
   width: 109.58px;
   height: 39.14px;
   background-color: "white";
-  color: #4C5563;
+  color: #4c5563;
   font-family: Inter;
   font-weight: 600;
   font-size: 10.96px;
   line-height: 15.65px;
   border-radius: 7px;
+}
+.history-filter {
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.30000001192092896px;
 }
