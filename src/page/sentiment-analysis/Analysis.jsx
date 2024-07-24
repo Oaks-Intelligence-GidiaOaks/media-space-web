@@ -1,8 +1,5 @@
 import { useSelector } from "react-redux";
 import "./style.css";
-
-import { ShimmerThumbnail } from "react-shimmer-effects";
-
 import "./WordCloud";
 import GaugeComponent from "react-gauge-component";
 import Legend from "./Legend";
@@ -11,41 +8,46 @@ import WordCloud from "./WordCloud";
 import TrendingKeywords from "./TrendingKeywords";
 import {
   useGetTrendingKeywordsQuery,
-  useGetNetSentimentQuery,
+  useGetNetSentimentQuery
 } from "../../service/admin/sentiment-analysis";
 import LineChart from "./LineChart";
 import Stats from "./Stats";
+import { Spinner } from "flowbite-react";
+import { useState } from "react";
 
 const Analysis = () => {
   const user = useSelector((state) => state.user.user);
-  // const { data: postStats, isLoading: loadStats } = useGetSentimentStatsQuery();
-
   const legendItemsNet = [
     { color: "#FF3A29", label: "Negative" },
     { color: "#D4BD52", label: "Neutral" },
-    { color: "#4E9C19", label: "Positive" },
+    { color: "#4E9C19", label: "Positive" }
   ];
   const legendItemsTrend = [
     { color: "#FF3A29", label: "Negative" },
     { color: "#4360FA", label: "Neutral" },
-    { color: "#4E9C19", label: "Positive" },
+    { color: "#4E9C19", label: "Positive" }
   ];
 
-  const { data: trendingKeywords, isLoading: loadingTrendingWords } =
-    useGetTrendingKeywordsQuery();
+  const [keywordFilter, setKeywordFilter] = useState("last 12 hours");
+  const { data: trendingKeywords, isFetching: loadingTrendingWords } =
+    useGetTrendingKeywordsQuery(keywordFilter);
+
   const transformedData = trendingKeywords?.data?.map((item) => ({
     keyword: item.keyword,
     usage: item.usage,
     sentiments: {
       neutral: Math.round(item.neutral),
       positive: Math.round(item.positive),
-      negative: Math.round(item.negative),
-    },
+      negative: Math.round(item.negative)
+    }
   }));
 
-  const { data: netSentiment, isLoading: loadNetSentiment } =
-    useGetNetSentimentQuery();
+  const [netFilter, setNetFilter] = useState("last 12 hours");
+  const { data: netSentiment, isFetching: loadNetSentiment } =
+    useGetNetSentimentQuery(netFilter);
   // console.log(netSentiment);
+
+  const [wordFilter, setWordFilter] = useState("last 12 hours");
 
   return (
     <>
@@ -62,79 +64,6 @@ const Analysis = () => {
                 </p>
               </div>
 
-              {/* <div className="flex w-full gap-2 justify-start items-center py-4">
-                <p className="analysis-filter-top pr-5">Filter by:</p>
-                <select className="analysis-filter-input focus:outline-none focus:ring-0">
-                  <option value="Worldwide">Worldwide</option>
-                  <option value="United Kingdom">United Kingdom</option>
-                  <option value="South Africa">South Africa</option>
-                  <option value="England">England</option>
-                  <option value="Wales">Wales</option>
-                </select>
-                <select className="analysis-filter-input focus:outline-none focus:ring-0">
-                  <option value="Today">Last 12 hours</option>
-                  <option value="Today">Today</option>
-                  <option value="Today">Last 3 days</option>
-                  <option value="Today">Last 7 days</option>
-                  <option value="Today">Last 30 days</option>
-                  <option value="Today">This year</option>
-                  <option value="Today">Custom</option>
-                </select>
-                <select className="analysis-filter-input focus:outline-none focus:ring-0">
-                  <option value="All Categories">All Categories</option>
-                  <option value="Education">Education</option>
-                  <option value="Sports">Sports</option>
-                  <option value="Health and Wellness">
-                    Health and Wellness
-                  </option>
-                  <option value="Entertainment">Entertainment</option>
-                  <option value="Carbon footprint">Carbon footprint</option>
-                  <option value="Others">Others</option>
-                </select>
-              </div>
-
-              <div className="w-full super-admin-card-box border-[#E6EDFF]  items-center justify-center sm:flex-row sm:flex-wrap sm:justify-center border shadow sm:gap-10 md:grid md:grid-cols-2 md:justify-between lg:grid lg:grid-cols-4 xl:grid-cols-4 mb-20">
-                {loadStats ? (
-                  <ShimmerThumbnail width={250} height={150} />
-                ) : (
-                  <Cards
-                    title={postStats?.data?.total_sentiments?.count || "--"}
-                    subtitle={"Total post"}
-                    img={post}
-                  />
-                )}
-
-                {loadStats ? (
-                  <ShimmerThumbnail width={250} height={150} />
-                ) : (
-                  <Cards
-                    title={postStats?.data?.positive_sentiments?.count || "--"}
-                    subtitle={"Total Positive"}
-                    img={positive}
-                  />
-                )}
-
-                {loadStats ? (
-                  <ShimmerThumbnail width={250} height={150} />
-                ) : (
-                  <Cards
-                    title={postStats?.data?.negative_sentiments?.count || "--"}
-                    subtitle={"Total Negative"}
-                    img={negative}
-                  />
-                )}
-
-                {loadStats ? (
-                  <ShimmerThumbnail width={250} height={150} />
-                ) : (
-                  <Cards
-                    title={postStats?.data?.neutral_sentiments?.count || "--"}
-                    subtitle={"Total Neutral"}
-                    img={neutral}
-                  />
-                )}
-              </div> */}
-
               <Stats />
             </>
           ) : null}
@@ -144,18 +73,22 @@ const Analysis = () => {
               <div className="px-10 pt-3">
                 <div className="flex justify-between items-center">
                   <p className="word-cloud-text">Word Cloud</p>
-                  {/* <select className="w-[173px] h-[37.97px] analysis-filter-input focus:outline-none focus:ring-0">
-                    <option value="Today">Last 12 hours</option>
-                    <option value="Today">Today</option>
-                    <option value="Today">Last 3 days</option>
-                    <option value="Today">Last 7 days</option>
-                    <option value="Today">Last 30 days</option>
-                    <option value="Today">This year</option>
-                    <option value="Today">Custom</option>{" "}
-                  </select> */}
+                  <select
+                    className="w-auto h-[37.97px] analysis-filter-input focus:outline-none focus:ring-0"
+                    onChange={(e) => setWordFilter(e.target.value)}
+                    value={wordFilter}
+                  >
+                    <option value="last 12 hours">Last 12 hours</option>
+                    <option value="today">Today</option>
+                    <option value="last 3 days">Last 3 days</option>
+                    <option value="last 7 days">Last 7 days</option>
+                    <option value="last 30 days">Last 30 days</option>
+                    <option value="this year">This year</option>
+                    {/* <option value="custom">Custom</option> */}
+                  </select>
                 </div>
                 <div className="flex justify-center items-center w-full">
-                  <WordCloud height={350} />
+                  <WordCloud height={350} filter={wordFilter} />
                 </div>
               </div>
             </div>
@@ -163,14 +96,26 @@ const Analysis = () => {
               <div className="p-3">
                 <div className="flex items-center justify-between">
                   <p className="word-cloud-text">Net Sentiment</p>
-                  {/* <select className="w-[106.97px] h-[23.21px] analysis-filter-input focus:outline-none focus:ring-0">
-                    <option value="Today">Today</option>
-                  </select> */}
+                  <select
+                    className="w-auto h-[37.97px] analysis-filter-input focus:outline-none focus:ring-0"
+                    onChange={(e) => setNetFilter(e.target.value)}
+                    value={netFilter}
+                  >
+                    <option value="last 12 hours">Last 12 hours</option>
+                    <option value="today">Today</option>
+                    <option value="last 3 days">Last 3 days</option>
+                    <option value="last 7 days">Last 7 days</option>
+                    <option value="last 30 days">Last 30 days</option>
+                    <option value="this year">This year</option>
+                    {/* <option value="custom">Custom</option> */}
+                  </select>
                 </div>
 
                 <div className="flex flex-col justify-center mt-8">
                   {loadNetSentiment ? (
-                    <ShimmerThumbnail width={350} height={350} />
+                    <div className="flex items-center justify-center h-full">
+                      <Spinner />
+                    </div>
                   ) : (
                     <>
                       <GaugeComponent
@@ -184,32 +129,33 @@ const Analysis = () => {
                               { value: 40 },
                               { value: 60 },
                               { value: 80 },
-                              { value: 100 },
-                            ],
+                              { value: 100 }
+                            ]
                           },
                           valueLabel: {
-                            hide: true,
-                          },
+                            hide: true
+                          }
                         }}
                         arc={{
                           colorArray: ["#EA4228", "#5BE12C"],
                           padding: 0.02,
                           width: 0.3,
-                          nbSubArcs: 0,
+                          nbSubArcs: 0
                         }}
                         pointer={{
                           elastic: true,
                           animationDelay: 0,
                           color: "#272525",
                           width: 10,
-                          length: 0.8,
+                          length: 0.8
                         }}
                       />
 
                       <div className="flex flex-col w-full justify-center items-center mb-40">
                         <h1 className="guage-value-head">
-                          {netSentiment?.data?.net_sentiment}
+                          {Math.round(netSentiment?.data?.net_sentiment)}
                         </h1>
+
                         <p className="guage-rating">
                           {netSentiment?.data?.net_sentiment === 0
                             ? "NEUTRAL"
@@ -221,7 +167,9 @@ const Analysis = () => {
                           <img src={arrow} alt="" />
                           7.2%
                         </p>
-                        <p className="guage-period">Previous period: 74.24</p>
+                        <p className="guage-period">
+                          Previous period: {netFilter}
+                        </p>
                       </div>
 
                       <Legend items={legendItemsNet} />
@@ -239,12 +187,26 @@ const Analysis = () => {
               <div className="p-3 h-full">
                 <div className="flex items-center justify-between">
                   <p className="word-cloud-text">Trending keywords</p>
-                  <p className="sentiment">Sentiment</p>
+                  <select
+                    className="w-auto h-[37.97px] analysis-filter-input focus:outline-none focus:ring-0"
+                    onChange={(e) => setKeywordFilter(e.target.value)}
+                    value={keywordFilter}
+                  >
+                    <option value="last 12 hours">Last 12 hours</option>
+                    <option value="today">Today</option>
+                    <option value="last 3 days">Last 3 days</option>
+                    <option value="last 7 days">Last 7 days</option>
+                    <option value="last 30 days">Last 30 days</option>
+                    <option value="this year">This year</option>
+                    {/* <option value="custom">Custom</option> */}
+                  </select>
                 </div>
 
                 <div className="pt-5 flex flex-col h-full w-full gap-4 relative">
                   {loadingTrendingWords ? (
-                    <ShimmerThumbnail width={350} height={400} />
+                    <div className="flex items-center justify-center h-full">
+                      <Spinner />
+                    </div>
                   ) : (
                     <>
                       {transformedData?.slice(0, 10).map((item, index) => (
@@ -257,7 +219,7 @@ const Analysis = () => {
                         />
                       ))}
 
-                      <div className="absolute bottom-5 justify-center items-center w-full">
+                      <div className="absolute bottom-10 justify-center items-center w-full">
                         <Legend items={legendItemsTrend} />
                       </div>
                     </>

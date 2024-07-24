@@ -1,57 +1,55 @@
 import {
   TRENDING_KEYWORDS,
   WORD_CLOUD,
-  SENTIMENT_ANALYSIS_STATISTICS,
   NET_SENTIMENT,
-  SENTIMENT_TREND,
+  SENTIMENT_TREND
 } from "../constants";
 import apiSlice from "../api/apiSlice";
 
 export const adminApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTrendingKeywords: builder.query({
-      query: () => ({
-        url: TRENDING_KEYWORDS,
-        method: "GET",
+      query: (filter) => ({
+        url: `${TRENDING_KEYWORDS}?filter=${filter}`,
+        method: "GET"
       }),
-      providesTags: ["sentimentAnalysis"],
+      providesTags: ["sentimentAnalysis"]
     }),
 
     getWordCloud: builder.query({
-      query: () => ({
-        url: WORD_CLOUD,
-        method: "GET",
-      }),
-      providesTags: ["sentimentAnalysis"],
+      query: (filter) => `${WORD_CLOUD}?filter=${filter}`,
+      providesTags: (result, error, filter) => [
+        { type: "SentimentAnalysis", id: filter }
+      ]
     }),
 
     getSentimentStats: builder.query({
-      query: ({ country, category, start_date, end_date }) => {
+      query: ({ filter, country, category }) => {
         // You can adjust the query string based on the parameters
         return {
           url: `/admin/sentiment/statistics`,
-          params: { country, category, start_date, end_date },
+          params: { filter, country, category }
         };
       },
-      providesTags: ["sentimentAnalysis"],
+      providesTags: ["sentimentAnalysis"]
     }),
 
     getNetSentiment: builder.query({
-      query: () => ({
-        url: NET_SENTIMENT,
-        method: "GET",
+      query: (filter) => ({
+        url: `${NET_SENTIMENT}?filter=${filter}`,
+        method: "GET"
       }),
-      providesTags: ["sentimentAnalysis"],
+      providesTags: ["sentimentAnalysis"]
     }),
 
     getSentimentTrend: builder.query({
       query: () => ({
         url: SENTIMENT_TREND,
-        method: "GET",
+        method: "GET"
       }),
-      providesTags: ["sentimentAnalysis"],
-    }),
-  }),
+      providesTags: ["sentimentAnalysis"]
+    })
+  })
 });
 
 export const {
@@ -59,5 +57,5 @@ export const {
   useGetWordCloudQuery,
   useGetSentimentStatsQuery,
   useGetNetSentimentQuery,
-  useGetSentimentTrendQuery,
+  useGetSentimentTrendQuery
 } = adminApiSlice;
