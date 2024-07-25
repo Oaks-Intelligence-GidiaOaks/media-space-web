@@ -37,4 +37,6 @@ export const NET_SENTIMENT = "admin/sentiment/net-sentiment";
 export const SENTIMENT_TREND = "admin/sentiment/trend";
 export const PLANS = "user/plans";
 export const FEATURES = "superadmin/plan/features";
-export const PAYMENT_INIT = "subscription/init-payment";
+export const PAYMENT_INIT = "admin/subscription/init-payment";
+export const SUBSCRIPTION_STATS = "admin/subscription/statistics";
+export const SUBSCRIPTION_HISTORY = "admin/subscription/history";
