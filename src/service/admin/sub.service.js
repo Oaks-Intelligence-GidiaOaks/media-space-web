@@ -32,8 +32,10 @@ export const AdminApiSlice = apiSlice.injectEndpoints({
     }),
 
     SubscriptionHistory: builder.query({
-      query: ({ page, page_size }) => ({
-        url: `${SUBSCRIPTION_HISTORY}?page=${page}&page_size=${page_size}`,
+      query: ({ filter, page, page_size }) => ({
+        url: `${SUBSCRIPTION_HISTORY}?filter=${
+          filter || ""
+        }&page=${page}&page_size=${page_size}`,
         method: "GET"
       })
       // providesTags: ["Plans"],

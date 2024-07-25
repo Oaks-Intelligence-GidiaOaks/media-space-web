@@ -21,8 +21,10 @@ function History() {
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [filter, setFilter] = useState("");
 
   const { data: history, isFetching } = useSubscriptionHistoryQuery({
+    filter,
     page,
     page_size: pageSize
   });
@@ -92,11 +94,15 @@ function History() {
             </div>
 
             <div className="table-section pt-10">
-              <select className="rounded-md h-[39px] bg-white border shadow border-[#EFF0F6] history-filter focus:outline-none focus:ring-0 mb-2 w-auto">
+              <select
+                className="rounded-md h-[39px] bg-white border shadow border-[#EFF0F6] history-filter focus:outline-none focus:ring-0 mb-2 w-auto"
+                onChange={(e) => setFilter(e.target.value)}
+              >
                 <option value="">All</option>
-                <option value="">Yearly Subscriptions</option>
-                <option value="">Monthly Subscriptions</option>
-                <option value="">Expired Subscriptions</option>
+                <option value="yearly">Yearly Subscriptions</option>
+                <option value="monthly">Monthly Subscriptions</option>
+                <option value="active">Active Subscriptions</option>
+                <option value="expired">Expired Subscriptions</option>
               </select>
               {isFetching ? (
                 <div className="flex items-center justify-center w-full">
