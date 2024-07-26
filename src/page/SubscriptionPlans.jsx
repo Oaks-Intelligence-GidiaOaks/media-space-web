@@ -18,7 +18,8 @@ const SubscriptionPlans = ({ organization }) => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("monthly");
-  const [country, setCountry] = useState(organization?.location);
+  const [country, setCountry] = useState(organization.location);
+  console.log(country);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -49,7 +50,7 @@ const SubscriptionPlans = ({ organization }) => {
         ...plan,
         price: plan[priceField],
         uniqueFeatures,
-        previousPlanName: index > 0 ? subscription_plans[index - 1].name : null,
+        previousPlanName: index > 0 ? subscription_plans[index - 1].name : null
       };
     }) || [];
 
@@ -165,8 +166,8 @@ SubscriptionPlans.propTypes = {
   organization: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     organization_name: PropTypes.string,
-    location: PropTypes.string,
-  }),
+    location: PropTypes.string
+  })
 };
 
 export default SubscriptionPlans;

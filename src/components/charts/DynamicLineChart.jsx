@@ -9,7 +9,9 @@ dayjs.extend(customParseFormat);
 const parseTrendData = (trendData, filter) => {
   const parsedData = { positive: [], negative: [], neutral: [] };
 
-  Object.entries(trendData.positive).forEach(([date, value]) => {
+  if (!trendData) return parsedData;
+
+  Object.entries(trendData.positive || {}).forEach(([date, value]) => {
     const parsedDate =
       filter === "year"
         ? dayjs(date, "YY-MM").toDate()
@@ -17,7 +19,7 @@ const parseTrendData = (trendData, filter) => {
     parsedData.positive.push({ x: parsedDate, y: value });
   });
 
-  Object.entries(trendData.negative).forEach(([date, value]) => {
+  Object.entries(trendData.negative || {}).forEach(([date, value]) => {
     const parsedDate =
       filter === "year"
         ? dayjs(date, "YY-MM").toDate()
@@ -25,7 +27,7 @@ const parseTrendData = (trendData, filter) => {
     parsedData.negative.push({ x: parsedDate, y: value });
   });
 
-  Object.entries(trendData.neutral).forEach(([date, value]) => {
+  Object.entries(trendData.neutral || {}).forEach(([date, value]) => {
     const parsedDate =
       filter === "year"
         ? dayjs(date, "YY-MM").toDate()
@@ -36,9 +38,8 @@ const parseTrendData = (trendData, filter) => {
   return parsedData;
 };
 
-const DynamicLineChart = ({ trendsData }) => {
+const DynamicLineChart = ({ trendsData = {} }) => {
   const [filter, setFilter] = useState("year");
-  // console.log(trendsData);
 
   const filteredData = useMemo(() => {
     let result = { positive: [], negative: [], neutral: [] };
@@ -132,7 +133,7 @@ const DynamicLineChart = ({ trendsData }) => {
               filter === "7-days" ? "active-btn" : ""
             }`}
             onClick={() => handleButtonClick("7-days")}
-            disabled={!trendsData}
+            disabled={!trendsData["7 days_trend"]}
           >
             7 days
           </button>
@@ -142,7 +143,7 @@ const DynamicLineChart = ({ trendsData }) => {
               filter === "30-days" ? "active-btn" : ""
             }`}
             onClick={() => handleButtonClick("30-days")}
-            disabled={!trendsData}
+            disabled={!trendsData["30 days_trend"]}
           >
             30 days
           </button>
@@ -150,7 +151,7 @@ const DynamicLineChart = ({ trendsData }) => {
           <button
             className={`filter-button ${filter === "year" ? "active-btn" : ""}`}
             onClick={() => handleButtonClick("year")}
-            disabled={!trendsData}
+            disabled={!trendsData["12 months_trend"]}
           >
             12 months
           </button>

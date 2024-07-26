@@ -18,6 +18,7 @@ function History() {
   const user = useSelector((state) => state.user.user);
   const { data, isLoading } = useSubscriptionStatsQuery();
   const paymentStats = data?.data;
+  console.log(paymentStats);
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -67,8 +68,8 @@ function History() {
                   <Cards
                     title={
                       paymentStats?.current_plan?.currency === "NGN"
-                        ? `₦${paymentStats?.current_plan?.amount}`
-                        : `$${paymentStats?.current_plan?.amount}`
+                        ? `₦${paymentStats?.current_plan?.amount || 0}`
+                        : `$${paymentStats?.current_plan?.amount || 0}`
                     }
                     subtitle={"Current Plan"}
                     percentage={""}
@@ -80,8 +81,8 @@ function History() {
                   <Cards
                     title={
                       paymentStats?.previous_plan?.currency === "NGN"
-                        ? `₦${paymentStats?.previous_plan?.amount}`
-                        : `$${paymentStats?.previous_plan?.amount}`
+                        ? `₦${paymentStats?.previous_plan?.amount || 0}`
+                        : `$${paymentStats?.previous_plan?.amount || 0}`
                     }
                     subtitle={"Previous Plan"}
                     percentage={""}

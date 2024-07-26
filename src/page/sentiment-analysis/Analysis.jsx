@@ -119,7 +119,7 @@ const Analysis = () => {
                   ) : (
                     <>
                       <GaugeComponent
-                        value={netSentiment?.data?.net_sentiment}
+                        value={netSentiment?.data?.net_sentiment || 0}
                         type="semicircle"
                         labels={{
                           tickLabels: {
@@ -153,7 +153,7 @@ const Analysis = () => {
 
                       <div className="flex flex-col w-full justify-center items-center mb-40">
                         <h1 className="guage-value-head">
-                          {Math.round(netSentiment?.data?.net_sentiment)}
+                          {Math.round(netSentiment?.data?.net_sentiment || 0)}
                         </h1>
 
                         <p className="guage-rating">

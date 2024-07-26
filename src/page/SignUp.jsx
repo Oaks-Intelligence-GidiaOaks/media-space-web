@@ -12,7 +12,7 @@ import validate from "validate.js";
 import { useSelector } from "react-redux";
 import { countries } from "../static/countries";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { showAlert } from "../static/alert";
 import rtkMutation from "../utils/rtkMutation";
 import { useRegisterUserMutation } from "../service/user.service";
@@ -23,14 +23,14 @@ import SubscriptionPlans from "./SubscriptionPlans";
 
 const constraints = {
   organization_name: {
-    presence: true,
+    presence: true
   },
   organization_email: {
-    presence: true,
+    presence: true
   },
   email: {
-    presence: true,
-  },
+    presence: true
+  }
 };
 
 const SignUp = () => {
@@ -49,7 +49,7 @@ const SignUp = () => {
   const state = useSelector((state) => state.register);
 
   const [registerUser, { error, isSuccess }] = useRegisterUserMutation({
-    provideTag: ["User"],
+    provideTag: ["User"]
   });
 
   const [organization, setOrganization] = useState({});
@@ -59,7 +59,7 @@ const SignUp = () => {
       const formData = {
         ...state,
         location,
-        industry_type,
+        industry_type
       };
       console.log(formData);
 
@@ -68,7 +68,7 @@ const SignUp = () => {
       // Extract and store the organization_id
       if (response && response?.data && response?.data?.organization_id) {
         setOrganization(response.data.organization_id);
-        dispatch(clearFormData);
+        dispatch(clearFormData());
       }
     } catch (error) {
       // console.log(error);
@@ -118,7 +118,7 @@ const SignUp = () => {
     "Transportation",
     "Travel & Tourism",
     "Utilities",
-    "Other",
+    "Other"
   ];
 
   if (isSuccess && organization) {
@@ -140,7 +140,7 @@ const SignUp = () => {
                   "linear-gradient(90deg, #6E9D37 0%, #74A12D 52%, #97B24C 99.99%, #94B04A 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
-                color: "transparent",
+                color: "transparent"
               }}
             >
               KOMMUNITA
@@ -291,23 +291,31 @@ const SignUp = () => {
                       )}
                     />
                   </div> */}
-
-                  <button
-                    type="submit"
-                    className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85"
-                  >
-                    {submitting ? (
-                      <>
-                        <span className="loading-dots">
-                          <span className="loading-dots-dot"></span>
-                          <span className="loading-dots-dot"></span>
-                          <span className="loading-dots-dot"></span>
-                        </span>
-                      </>
-                    ) : (
-                      "Finish"
-                    )}
-                  </button>
+                  <div className="flex justify-center items-between gap-10">
+                    <Link
+                      type="submit"
+                      className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85 text-center"
+                      to={"/register"}
+                    >
+                      Back
+                    </Link>
+                    <button
+                      type="submit"
+                      className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85"
+                    >
+                      {submitting ? (
+                        <>
+                          <span className="loading-dots">
+                            <span className="loading-dots-dot"></span>
+                            <span className="loading-dots-dot"></span>
+                            <span className="loading-dots-dot"></span>
+                          </span>
+                        </>
+                      ) : (
+                        "Finish"
+                      )}
+                    </button>
+                  </div>
                 </form>
               )}
             />
