@@ -15,6 +15,7 @@ export const circle = `${PATH}/circle.svg`;
 export const footerimg = `${PATH}/footerimg.svg`;
 export const rectangle = `${PATH}/Rectangle.svg`;
 export const footer = `${PATH}/footer.svg`;
+export const help = `${PATH}/help.svg`;
 export const howitworks = `${PATH}/howitworks.svg`;
 export const Account_Management = `${PATH}/Account_Management.svg`;
 export const faq = `${PATH}/faq.svg`;

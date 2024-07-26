@@ -1,14 +1,15 @@
 // import { faq } from "../../../../assets";
 import { questions } from "./questions";
 import Accordion from "./Accordion";
-// import { useLocation } from 'react-router-dom';
-// import { useEffect } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
 import * as images from "../../../../assets";
 
 
 function Faq() {
-  // console.table(questions);
+  console.table(questions);
   // const location = useLocation();
+  // const navigate = useNavigate();
   // useEffect(() => {
   //   if (location.hash) {
   //     const element = document.querySelector(location.hash);

@@ -76,3 +76,41 @@
   font-variation-settings: "slnt" 0;
   color: #2d2b32;
 }
+
+
+.toggle-icon-container {
+  width: 3rem;
+  height: 1.5rem;
+  background-color: #9FB3C8;
+  border-radius: 1rem;
+  }
+  
+  .toggle-button{
+    background-color: white;
+    width: 1.2rem;
+    height: 1.2rem;
+    left: 0.1rem;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(100%), translateX(100), rotate(360deg);
+  }
+
+  .is-checked{
+    background-color: #57DD80;
+  }
+
+  .toggle-icon{
+    gap: .5rem;
+    padding: 0 2px;
+  }
+
+  .toggle-icon svg{
+    font-size: .6rem;
+    color: #fff;
+  }
+
+  .translate-x-6{
+    transform: translateX(1rem);
+  }

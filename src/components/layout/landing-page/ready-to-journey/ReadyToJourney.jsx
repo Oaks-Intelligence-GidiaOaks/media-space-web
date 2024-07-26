@@ -20,8 +20,8 @@ const ReadyToJourney = () => {
           Ready to journey with us?
         </p>
         <h2 className="text-[2.5rem] leading-[3rem] mb-11 font-[600] text-center text-[#F7F7F8] ">
-          Get started for free <br />
-          Create an account
+        Get Started for Free <br />
+        Create an Account
         </h2>
         <div className="flex pb-24 gap-5">
         <div className="flex mx-auto gap-5">
