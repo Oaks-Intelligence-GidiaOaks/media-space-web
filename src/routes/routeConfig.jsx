@@ -23,11 +23,14 @@ import {
   LoginAs,
   SignUpAs,
   PricingPage,
+  SupportPage,
+  SupportGetStartedPage,
+  ResourcePage,
 } from "../page";
 
 import * as routes from "./CONSTANT";
 // import { ProtectedRoute } from "../guards";
-import { SuperAdminLayout } from "../layouts";
+import { SuperAdminLayout, SupportLayout } from "../layouts";
 import ProtectedRoute from "../components/protected/ProtectedRoute";
 import PublicRoute from "../components/protected/PublicRoute";
 
@@ -39,6 +42,13 @@ const RouterConfig = () => {
         <Route path={routes.SIGN_UP_AS} element={<SignUpAs />} />
         <Route path={routes.LOGIN_AS} element={<LoginAs />} />
         <Route path={routes.PRICING} element={<PricingPage />} />
+        <Route path={routes.SUPPORT} element={<SupportPage />} />
+        <Route path={routes.SUPPORT} element={<SupportLayout />} >
+        <Route index path={routes.SUPPORT_GetStarted} element={<SupportGetStartedPage />} />
+        <Route index path={routes.SUPPORT_GetStarted + "/:id"} element={<ResourcePage />} />
+        
+        </Route>
+
         <Route
           path={routes.LOGIN}
           element={<PublicRoute component={Login} />}

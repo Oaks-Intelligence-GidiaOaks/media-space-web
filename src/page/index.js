@@ -21,3 +21,6 @@ export { default as OrganizationsSurvey } from "./organizations/Survey";
 export { default as SurveyResponses } from "./organizations/SurveyResponses";
 export { default as SentimentAnalysis } from "./sentiment-analysis/Analysis";
 export { default as PricingPage } from "./pricing/PricingPage";
+export { default as SupportPage } from "./support/Support";
+export { default as SupportGetStartedPage } from "./support/GetStarted";
+export { default as ResourcePage } from "./support/ResourcePage";

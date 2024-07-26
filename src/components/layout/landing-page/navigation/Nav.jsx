@@ -20,43 +20,44 @@ import { Squash as Hamburger } from "hamburger-react";
 
 function Nav() {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
 
   const links = [
-    { name: "Features", path: FEATURES },
+    { name: "Features", path: location.pathname === '/' ? FEATURES : '/#features' },
     { name: "Pricing", path: PRICING },
     { name: "Support", path: SUPPORT },
-    { name: "FAQ", path: FAQ },
+    { name: "FAQ", path: location.pathname === '/' ?  FAQ : '/#faq' },
   ];
-  const location = useLocation();
   const pricing = location.pathname === '/pricing'
-  console.log("pricing location " + pricing)
+  const support = location.pathname === '/support/get-started'
   const ref = useRef(null);
 
   useClickAway(ref, () => setMenuOpen(false));
 
   return (
-    <section className={`sticky top-0 w-full ${pricing ? "bg-white" : "bg-[#112420]"}   z-50`}>
+    <section className={`sticky top-0 w-full ${pricing || support ? "bg-white" : "bg-[#112420]"}   z-50`}>
       <div className="w-full mx-auto px-5 md:px-20 lg:px-10 xl:px-20 py-4 flex justify-between items-center gap-5">
         <div className="logo">
           <Link to={INDEX} className="flex" smooth={true}>
-            <img src={pricing ? images.logo_new : images.logo} alt="logo" />
+            <img src={pricing || support ? images.logo_new : images.logo} alt="logo" />
           </Link>
         </div>
 
         <div className="flex gap-x-10">
           <div className="nav-links hidden md:flex lg:flex">
-            <ul className="flex justify-end gap-x-12">
+            <ul className="flex justify-end gap-x-12 active-ul">
               {links.map((link) => (
                 <li key={link.path}>
                   <NavLink
                     to={link.path}
                     exact="true"
                     activeclassname="active"
-                    className={`block py-2 hover:text-neutral-400 text-[1rem] ${pricing ? "text-black" : "text-white"}   transition-all menu-links`}
+                    className={`block py-2 hover:text-neutral-400 text-[1rem] ${pricing || support ? "text-black" : "text-white"}   transition-all menu-links`}
                     onClick={toggleMenu}
                   >
                     {link.name}
@@ -79,7 +80,7 @@ function Nav() {
         </div>
 
         <div ref={ref} className="block md:hidden lg:hidden">
-          <Hamburger toggled={isMenuOpen} size={22} toggle={setMenuOpen} color={pricing ? "#000" : "#FFFFFF"} />
+          <Hamburger toggled={isMenuOpen} size={22} toggle={setMenuOpen} color={pricing || support ? "#000" : "#FFFFFF"} />
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div

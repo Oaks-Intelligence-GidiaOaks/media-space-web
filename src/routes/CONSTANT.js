@@ -1,6 +1,7 @@
 export const INDEX = "/";
 export const FEATURES = "#features";
-export const SUPPORT = "#support";
+export const SUPPORT = "/support";
+export const SUPPORT_GetStarted = "get-started";
 export const PRICING = "/pricing";
 export const ABOUT = "/about";
 export const CONTACT_US = "/contact";
