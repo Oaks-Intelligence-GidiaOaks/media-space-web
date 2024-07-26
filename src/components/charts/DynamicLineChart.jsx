@@ -38,7 +38,7 @@ const parseTrendData = (trendData, filter) => {
 
 const DynamicLineChart = ({ trendsData }) => {
   const [filter, setFilter] = useState("year");
-  console.log(trendsData);
+  // console.log(trendsData);
 
   const filteredData = useMemo(() => {
     let result = { positive: [], negative: [], neutral: [] };
@@ -57,8 +57,8 @@ const DynamicLineChart = ({ trendsData }) => {
   const options = {
     chart: {
       toolbar: {
-        show: false,
-      },
+        show: false
+      }
     },
     xaxis: {
       type: "datetime",
@@ -66,14 +66,14 @@ const DynamicLineChart = ({ trendsData }) => {
       labels: {
         style: {
           fontSize: "12px",
-          fontFamily: "Inter",
+          fontFamily: "Inter"
         },
         formatter: (value) => {
           return filter === "year"
             ? dayjs(value).format("MMM YYYY")
             : dayjs(value).format("MMM D");
-        },
-      },
+        }
+      }
     },
     yaxis: {
       tickAmount: 5,
@@ -81,38 +81,38 @@ const DynamicLineChart = ({ trendsData }) => {
         formatter: (value) => `${value}`,
         style: {
           fontSize: "10px",
-          fontFamily: "Inter",
-        },
-      },
+          fontFamily: "Inter"
+        }
+      }
     },
     dataLabels: {
-      enabled: false,
+      enabled: false
     },
     stroke: {
       curve: "smooth",
-      width: 2,
+      width: 2
     },
     annotations: {
       text: {
         style: {
           fontSize: "12px",
           fontFamily: "Inter",
-          fontWeight: 400,
-        },
-      },
+          fontWeight: 400
+        }
+      }
     },
     fill: {
-      type: "solid",
+      type: "solid"
     },
     colors: ["#15CE12", "#FA3838", "#4360FA"],
     tooltip: {
       x: {
-        format: filter === "year" ? "MMM YYYY" : "MMM D",
+        format: filter === "year" ? "MMM YYYY" : "MMM D"
       },
       y: {
-        formatter: (value) => `${value}`,
-      },
-    },
+        formatter: (value) => `${value}`
+      }
+    }
   };
 
   const handleButtonClick = (value) => {
@@ -163,16 +163,16 @@ const DynamicLineChart = ({ trendsData }) => {
           series={[
             {
               name: "Positive",
-              data: filteredData.positive.map((item) => item.y),
+              data: filteredData.positive.map((item) => item.y)
             },
             {
               name: "Negative",
-              data: filteredData.negative.map((item) => item.y),
+              data: filteredData.negative.map((item) => item.y)
             },
             {
               name: "Neutral",
-              data: filteredData.neutral.map((item) => item.y),
-            },
+              data: filteredData.neutral.map((item) => item.y)
+            }
           ]}
           type="line"
           height={350}
@@ -183,7 +183,7 @@ const DynamicLineChart = ({ trendsData }) => {
 };
 
 DynamicLineChart.propTypes = {
-  trendsData: PropTypes.object.isRequired,
+  trendsData: PropTypes.object.isRequired
 };
 
 export default DynamicLineChart;

@@ -13,8 +13,8 @@ function Cards({ title, subtitle, img, icon, percentage, text }) {
 
       {icon || percentage || text ? (
         <div className="flex items-center gap-3">
-          <img src={icon} alt="" />
-          <p className="s-card-text">{percentage}</p>
+          {icon ? <img src={icon} alt="" /> : ""}
+          {icon ? <p className="s-card-text">{percentage}</p> : ""}
           <p className="s-card-text">{text}</p>
         </div>
       ) : null}
@@ -28,7 +28,7 @@ Cards.propTypes = {
   img: PropTypes.string,
   icon: PropTypes.string,
   percentage: PropTypes.string,
-  text: PropTypes.string,
+  text: PropTypes.string
 };
 
 export default Cards;

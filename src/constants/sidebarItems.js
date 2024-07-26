@@ -14,22 +14,22 @@ const sidebarItems = [
   {
     title: "Overview",
     route: "dashboard/overview",
-    icon: overview,
+    icon: overview
   },
   {
     title: "Sentiment Analysis",
     route: "dashboard/analysis",
-    icon: psychology,
+    icon: psychology
   },
   {
     title: "Create post",
     route: "dashboard/category",
-    icon: pen,
+    icon: pen
   },
   {
     title: "Users Acquisition",
     route: "dashboard/users",
-    icon: user,
+    icon: user
   },
   // {
   //   title: "Organizations",
@@ -39,18 +39,18 @@ const sidebarItems = [
   {
     title: "Staff",
     route: "dashboard/staff",
-    icon: user_charts,
+    icon: user_charts
   },
   {
-    title: "Subscription",
+    title: "Ads & Subscription",
     route: "dashboard/subscription",
-    icon: money,
+    icon: money
   },
   {
     title: "Survey",
     route: "dashboard/survey",
-    icon: bell,
-  },
+    icon: bell
+  }
   // {
   //   title: "Settings",
   //   route: "dashboard/settings",

@@ -3,13 +3,13 @@ import { Text } from "@visx/text";
 import { scaleLog } from "@visx/scale";
 import Wordcloud from "@visx/wordcloud/lib/Wordcloud";
 import { useGetWordCloudQuery } from "../../service/admin/sentiment-analysis";
-import { ShimmerThumbnail } from "react-shimmer-effects";
 import PropTypes from "prop-types";
+import { Spinner } from "flowbite-react";
 
 const colors = ["#28F473", "#09ABC3", "#000", "#5F0CF3", "#E0092F"];
 
 const fontScale = scaleLog({
-  range: [5, 15], // Adjusted range for font sizes
+  range: [5, 15] // Adjusted range for font sizes
 });
 const fontSizeSetter = (datum) => fontScale(datum.value);
 
@@ -25,7 +25,7 @@ const WordCard = ({ word, details }) => {
   const sentimentColors = {
     positive: "#4E9C19", // Green
     neutral: "#4360FA", // Blue
-    negative: "#FF3A29", // Red
+    negative: "#FF3A29" // Red
   };
 
   return (
@@ -88,15 +88,15 @@ const WordCard = ({ word, details }) => {
   );
 };
 
-export default function WordCloud({ height }) {
+export default function WordCloud({ height, filter }) {
   const containerRef = useRef(null);
   const [width, setWidth] = useState(0);
   const [hoveredWord, setHoveredWord] = useState(null); // State for hovered word
   const [hoveredWordPosition, setHoveredWordPosition] = useState({
     x: 0,
-    y: 0,
+    y: 0
   }); // State for card position
-  const { data: wordclouddata, isLoading } = useGetWordCloudQuery();
+  const { data: wordclouddata, isFetching } = useGetWordCloudQuery(filter);
   // console.log(wordclouddata);
 
   useEffect(() => {
@@ -132,8 +132,8 @@ export default function WordCloud({ height }) {
             ? "positive"
             : item.sentiment_score < 0
             ? "negative"
-            : "neutral",
-      },
+            : "neutral"
+      }
     })) || [];
 
   const maxWordValue = Math.max(...transformedWords.map((w) => w.value), 1);
@@ -144,7 +144,7 @@ export default function WordCloud({ height }) {
       ((word.value - minWordValue) / (maxWordValue - minWordValue)) * 100;
     return {
       ...word,
-      value: Math.round(normalizedValue),
+      value: Math.round(normalizedValue)
     };
   });
 
@@ -159,8 +159,10 @@ export default function WordCloud({ height }) {
 
   return (
     <div className="wordcloud w-full pt-2 relative" ref={containerRef}>
-      {isLoading ? (
-        <ShimmerThumbnail width={width} height={300} />
+      {isFetching ? (
+        <div className="flex items-center justify-center h-full">
+          <Spinner />
+        </div>
       ) : width > 0 && normalizedWords.length > 0 ? (
         <>
           <Wordcloud
@@ -197,7 +199,7 @@ export default function WordCloud({ height }) {
               details={hoveredWord.details}
               style={{
                 top: hoveredWordPosition.y + 10,
-                left: hoveredWordPosition.x + 10,
+                left: hoveredWordPosition.x + 10
               }}
             />
           )}
@@ -216,10 +218,11 @@ WordCard.propTypes = {
     unique_users: PropTypes.number.isRequired,
     sentiment_score: PropTypes.number.isRequired,
     sentiment_category: PropTypes.oneOf(["positive", "neutral", "negative"])
-      .isRequired,
-  }).isRequired,
+      .isRequired
+  }).isRequired
 };
 
 WordCloud.propTypes = {
   height: PropTypes.number.isRequired,
+  filter: PropTypes.string.isRequired
 };

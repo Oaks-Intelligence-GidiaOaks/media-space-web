@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { Cards } from "../../components/layout/super-admin-layout";
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import neutral from "../../assets/icons/neutral.svg";
@@ -6,29 +6,17 @@ import post from "../../assets/icons/post.svg";
 import positive from "../../assets/icons/positive.svg";
 import negative from "../../assets/icons/negative.svg";
 import { useGetSentimentStatsQuery } from "../../service/admin/sentiment-analysis";
-import { DateRangePicker } from "react-date-range";
-import { addDays, format } from "date-fns";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
+import { Spinner } from "flowbite-react";
 
 const Stats = () => {
   const [country, setCountry] = useState("Nigeria");
-  const [dateRange, setDateRange] = useState([
-    {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
-      key: "selection",
-    },
-  ]);
+  const [dateRange, setDateRange] = useState("last 12 hours");
   const [category, setCategory] = useState("All Categories");
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [isFilterLoading, setIsFilterLoading] = useState(false);
 
-  const { data: postStats, isLoading: loadStats } = useGetSentimentStatsQuery({
-    country,
+  const { data: postStats, isFetching: loadStats } = useGetSentimentStatsQuery({
+    filter: dateRange,
     category,
-    start_date: format(dateRange[0].startDate, "yyyy-MM-dd"),
-    end_date: format(dateRange[0].endDate, "yyyy-MM-dd"),
+    country
   });
 
   return (
@@ -50,29 +38,19 @@ const Stats = () => {
           <option value="Nigeria">Nigeria</option>
         </select>
 
-        <button
-          className="analysis-filter-input focus:outline-none focus:ring-0"
-          onClick={() => setShowDatePicker(!showDatePicker)}
+        <select
+          className="h-[37.97px] analysis-filter-input focus:outline-none focus:ring-0"
+          onChange={(e) => setDateRange(e.target.value)}
+          value={dateRange}
         >
-          {`${format(dateRange[0].startDate, "yyyy-MM-dd")} to ${format(
-            dateRange[0].endDate,
-            "yyyy-MM-dd"
-          )}`}
-        </button>
-
-        {showDatePicker && (
-          <div className="absolute z-10 mt-2">
-            <DateRangePicker
-              onChange={(item) => {
-                setDateRange([item.selection]);
-                setShowDatePicker(false); // Hide date picker after selection
-              }}
-              showSelectionPreview={true}
-              moveRangeOnFirstSelection={false}
-              ranges={dateRange}
-            />
-          </div>
-        )}
+          <option value="last 12 hours">Last 12 hours</option>
+          <option value="today">Today</option>
+          <option value="last 3 days">Last 3 days</option>
+          <option value="last 7 days">Last 7 days</option>
+          <option value="last 30 days">Last 30 days</option>
+          <option value="this year">This year</option>
+          {/* <option value="custom">Custom</option> */}
+        </select>
 
         <select
           className="analysis-filter-input focus:outline-none focus:ring-0"
@@ -92,8 +70,10 @@ const Stats = () => {
       </div>
 
       <div className="w-full super-admin-card-box border-[#E6EDFF] items-center justify-center sm:flex-row sm:flex-wrap sm:justify-center border shadow sm:gap-10 md:grid md:grid-cols-2 md:justify-between lg:grid lg:grid-cols-4 xl:grid-cols-4 mb-20">
-        {isFilterLoading || loadStats ? (
-          <ShimmerThumbnail width={250} height={150} />
+        {loadStats ? (
+          <div className="flex items-center justify-center h-full w-full">
+            <Spinner />
+          </div>
         ) : (
           <>
             <Cards
