@@ -28,7 +28,7 @@ function Footer() {
         </Link>
       </div>
       <div className="pt-[64px]  pb-[64px]">
-        <div className="hidden lg:flex justify-end xl:pr-36 font-[500]">
+        <div className="hidden lg:flex justify-end font-[500]">
           <p>
             Download our mobile app{" "}
             <img src={images.arrowdown} alt="" className="inline" />
