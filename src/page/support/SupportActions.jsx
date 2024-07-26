@@ -26,7 +26,7 @@ const SupportActions = () => {
             </div>
           </div>
         </Link>
-        <Link to={""}>
+        <Link to={"tutorial"}>
           <div
             className={`rounded-lg border cursor-pointer bg-[#FFFFFF] p-4 md:p-8 w-full md:w-96`}
           >

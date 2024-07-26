@@ -108,7 +108,19 @@ const Login = () => {
         <div className="relative">
           <div className="h-screen w-full flex justify-center items-center bg-[#001900] bg-no-repeat overflow-hidden relative">
             <Link to={INDEX} className="flex" smooth={true}>
-              <motion.img
+              <img
+                className="absolute top-0 left-10 transform  text-white  mt-5"
+                // className="absolute text-center font-Inter top-0 left-1/2 transform -translate-x-1/2 text-white text-3xl  mt-10"
+                style={{
+                  // backgroundImage:
+                  //   "linear-gradient(90deg, #6E9D37 0%, #74A12D 52%, #97B24C 99.99%, #94B04A 100%)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+                src={images.logo}
+              />
+              {/* <motion.img
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 3, duration: 1, ease: "easeIn" }}
@@ -122,11 +134,18 @@ const Login = () => {
                   color: "transparent",
                 }}
                 src={images.logo}
-              />
+              /> */}
 
               {/* <img src={images.logo} alt="logo" /> */}
             </Link>
-            <motion.img
+            <img
+            
+              // src={BgGroup}
+              src={images.user_phone}
+              alt="Background"
+              className="absolute z-40 bg-cover bottom-0  transform -translate-x-1/2 w-[20rem]"
+            />
+            {/* <motion.img
               initial={{ y: 200, opacity: 0, scale: 1 }}
               animate={{ y: 0, opacity: 1, scale: 1.1 }}
               transition={{ duration: 1, ease: "easeInOut" }}
@@ -134,14 +153,17 @@ const Login = () => {
               src={images.user_phone}
               alt="Background"
               className="absolute z-40 bg-cover bottom-0  transform -translate-x-1/2 w-[20rem]"
-            />
+            /> */}
           </div>
 
           <div className="absolute right-0 left-0 top-0 h-full w-full scale-100">
-            <motion.img
-              // initial={{ y: -400, x: -400 }}
-              // animate={{ y: 0, x: 0 }}
-              // transition={{ delay: 1.5, duration: 1, ease: "easeOut" }}
+            <img
+              src={images.world_2}
+              alt=""
+              className="mt-24 w- mx-auto   "
+            />
+            {/* <motion.img
+           
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.5 }}
@@ -149,7 +171,7 @@ const Login = () => {
               src={images.world_2}
               alt=""
               className="mt-24 w- mx-auto   "
-            />
+            /> */}
           </div>
         </div>
       </div>

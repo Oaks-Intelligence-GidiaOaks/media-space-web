@@ -24,3 +24,4 @@ export { default as PricingPage } from "./pricing/PricingPage";
 export { default as SupportPage } from "./support/Support";
 export { default as SupportGetStartedPage } from "./support/GetStarted";
 export { default as ResourcePage } from "./support/ResourcePage";
+export { default as TutorialPage } from "./support/Tutorial";

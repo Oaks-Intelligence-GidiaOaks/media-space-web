@@ -26,6 +26,7 @@ import {
   SupportPage,
   SupportGetStartedPage,
   ResourcePage,
+  TutorialPage,
 } from "../page";
 
 import * as routes from "./CONSTANT";
@@ -45,6 +46,7 @@ const RouterConfig = () => {
         <Route path={routes.SUPPORT} element={<SupportPage />} />
         <Route path={routes.SUPPORT} element={<SupportLayout />} >
         <Route index path={routes.SUPPORT_GetStarted} element={<SupportGetStartedPage />} />
+        <Route index path={routes.TUTORIAL} element={<TutorialPage />} />
         <Route index path={routes.SUPPORT_GetStarted + "/:id"} element={<ResourcePage />} />
         
         </Route>
