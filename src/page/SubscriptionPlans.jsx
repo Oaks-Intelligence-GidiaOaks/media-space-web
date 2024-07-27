@@ -1,5 +1,5 @@
 import { Plans } from "../components/ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useGetUserPlansQuery } from "../service/admin/sub.service";
@@ -18,8 +18,14 @@ const SubscriptionPlans = ({ organization }) => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("monthly");
-  const [country, setCountry] = useState(organization.location);
-  console.log(country);
+  const [country, setCountry] = useState("");
+  // console.log(country, "country");
+
+  useEffect(() => {
+    if (organization) {
+      setCountry(organization?.location);
+    }
+  }, [organization]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);

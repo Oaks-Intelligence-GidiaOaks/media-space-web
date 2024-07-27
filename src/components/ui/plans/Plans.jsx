@@ -12,6 +12,8 @@ import rtkMutation from "../../../utils/rtkMutation";
 import PlanDetails from "./PlanDetails";
 import useStripePayment from "./StripePayment";
 import "./style.css";
+import { ToWords } from "to-words";
+import { formatAmount } from "../../../static/priceFormat";
 
 const Plans = ({
   id,
@@ -25,7 +27,7 @@ const Plans = ({
   uniqueFeatures,
   organization_id,
   userLocation,
-  plan_type,
+  plan_type
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,6 +59,14 @@ const Plans = ({
     }
   };
 
+  const isLocal = window.location.hostname === "localhost";
+  // Construct the URL based on environment
+  const redirectUrl = isLocal
+    ? `http://localhost:5173${PAYMENT_SUCCESS}?gateway=${gateway}`
+    : `${window.location.protocol}//${window.location.hostname}${PAYMENT_SUCCESS}?gateway=${gateway}`;
+
+  console.log(redirectUrl);
+
   const initiatePayment = async () => {
     const data = {
       gateway,
@@ -65,7 +75,7 @@ const Plans = ({
       plan_type: plan_type === "yearly" ? "annually" : "monthly",
       is_trial: trial,
       country: userLocation,
-      redirect_url: `http://localhost:5173${PAYMENT_SUCCESS}`,
+      redirect_url: redirectUrl
     };
 
     try {
@@ -94,6 +104,41 @@ const Plans = ({
     }
   };
 
+  const formattedAmount = plan_type === "monthly" ? amount : amount * 12;
+
+  const getLocaleCode = (userLocation) => {
+    if (userLocation === "Nigeria") {
+      return "en-NG";
+    } else {
+      return "en-US";
+    }
+  };
+
+  // Function to convert amount to words
+  const convertAmountToWords = (amount, userLocation) => {
+    const localeCode = getLocaleCode(userLocation);
+
+    const toWords = new ToWords({
+      localeCode,
+      converterOptions: {
+        currency: true
+      }
+    });
+
+    const adjustedAmount = plan_type === "monthly" ? amount : amount * 12;
+
+    // Handle "free" and "negotiable" cases
+    if (
+      amount === "free" ||
+      (amount === "negotiable" && plan_type === "monthly")
+    ) {
+      return amount;
+    }
+
+    // Convert adjusted amount to words
+    return toWords.convert(adjustedAmount);
+  };
+
   return (
     <>
       <PlanDetails
@@ -117,7 +162,7 @@ const Plans = ({
             <div className="flex w-full gap-5 justify-center">
               <div className="w-full flex flex-col gap-10">
                 <h2 className="cart-title">Shopping cart</h2>
-                <p className="plan-title">Ultimate Plan</p>
+                <p className="plan-title">{title}</p>
                 <div className="flex flex-col">
                   <label htmlFor="billing" className="billing-period pb-1">
                     Billing Period - {plan_type}
@@ -125,10 +170,11 @@ const Plans = ({
                 </div>
                 <p className="billing-text text-justify">
                   This is a subscription product. After the initial period, a
-                  fee of{" "}
-                  <span>
+                  fee of <br />
+                  <span className="font-bold text-black">
                     {currency}
-                    {amount}
+                    {formatAmount(formattedAmount)} (
+                    {convertAmountToWords(amount, userLocation)})
                   </span>{" "}
                   is due at the next billing cycle. You may cancel at any time.
                 </p>
@@ -170,7 +216,7 @@ Plans.propTypes = {
   uniqueFeatures: PropTypes.arrayOf(PropTypes.object).isRequired,
   organization_id: PropTypes.string,
   userLocation: PropTypes.string,
-  plan_type: PropTypes.string,
+  plan_type: PropTypes.string
 };
 
 export default Plans;

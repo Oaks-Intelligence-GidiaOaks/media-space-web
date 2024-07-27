@@ -28,7 +28,7 @@ const Analysis = () => {
     { color: "#4E9C19", label: "Positive" }
   ];
 
-  const [keywordFilter, setKeywordFilter] = useState("last 12 hours");
+  const [keywordFilter, setKeywordFilter] = useState("last 30 days");
   const { data: trendingKeywords, isFetching: loadingTrendingWords } =
     useGetTrendingKeywordsQuery(keywordFilter);
 
@@ -42,12 +42,12 @@ const Analysis = () => {
     }
   }));
 
-  const [netFilter, setNetFilter] = useState("last 12 hours");
+  const [netFilter, setNetFilter] = useState("last 30 days");
   const { data: netSentiment, isFetching: loadNetSentiment } =
     useGetNetSentimentQuery(netFilter);
   // console.log(netSentiment);
 
-  const [wordFilter, setWordFilter] = useState("last 12 hours");
+  const [wordFilter, setWordFilter] = useState("last 30 days");
 
   return (
     <>
