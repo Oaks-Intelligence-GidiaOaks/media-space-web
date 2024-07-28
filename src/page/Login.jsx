@@ -143,7 +143,7 @@ const Login = () => {
               // src={BgGroup}
               src={images.user_phone}
               alt="Background"
-              className="absolute z-40 bg-cover bottom-0  transform -translate-x-1/2 w-[20rem]"
+              className="absolute z-40 bg-cover bottom-0 left-1/2  transform -translate-x-1/2 w-[20rem]"
             />
             {/* <motion.img
               initial={{ y: 200, opacity: 0, scale: 1 }}

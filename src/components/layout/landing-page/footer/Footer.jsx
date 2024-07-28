@@ -28,12 +28,12 @@ function Footer() {
         </Link>
       </div>
       <div className="pt-[64px]  pb-[64px]">
-        <div className="hidden lg:flex justify-end font-[500]">
+        {/* <div className="hidden lg:flex justify-end font-[500]">
           <p>
             Download our mobile app{" "}
             <img src={images.arrowdown} alt="" className="inline" />
           </p>
-        </div>
+        </div> */}
 
         <div className="md:flex flex-row flex-wrap justify-between pt-4">
           <div className="flex flex-col gap-5">
@@ -88,6 +88,12 @@ function Footer() {
           </div>
 
           <div className="flex flex-col gap-3 justify-between">
+          <div className="font-[500]">
+          <p>
+            Download our mobile app{" "}
+            <img src={images.arrowdown} alt="" className="inline" />
+          </p>
+        </div>
             <div className="flex gap-3 justify-between">
               <Link to={""} className="text-black">
                 <img src={images.ios} alt="" />

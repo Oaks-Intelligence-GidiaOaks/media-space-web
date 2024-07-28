@@ -10,9 +10,9 @@ import TypingEffect from "../../../ui/TypingEffect";
 function Hero() {
   return (
     <>
-      <section className="h-[558px] heroimg w-full ">
-        <div className="w-full bg-[#112420] text-[#FBFBFB] px-5 md:px-20 h-full flex justify-center items-center">
-          <div className="flex flex-col">
+      <section className="h-[558px] heroimg relative w-full ">
+        <div className="w-full bg-gradient-to-r from-[#112420] to-[#2d3d1d] text-[#FBFBFB] px-5 md:px-20 h-full flex justify-center items-center">
+          <div className="flex flex-col relative z-20">
             <h3 className="first-hero-head hero-subtitle text-[#fff]">
             Discover <span className="text-[#7ADD02] font-semibold "> Seamless <br /> Community Management <br />
               </span> in one Place
@@ -35,6 +35,7 @@ function Hero() {
           </div>
           <img src={imagehero} className="hidden lg:flex" alt="" />
         </div>
+          <img src={images.hero_elipse} className="hidden absolute bottom-0 z-10 lg:flex" alt="" />
       </section>
       <section className="hero bg-[#F7FEEE] min-h-screen pt-36 flex justify-center items-center">
         <div className="container relative">
