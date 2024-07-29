@@ -2,7 +2,8 @@ import {
   PLANS,
   PAYMENT_INIT,
   SUBSCRIPTION_HISTORY,
-  SUBSCRIPTION_STATS
+  SUBSCRIPTION_STATS,
+  VERIFY_SUBSCRIPTION
 } from "../constants";
 import apiSlice from "../api/apiSlice";
 
@@ -39,6 +40,15 @@ export const AdminApiSlice = apiSlice.injectEndpoints({
         method: "GET"
       })
       // providesTags: ["Plans"],
+    }),
+
+    verifyPayment: builder.mutation({
+      query: (body) => ({
+        url: VERIFY_SUBSCRIPTION,
+        method: "POST",
+        body: body
+      })
+      // providesTags: ["Plans"],
     })
   })
 });
@@ -47,5 +57,6 @@ export const {
   useGetUserPlansQuery,
   useInitializePaymentMutation,
   useSubscriptionStatsQuery,
-  useSubscriptionHistoryQuery
+  useSubscriptionHistoryQuery,
+  useVerifyPaymentMutation
 } = AdminApiSlice;

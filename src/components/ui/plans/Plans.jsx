@@ -1,13 +1,11 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useInitializePaymentMutation } from "../../../service/admin/sub.service";
 import { showAlert } from "../../../static/alert";
 import { Modal, Button } from "flowbite-react";
 import { LOGIN, PAYMENT_SUCCESS } from "../../../routes/CONSTANT";
 import PaymentOptions from "./PaymentOptions";
-import { clearFormData } from "../../../redux/slices/register.slice";
 import rtkMutation from "../../../utils/rtkMutation";
 import PlanDetails from "./PlanDetails";
 import useStripePayment from "./StripePayment";
@@ -29,7 +27,6 @@ const Plans = ({
   userLocation,
   plan_type
 }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [gateway, setGateway] = useState("");
@@ -84,16 +81,13 @@ const Plans = ({
 
       if (gateway === "flutterwave") {
         const url = response?.data?.data?.link;
-        dispatch(clearFormData());
         window.location.href = url;
       } else if (gateway === "paystack") {
         const url = response?.data?.authorization_url;
-        dispatch(clearFormData());
         window.location.href = url;
       } else {
         const secret = response?.data?.client_secret;
         setClientSecret(secret);
-        dispatch(clearFormData());
       }
     } catch (error) {
       showAlert(
