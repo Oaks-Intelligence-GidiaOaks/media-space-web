@@ -9,6 +9,7 @@ export const world_2 = `${PATH}/world_2.svg`;
 export const user_phone = `${PATH}/user_phone.svg`;
 export const hero_bg = `${PATH}/hero-background.svg`;
 export const hero_map = `${PATH}/hero-map.svg`;
+export const hero_elipse = `${PATH}/hero_elipse.svg`;
 export const half = `${PATH}/half.svg`;
 export const half2 = `${PATH}/half2.svg`;
 export const circle = `${PATH}/circle.svg`;
