@@ -40,3 +40,4 @@ export const FEATURES = "superadmin/plan/features";
 export const PAYMENT_INIT = "admin/subscription/init-payment";
 export const SUBSCRIPTION_STATS = "admin/subscription/statistics";
 export const SUBSCRIPTION_HISTORY = "admin/subscription/history";
+export const VERIFY_SUBSCRIPTION = "admin/subscription/verify-payment";

@@ -11,7 +11,7 @@ import {
   share,
   impressions,
   icon_success,
-  icon_error,
+  icon_error
 } from "../../assets";
 import "./style.css";
 import { useSelector } from "react-redux";
@@ -22,14 +22,15 @@ import { useGetSubscriptionQuery } from "../../service/superadmin/subscription.s
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import {
   useGetUserStatsQuery,
-  useGetUserOverallActivityQuery,
+  useGetUserOverallActivityQuery
 } from "../../service/superadmin/statistics.service";
 import { useGetTopOrganizationQuery } from "../../service/organization.service";
 import {
   useGetPostStatsQuery,
   useGetAminUserActivityStatsQuery,
-  useGetAminUserAnalyticsStatsQuery,
+  useGetAminUserAnalyticsStatsQuery
 } from "../../service/admin/statistics.service";
+import { CountdownBanner } from "./Countdown";
 
 const Overview = () => {
   const { data: analyticsData, isLoading: loadingAnalyticsData } =
@@ -41,6 +42,7 @@ const Overview = () => {
   console.log(activity);
 
   const user = useSelector((state) => state.user.user);
+
   const { data: overallActivity, isLoading: loadingOverallActivity } =
     useGetUserOverallActivityQuery();
 
@@ -49,7 +51,7 @@ const Overview = () => {
   if (overallActivity && overallActivity.data) {
     userActivity.push({
       month: overallActivity?.data?.month,
-      count: overallActivity?.data?.count,
+      count: overallActivity?.data?.count
     });
   }
 
@@ -62,7 +64,7 @@ const Overview = () => {
   const userStats = [
     { label: "New", value: statsData?.data?.new_users?.total },
     { label: "Returning", value: statsData?.data?.returning_users?.total },
-    { label: "Inactive", value: statsData?.data?.inactive_users?.total },
+    { label: "Inactive", value: statsData?.data?.inactive_users?.total }
   ];
 
   const { data: subscriptionData, isLoading } = useGetSubscriptionQuery();
@@ -70,11 +72,12 @@ const Overview = () => {
     { label: "Paid", value: subscriptionData?.data?.paid_subscription?.total },
     {
       label: "Trial",
-      value: subscriptionData?.data?.trial_subscription?.total,
-    },
+      value: subscriptionData?.data?.trial_subscription?.total
+    }
   ];
 
   const { data: postStats, isLoading: loadStats } = useGetPostStatsQuery();
+  const trialEndDate = user?.organization_id?.trial_end_date;
 
   return (
     <div className="px-3 pt-5 pb-5">
@@ -193,6 +196,10 @@ const Overview = () => {
           </>
         ) : (
           <>
+            {user?.organization_id?.plan_id === "669149f11eec17ef058d668c" &&
+              user?.organization_id?.isSubscribed === false &&
+              trialEndDate && <CountdownBanner trialEndDate={trialEndDate} />}
+
             <div className="w-full super-admin-card-box  items-center justify-center sm:flex-row sm:flex-wrap sm:justify-center sm:gap-10 md:grid md:grid-cols-2 md:justify-between lg:grid lg:grid-cols-4 xl:grid-cols-5 mb-20">
               {loadStats ? (
                 <ShimmerThumbnail width={250} height={150} />
@@ -270,16 +277,16 @@ const Overview = () => {
                         name: "Offline users",
                         data: analyticsData?.data?.map((point) => ({
                           x: point.month,
-                          y: point.offline_users,
-                        })),
+                          y: point.offline_users
+                        }))
                       },
                       {
                         name: "Online users",
                         data: analyticsData?.data?.map((point) => ({
                           x: point.month,
-                          y: point.online_users,
-                        })),
-                      },
+                          y: point.online_users
+                        }))
+                      }
                     ]}
                     xKey="x"
                     yKeys={["y"]}
