@@ -35,6 +35,11 @@ const PaymentSuccess = () => {
         await rtkMutation(verifyPayment, values);
         break;
       }
+      case "stripe": {
+        showAlert("Success", "Payment processed successfully", "success");
+        navigate("/signin");
+        break;
+      }
       default:
         showAlert("", "Payment method not recognized", "error");
     }
