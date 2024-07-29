@@ -13,7 +13,7 @@ import {
   SIGN_UP_AS,
   LOGIN_AS,
 } from "../../../../routes/CONSTANT";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useClickAway } from "react-use";
 import { Squash as Hamburger } from "hamburger-react";
@@ -21,6 +21,13 @@ import { Squash as Hamburger } from "hamburger-react";
 function Nav() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const [activeLink, setActiveLink] = useState('');
+
+  const handleScroll = (id) => {
+    if (location.pathname === '/') {
+      scrollToId(id);
+    }
+  };
 
 
   const toggleMenu = () => {
@@ -34,13 +41,37 @@ function Nav() {
     { name: "FAQ", path: location.pathname === '/' ?  FAQ : '/#faq' },
   ];
   const pricing = location.pathname === '/pricing'
-  const support = location.pathname === '/support/get-started'
+  const support = location.pathname.includes('get-started') || location.pathname === '/support/tutorial'
   const ref = useRef(null);
+
+  useEffect(() => {
+    const updateActiveLink = () => {
+      const path = location.pathname + location.hash;
+      if (path.includes('#features')) {
+        setActiveLink('features');
+      } else if (path.includes('#faq')) {
+        setActiveLink('faq');
+      } else if (path.includes('pricing')) {
+        setActiveLink('pricing');
+      } else if (path.includes('support')) {
+        setActiveLink('support');
+      } else {
+        setActiveLink('');
+      }
+    };
+
+    updateActiveLink();
+
+    window.addEventListener('hashchange', updateActiveLink);
+    return () => {
+      window.removeEventListener('hashchange', updateActiveLink);
+    };
+  }, [location]);
 
   useClickAway(ref, () => setMenuOpen(false));
 
   return (
-    <section className={`sticky top-0 w-full ${pricing || support ? "bg-white" : "bg-gradient-to-r from-[#112420] to-[#2d3d1d]"}   z-50`}>
+    <section className={`sticky top-0 w-full ${pricing || support ? "bg-white" : "heroimg"}   z-50`}>
       <div className="w-full mx-auto px-5 md:px-20 lg:px-10 xl:px-20 py-4 flex justify-between items-center gap-5">
         <div className="logo">
           <Link to={INDEX} className="flex" smooth={true}>
@@ -57,8 +88,11 @@ function Nav() {
                     to={link.path}
                     exact="true"
                     activeclassname="active"
-                    className={`block py-2 hover:text-neutral-400 text-[1rem] ${pricing || support ? "text-black" : "text-white"}   transition-all menu-links`}
-                    onClick={toggleMenu}
+                    className={`block py-2 hover:text-neutral-400 text-[1rem] ${pricing || support ? "text-black" : "text-white"} ${activeLink === link.name.toLowerCase() ? 'active' : ''}  transition-all menu-links`}
+                    onClick={()=>{
+                      toggleMenu()
+                      handleScroll(link.path);
+                    }}
                   >
                     {link.name}
                   </NavLink>

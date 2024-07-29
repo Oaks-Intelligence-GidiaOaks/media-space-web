@@ -40,8 +40,10 @@ const SupportLayout = () => {
           </form>
         </div>
       </div>
-      <Outlet />
-      <Chatbot />
+     <div className="min-h-[50vh]">
+     <Outlet />
+     <Chatbot />
+     </div>
     </>
   );
 };
