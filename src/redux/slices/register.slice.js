@@ -8,7 +8,7 @@ const initialState = {
   password: null,
   confirm_password: null,
   organization_name: null,
-  organization_email: null,
+  organization_email: null
 };
 
 const registerSlice = createSlice({
@@ -30,9 +30,11 @@ const registerSlice = createSlice({
       newState.confirm_password = null;
       newState.organization_name = null;
       newState.organization_email = null;
+      newState.phone_number = null;
+      newState.website_url = null;
       return newState;
-    },
-  },
+    }
+  }
 });
 
 export const { updateFormdata, clearFormData } = registerSlice.actions;

@@ -3,5 +3,5 @@ import { showAlert } from "./alert";
 
 export const handleLogout = (dispatch) => {
   dispatch(logoutUser());
-  showAlert("", "You've ended your current session", "success");
+  // showAlert("", "You've ended your current session", "success");
 };

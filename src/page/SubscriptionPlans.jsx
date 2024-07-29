@@ -1,5 +1,5 @@
 import { Plans } from "../components/ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useGetUserPlansQuery } from "../service/admin/sub.service";
@@ -18,7 +18,14 @@ const SubscriptionPlans = ({ organization }) => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("monthly");
-  const [country, setCountry] = useState(organization?.location);
+  const [country, setCountry] = useState("");
+  // console.log(country, "country");
+
+  useEffect(() => {
+    if (organization) {
+      setCountry(organization?.location);
+    }
+  }, [organization]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -49,7 +56,7 @@ const SubscriptionPlans = ({ organization }) => {
         ...plan,
         price: plan[priceField],
         uniqueFeatures,
-        previousPlanName: index > 0 ? subscription_plans[index - 1].name : null,
+        previousPlanName: index > 0 ? subscription_plans[index - 1].name : null
       };
     }) || [];
 
@@ -165,8 +172,8 @@ SubscriptionPlans.propTypes = {
   organization: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     organization_name: PropTypes.string,
-    location: PropTypes.string,
-  }),
+    location: PropTypes.string
+  })
 };
 
 export default SubscriptionPlans;

@@ -45,3 +45,54 @@
   letter-spacing: -0.02em;
   color: #0a0d13;
 }
+
+/* Style for the fieldset */
+fieldset {
+  border: 1px solid #ccd0d2;
+  border-radius: 4px;
+  padding: 1rem;
+  position: relative;
+  box-shadow: 0px 1px 3px 0px rgba(50, 50, 50, 0.15);
+}
+
+/* Style for the legend */
+legend {
+  font-size: 0.875rem;
+  color: #aab7c4;
+  padding: 0 0.5rem;
+  background-color: #fff;
+  position: absolute;
+  top: -0.75rem;
+  left: 1rem;
+}
+
+/* Container for the Stripe element */
+.StripeElement {
+  box-shadow: 0px 1px 3px 0px rgba(50, 50, 50, 0.15);
+  padding: 12px;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #ccd0d2;
+  margin-top: 1rem;
+}
+
+/* Button styling */
+.stripe-btn {
+  background-color: #6772e5;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.stripe-btn:hover {
+  background-color: #5469d4;
+}
+
+/* Error message styling */
+.stripe-form div {
+  color: #fa755a;
+  margin-top: 0.5rem;
+}

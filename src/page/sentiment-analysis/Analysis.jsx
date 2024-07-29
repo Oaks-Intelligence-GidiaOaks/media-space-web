@@ -28,7 +28,7 @@ const Analysis = () => {
     { color: "#4E9C19", label: "Positive" }
   ];
 
-  const [keywordFilter, setKeywordFilter] = useState("last 12 hours");
+  const [keywordFilter, setKeywordFilter] = useState("last 30 days");
   const { data: trendingKeywords, isFetching: loadingTrendingWords } =
     useGetTrendingKeywordsQuery(keywordFilter);
 
@@ -42,12 +42,12 @@ const Analysis = () => {
     }
   }));
 
-  const [netFilter, setNetFilter] = useState("last 12 hours");
+  const [netFilter, setNetFilter] = useState("last 30 days");
   const { data: netSentiment, isFetching: loadNetSentiment } =
     useGetNetSentimentQuery(netFilter);
   // console.log(netSentiment);
 
-  const [wordFilter, setWordFilter] = useState("last 12 hours");
+  const [wordFilter, setWordFilter] = useState("last 30 days");
 
   return (
     <>
@@ -119,7 +119,7 @@ const Analysis = () => {
                   ) : (
                     <>
                       <GaugeComponent
-                        value={netSentiment?.data?.net_sentiment}
+                        value={netSentiment?.data?.net_sentiment || 0}
                         type="semicircle"
                         labels={{
                           tickLabels: {
@@ -153,7 +153,7 @@ const Analysis = () => {
 
                       <div className="flex flex-col w-full justify-center items-center mb-40">
                         <h1 className="guage-value-head">
-                          {Math.round(netSentiment?.data?.net_sentiment)}
+                          {Math.round(netSentiment?.data?.net_sentiment || 0)}
                         </h1>
 
                         <p className="guage-rating">

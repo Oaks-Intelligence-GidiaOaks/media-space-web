@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import PropTypes from "prop-types";
 
@@ -6,6 +6,7 @@ const DropdownMenu = ({ options, onSelect, displayText }) => {
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
+  const optionsRef = useRef([]);
 
   // Function to handle option selection
   const handleSelect = (option) => {
@@ -14,6 +15,35 @@ const DropdownMenu = ({ options, onSelect, displayText }) => {
     setInputValue("");
     onSelect(option);
   };
+
+  // Function to handle keyboard events for navigation
+  const handleKeyDown = (event) => {
+    if (/^[a-zA-Z]$/.test(event.key)) {
+      const firstMatchingIndex = options.findIndex((option) =>
+        (typeof option === "object" ? option.name : option)
+          .toLowerCase()
+          .startsWith(event.key.toLowerCase())
+      );
+      if (firstMatchingIndex !== -1) {
+        optionsRef.current[firstMatchingIndex].scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }
+    }
+  };
+
+  // Attach keydown event listener
+  useEffect(() => {
+    if (open) {
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open, options]);
 
   return (
     <div className="w-full mb-4 lg:mb-0 2xl:mt-6 lg:mt-4">
@@ -52,10 +82,10 @@ const DropdownMenu = ({ options, onSelect, displayText }) => {
             className="placeholder:text-gray-700 hidden p-2 outline-none"
           />
         </div>
-        {/* Map through options */}
-        {options.map((option) => (
+        {options.map((option, index) => (
           <li
             key={typeof option === "object" ? option.name : option}
+            ref={(el) => (optionsRef.current[index] = el)}
             className={`p-2 mt-1 text-sm hover:bg-sky-600 hover:text-white
               ${
                 (typeof option === "object"
@@ -88,7 +118,7 @@ const DropdownMenu = ({ options, onSelect, displayText }) => {
 DropdownMenu.propTypes = {
   options: PropTypes.array.isRequired,
   onSelect: PropTypes.func.isRequired,
-  displayText: PropTypes.string,
+  displayText: PropTypes.string
 };
 
 export default DropdownMenu;

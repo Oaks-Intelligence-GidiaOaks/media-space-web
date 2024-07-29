@@ -24,8 +24,8 @@ const StripeCheckout = ({ handlePaymentSuccess, clientSecret }) => {
       type: "card",
       card: cardElement,
       billing_details: {
-        name: "Cardholder Name", // Replace with actual cardholder's name
-      },
+        name: "Cardholder Name" // Replace with actual cardholder's name
+      }
     });
 
     if (error) {
@@ -37,19 +37,27 @@ const StripeCheckout = ({ handlePaymentSuccess, clientSecret }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement />
-      {error && <div>{error}</div>}
-      <button type="submit" disabled={!stripe || isProcessing}>
-        {isProcessing ? "Processing…" : "Pay"}
-      </button>
-    </form>
+    <fieldset className="mt-5">
+      <legend>Powered by Stripe</legend>
+
+      <form onSubmit={handleSubmit} className="p-3 stripe-form">
+        <CardElement />
+        {error && <div>{error}</div>}
+        <button
+          type="submit"
+          className="stripe-btn w-full mt-3"
+          disabled={!stripe || isProcessing}
+        >
+          {isProcessing ? "Processing…" : "Pay"}
+        </button>
+      </form>
+    </fieldset>
   );
 };
 
 StripeCheckout.propTypes = {
   handlePaymentSuccess: PropTypes.func.isRequired,
-  clientSecret: PropTypes.string.isRequired,
+  clientSecret: PropTypes.string.isRequired
 };
 
 export default StripeCheckout;

@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import tick from "../../../assets/icons/tick.svg";
+import { formatAmount } from "../../../static/priceFormat";
 
 const PlanDetails = ({
   title,
@@ -10,7 +11,7 @@ const PlanDetails = ({
   previousPlanName,
   uniqueFeatures,
   submitPlan,
-  background,
+  background
 }) => (
   <div
     className={`rounded-[10px] plan-box shadow hover:border hover:border-[#0f5901] ${
@@ -26,7 +27,7 @@ const PlanDetails = ({
             {amount !== "free" && amount !== "negotiable" ? (
               <>
                 {currency}
-                {amount}
+                {formatAmount(amount)}
               </>
             ) : (
               <>{amount}</>
@@ -81,11 +82,11 @@ PlanDetails.propTypes = {
   previousPlanName: PropTypes.string,
   uniqueFeatures: PropTypes.arrayOf(
     PropTypes.shape({
-      module_name: PropTypes.string.isRequired,
+      module_name: PropTypes.string.isRequired
     })
   ).isRequired,
   submitPlan: PropTypes.func.isRequired,
-  background: PropTypes.string,
+  background: PropTypes.string
 };
 
 export default PlanDetails;

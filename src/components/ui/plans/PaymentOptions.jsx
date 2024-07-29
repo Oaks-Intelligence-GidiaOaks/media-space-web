@@ -19,7 +19,7 @@ const PaymentOptions = ({
   initiatePayment,
   isLoading,
   clientSecret,
-  confirmPayment,
+  confirmPayment
 }) => {
   const { confirmPayment: stripeConfirmPayment, error } = useStripePayment();
   const navigate = useNavigate();
@@ -38,40 +38,70 @@ const PaymentOptions = ({
     }
   };
 
+  const handleSelectChange = (e) => {
+    const value = e.target.value === "true";
+    setTrial(value);
+  };
+
   return (
     <div className="w-full flex flex-col justify-center gap-10">
       <h2 className="cart-title">Payment options</h2>
       <div className="flex flex-col gap-2">
-        <p className="billing-period">Pay With:</p>
+        {id === "669149f11eec17ef058d668c" ? (
+          ""
+        ) : (
+          <p className="billing-period">Pay With:</p>
+        )}
+
         <div className="w-full items-center gap-3">
           {userLocation === "Nigeria" ? (
-            <div className="flex flex-wrap gap-2">
-              {id === "669149f11eec17ef058d668e" && (
+            <div className="flex flex-col gap-2">
+              {id === "669149f11eec17ef058d668c" && (
+                <div className="flex w-full flex-col gap-4">
+                  <>
+                    <div className="w-full">
+                      <label className="text-sm">
+                        Do you want to use your free 2 months trial?
+                      </label>
+                      <select
+                        onChange={handleSelectChange}
+                        value={trial}
+                        className="border focus:outline-none focus:ring-0 w-full"
+                      >
+                        <option value={false}>
+                          No, I want to pay directly
+                        </option>
+                        <option value={true}>
+                          Yes, I want to start with trial
+                        </option>
+                      </select>
+                    </div>
+                    <p className="billing-period text-sm text-black">
+                      {trial === true
+                        ? `Select gateway to enable billing after trial expires:`
+                        : "Pay With"}
+                    </p>
+                  </>
+                </div>
+              )}
+              <div className="flex gap-3 w-full">
+                <button
+                  className={`p-2 border shadow flex items-center ${
+                    gateway === "flutterwave" ? "border-1 border-green-500" : ""
+                  }`}
+                  onClick={() => handleGatewaySelection("flutterwave")}
+                >
+                  <img src={wave} height={100} width={100} alt="Flutterwave" />
+                </button>
                 <button
                   className={`p-2 border shadow ${
-                    trial === true ? "bg-green-500 text-white" : ""
+                    gateway === "paystack" ? "border-1 border-green-500" : ""
                   }`}
-                  onClick={() => setTrial(true)}
+                  onClick={() => handleGatewaySelection("paystack")}
                 >
-                  Start with Trial
+                  <img src={paystack} height={100} width={100} alt="Paystack" />
                 </button>
-              )}
-              <button
-                className={`p-2 border shadow flex items-center ${
-                  gateway === "flutterwave" ? "border-1 border-green-500" : ""
-                }`}
-                onClick={() => handleGatewaySelection("flutterwave")}
-              >
-                <img src={wave} height={100} width={100} alt="Flutterwave" />
-              </button>
-              <button
-                className={`p-2 border shadow ${
-                  gateway === "paystack" ? "border-1 border-green-500" : ""
-                }`}
-                onClick={() => handleGatewaySelection("paystack")}
-              >
-                <img src={paystack} height={100} width={100} alt="Paystack" />
-              </button>
+              </div>
             </div>
           ) : (
             <>
@@ -123,7 +153,7 @@ PaymentOptions.propTypes = {
   initiatePayment: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   clientSecret: PropTypes.string,
-  confirmPayment: PropTypes.func.isRequired,
+  confirmPayment: PropTypes.func.isRequired
 };
 
 export default PaymentOptions;
