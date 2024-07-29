@@ -1,4 +1,5 @@
 import React from 'react'
+import TutorialsGrid from './TutorialDrid'
 
 const Tutorial = () => {
   return (
@@ -10,6 +11,9 @@ const Tutorial = () => {
         <p className="text-[1rem] px-5 md:px-20">
         Want to learn how to use Kommunita? We have Beginner-friendly tutorials for you.
         </p>
+        <div className=''>
+          <TutorialsGrid />
+        </div>
       </div>
 
 

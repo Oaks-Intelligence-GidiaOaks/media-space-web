@@ -8,6 +8,7 @@ export const register_bg = `${PATH}/register_bg.svg`;
 export const world_2 = `${PATH}/world_2.svg`;
 export const user_phone = `${PATH}/user_phone.svg`;
 export const hero_bg = `${PATH}/hero-background.svg`;
+export const hero_bg_ = `${PATH}/gradient-background-modern-design-abstract-green.svg`;
 export const hero_map = `${PATH}/hero-map.svg`;
 export const hero_elipse = `${PATH}/hero_elipse.svg`;
 export const half = `${PATH}/half.svg`;

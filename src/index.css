@@ -84,6 +84,7 @@ html {
   }
 }
 
-.active-ul li a.active{
+
+.active {
   color: #3D7100;
 }

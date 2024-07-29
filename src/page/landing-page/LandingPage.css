@@ -3,7 +3,8 @@ body {
 }
 
 .heroimg {
-  background-image: url("../../assets/heroimg.svg");
+  background-image: url("../../assets/gradient-background-modern-design-abstract-green.svg");
+  /* background-image: url("../../assets/heroimg.svg"); */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
