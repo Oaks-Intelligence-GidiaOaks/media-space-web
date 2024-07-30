@@ -28,7 +28,8 @@ import {
   ResourcePage,
   TutorialPage,
   ForgotPassword,
-  ResetPassword
+  ResetPassword,
+  PlanPage
 } from "../page";
 
 import * as routes from "./CONSTANT";
@@ -72,6 +73,7 @@ const RouterConfig = () => {
         <Route path={routes.PAYMENT_SUCCESS} element={<PaymentSuccess />} />
         <Route path={routes.FORGOT_PASSWORD} element={<ForgotPassword />} />
         <Route path={routes.RESET_PASSWORD} element={<ResetPassword />} />
+        <Route path={routes.PLANS_PAGE} element={<PlanPage />} />
 
         <Route
           path={routes.DASHBOARD}

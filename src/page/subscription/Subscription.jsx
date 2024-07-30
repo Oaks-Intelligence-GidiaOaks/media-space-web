@@ -63,7 +63,7 @@ const Subscription = () => {
     isLoading: loadAdvert,
     refetch
   } = useGetAllAdminAdvertQuery(undefined, {
-    skip: user?.role !== "Admin"
+    skip: user?.role !== "OrgAdmin"
   });
 
   const {
@@ -71,7 +71,7 @@ const Subscription = () => {
     isLoading: loadAdvertStats,
     refetch: refetchAdvertStats
   } = useAdminAdvertStatsQuery(undefined, {
-    skip: user?.role !== "Admin"
+    skip: user?.role !== "OrgAdmin"
   });
 
   const adverts = advertdata?.data || [];

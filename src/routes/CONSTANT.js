@@ -31,3 +31,4 @@ export const SUBSCRIPTION_PLANS = "/subscription-plans";
 export const PAYMENT_SUCCESS = "/payment-success";
 export const FORGOT_PASSWORD = "/forgot-password";
 export const RESET_PASSWORD = "/reset-password";
+export const PLANS_PAGE = "/plans";
