@@ -38,7 +38,7 @@ function Footer() {
         <div className="md:flex flex-row flex-wrap justify-between pt-4">
           <div className="flex flex-col gap-5">
             <p className="link-head text-[#3D7100]">Company</p>
-            <Link to={""} className="footer-link text-black">
+            <Link to={"/"} className="footer-link text-black">
               Home
             </Link>
             <Link to={""} className="footer-link text-black">
