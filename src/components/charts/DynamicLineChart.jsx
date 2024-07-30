@@ -7,6 +7,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
 const parseTrendData = (trendData, filter) => {
+  console.log(trendData);
   const parsedData = { positive: [], negative: [], neutral: [] };
 
   if (!trendData) return parsedData;

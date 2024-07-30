@@ -80,6 +80,7 @@ const Analysis = () => {
                   >
                     <option value="last 12 hours">Last 12 hours</option>
                     <option value="today">Today</option>
+                    <option value="1 day">1 Day</option>
                     <option value="last 3 days">Last 3 days</option>
                     <option value="last 7 days">Last 7 days</option>
                     <option value="last 30 days">Last 30 days</option>
@@ -103,6 +104,7 @@ const Analysis = () => {
                   >
                     <option value="last 12 hours">Last 12 hours</option>
                     <option value="today">Today</option>
+                    <option value="1 day">1 Day</option>
                     <option value="last 3 days">Last 3 days</option>
                     <option value="last 7 days">Last 7 days</option>
                     <option value="last 30 days">Last 30 days</option>
@@ -194,6 +196,7 @@ const Analysis = () => {
                   >
                     <option value="last 12 hours">Last 12 hours</option>
                     <option value="today">Today</option>
+                    <option value="1 day">1 Day</option>
                     <option value="last 3 days">Last 3 days</option>
                     <option value="last 7 days">Last 7 days</option>
                     <option value="last 30 days">Last 30 days</option>
