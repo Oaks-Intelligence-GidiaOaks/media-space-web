@@ -3,14 +3,13 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Helvetica';
-  src: url('/fonts/Helvetica.woff2') format('woff2'),
-       url('/fonts/Helvetica.woff') format('woff'),
-       url('/fonts/Helvetica.ttf') format('truetype');
+  font-family: "Helvetica";
+  src: url("/fonts/Helvetica.woff2") format("woff2"),
+    url("/fonts/Helvetica.woff") format("woff"),
+    url("/fonts/Helvetica.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
-
 
 @keyframes dotPulse {
   0% {
@@ -57,13 +56,14 @@ html {
   
 } */
 
-.dance{
+.dance {
   animation: dance 3s infinite ease alternate;
 }
 @keyframes dance {
   from {
     transform: translateY(-12px);
-  } to{ 
+  }
+  to {
     transform: translateY(12px);
   }
 }
@@ -84,7 +84,10 @@ html {
   }
 }
 
-
 .active {
-  color: #3D7100;
+  color: #3d7100;
+}
+
+.nav-bg {
+  background: linear-gradient(to right, #001a24 56.5%, #092a20 50%, #323f1b 100%);
 }

@@ -1,4 +1,4 @@
-import { Nav } from '../../components'
+import { Footer, Nav } from '../../components'
 import React, { useEffect } from 'react'
 import Help from './Help'
 import SupportActions from './SupportActions'
@@ -16,6 +16,7 @@ const Support = () => {
      <Nav />
      <Help/>
      <SupportActions />
+     <Footer/>
     </>
   )
 }

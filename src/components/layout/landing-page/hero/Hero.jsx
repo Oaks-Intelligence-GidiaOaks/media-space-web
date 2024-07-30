@@ -47,7 +47,7 @@ function Hero() {
               
             </h5>
             <h5 className="hero-lead pt-5 pb-8">
-            Do more with Kommunita and grow your Ideal reach
+            Do more with Kommunita and grow your ideal reach
             </h5>
 
             <div className="flex pb-32 justify-center">

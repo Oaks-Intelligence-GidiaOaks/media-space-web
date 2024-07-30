@@ -17,7 +17,7 @@ const FeatureCards = () => {
                 Targeted Advertising
               </h4>
               <p className="text-sm text-[#5E5E6B]">
-                Unlimited Advertising for the price of one License
+                Unlimited Advertising for the price of one License.
               </p>
             </div>
             <div className="w-full h-[80%] mt-auto">
@@ -34,7 +34,7 @@ const FeatureCards = () => {
                 Sentiment Analysis
               </h4>
               <p className="text-sm text-[#5E5E6B]">
-                Real-time data on user behaviour, expectation and satisfaction
+                Real-time data on user behaviour, expectation and satisfaction.
               </p>
             </div>
             <div className="w-full h-[80%] mt-auto">
