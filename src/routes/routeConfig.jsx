@@ -27,6 +27,9 @@ import {
   SupportGetStartedPage,
   ResourcePage,
   TutorialPage,
+  ForgotPassword,
+  ResetPassword,
+  PlanPage
 } from "../page";
 
 import * as routes from "./CONSTANT";
@@ -44,11 +47,18 @@ const RouterConfig = () => {
         <Route path={routes.LOGIN_AS} element={<LoginAs />} />
         <Route path={routes.PRICING} element={<PricingPage />} />
         <Route path={routes.SUPPORT} element={<SupportPage />} />
-        <Route path={routes.SUPPORT} element={<SupportLayout />} >
-        <Route index path={routes.SUPPORT_GetStarted} element={<SupportGetStartedPage />} />
-        <Route index path={routes.TUTORIAL} element={<TutorialPage />} />
-        <Route index path={routes.SUPPORT_GetStarted + "/:id"} element={<ResourcePage />} />
-        
+        <Route path={routes.SUPPORT} element={<SupportLayout />}>
+          <Route
+            index
+            path={routes.SUPPORT_GetStarted}
+            element={<SupportGetStartedPage />}
+          />
+          <Route index path={routes.TUTORIAL} element={<TutorialPage />} />
+          <Route
+            index
+            path={routes.SUPPORT_GetStarted + "/:id"}
+            element={<ResourcePage />}
+          />
         </Route>
 
         <Route
@@ -61,6 +71,9 @@ const RouterConfig = () => {
         <Route path={routes.REGISTER} element={<Register />} />
         <Route path={routes.SIGN_UP} element={<SignUp />} />
         <Route path={routes.PAYMENT_SUCCESS} element={<PaymentSuccess />} />
+        <Route path={routes.FORGOT_PASSWORD} element={<ForgotPassword />} />
+        <Route path={routes.RESET_PASSWORD} element={<ResetPassword />} />
+        <Route path={routes.PLANS_PAGE} element={<PlanPage />} />
 
         <Route
           path={routes.DASHBOARD}

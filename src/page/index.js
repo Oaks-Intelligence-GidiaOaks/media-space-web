@@ -1,5 +1,8 @@
 export { default as LandingPage } from "./landing-page/LandingPage";
 export { default as Login } from "./Login";
+export { default as ForgotPassword } from "./ForgotPassword";
+export { default as ResetPassword } from "./ResetPassword";
+export { default as PlanPage } from "./Plans";
 export { default as LoginAs } from "./landing-page/LoginAs";
 export { default as SignUpAs } from "./landing-page/SignUpAs";
 export { default as PaymentSuccess } from "./PaymentSuccess";

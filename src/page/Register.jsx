@@ -2,13 +2,8 @@ import { useState } from "react";
 import { GoPerson } from "react-icons/go";
 import facebook from "../assets/facebook.svg";
 import goggle from "../assets/goggle.svg";
-import instagram from "../assets/instagram.svg";
-import linkedin from "../assets/linkedin.svg";
 import { AiOutlineMail } from "react-icons/ai";
-import BgGroup from "../assets/BgGroup.svg";
-import Ellipse from "../assets/Ellipse.svg";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { InputField, PasswordField } from "../components/ui";
 import { Form, Field } from "react-final-form";
 import validate from "validate.js";
@@ -21,33 +16,33 @@ import * as images from "../assets";
 
 const constraints = {
   display_name: {
-    presence: true,
+    presence: true
   },
   email: {
-    presence: true,
+    presence: true
   },
   username: {
-    presence: true,
+    presence: true
   },
   password: {
     presence: true,
     length: {
-      minimum: 6,
-    },
+      minimum: 6
+    }
   },
   confirm_password: {
     presence: true,
-    equality: "password",
+    equality: "password"
   },
   terms: {
     presence: {
-      message: "must be accepted",
+      message: "must be accepted"
     },
     inclusion: {
       within: [true],
-      message: "^must be accepted",
-    },
-  },
+      message: "^must be accepted"
+    }
+  }
 };
 
 const Register = () => {
@@ -82,81 +77,36 @@ const Register = () => {
               <img
                 className="absolute top-0 left-10 transform  text-white  mt-5"
                 style={{
-                  // backgroundImage:
-                  //   "linear-gradient(90deg, #6E9D37 0%, #74A12D 52%, #97B24C 99.99%, #94B04A 100%)",
                   WebkitBackgroundClip: "text",
                   backgroundClip: "text",
-                  color: "transparent",
+                  color: "transparent"
                 }}
                 src={images.logo}
               />
-              {/* <motion.img
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 3, duration: 1, ease: "easeIn" }}
-                className="absolute top-0 left-10 transform  text-white  mt-5"
-                // className="absolute text-center font-Inter top-0 left-1/2 transform -translate-x-1/2 text-white text-3xl  mt-10"
-                style={{
-                  // backgroundImage:
-                  //   "linear-gradient(90deg, #6E9D37 0%, #74A12D 52%, #97B24C 99.99%, #94B04A 100%)",
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  color: "transparent",
-                }}
-                src={images.logo}
-              /> */}
-
-              {/* <img src={images.logo} alt="logo" /> */}
             </Link>
             <img
-            
               src={images.user_phone}
               alt="Background"
               className="absolute z-40 bg-cover left-1/2 bottom-0  transform -translate-x-1/2 w-[20rem]"
             />
-            {/* <motion.img
-              initial={{ y: 200, opacity: 0, scale: 1 }}
-              animate={{ y: 0, opacity: 1, scale: 1.1 }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-              // src={BgGroup}
-              src={images.user_phone}
-              alt="Background"
-              className="absolute z-40 bg-cover bottom-0  transform -translate-x-1/2 w-[20rem]"
-            /> */}
           </div>
 
           <div className="absolute right-0 left-0 top-0 h-full w-full scale-100">
-            <img
-              src={images.world_2}
-              alt=""
-              className="mt-24 w- mx-auto   "
-            />
-            {/* <motion.img
-              // initial={{ y: -400, x: -400 }}
-              // animate={{ y: 0, x: 0 }}
-              // transition={{ delay: 1.5, duration: 1, ease: "easeOut" }}
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.5 }}
-              transition={{ duration: 3, ease: "easeOut" }}
-              src={images.world_2}
-              alt=""
-              className="mt-24 w- mx-auto   "
-            /> */}
+            <img src={images.world_2} alt="" className="mt-24 w- mx-auto   " />
           </div>
         </div>
       </div>
       <div className="w-full h-screen flex-1 rounded-tl-[10%]  lg:rounded-tl-[20%] mx-auto pt-20 px-8 lg:p-16 bg-white overflow-y-scroll scrollbar-thin bar  scrollbar-thumb-[#AEAEAE] scrollbar-track-gray-200">
         <div className=" mx-auto w-[80%] lg:mt-10 2xl:mt-40">
           <div className="">
-          <div className="flex justify-center items-center mb-10">
-          <div className="flex font-[500] mx-auto text-xs items-center">
-              <p className=" bg-[#F7F7F8] text-sm w-[8.8rem] text-center rounded-lg text-[#757682]">
-                Built for you
-              </p>
-              <p className="text-[#3D7100]">Change</p>
+            <div className="flex justify-center items-center mb-10">
+              <div className="flex font-[500] mx-auto text-xs items-center">
+                <p className=" bg-[#F7F7F8] text-sm w-[8.8rem] text-center rounded-lg text-[#757682]">
+                  Built for you
+                </p>
+                <p className="text-[#3D7100]">Change</p>
+              </div>
             </div>
-          </div>
             <Form
               onSubmit={onSubmit}
               validate={validateForm}
@@ -254,8 +204,7 @@ const Register = () => {
                     </div>
                     <span className="text-xs font-Inter font-normal pt-1">
                       I accept the{" "}
-                      <span className=" text-[#3D7100]">terms of use</span>{" "}
-                      and{" "}
+                      <span className=" text-[#3D7100]">terms of use</span> and{" "}
                       <span className=" text-[#3D7100]">privacy policy</span>
                     </span>
                   </div>
@@ -309,20 +258,6 @@ const Register = () => {
                 className="bg-cover hover:cursor-pointer"
               />
             </div>
-            {/* <div className="p-2 border border-gray-500 w-10 h-10 flex justify-center items-center rounded-full">
-              <img
-                src={instagram}
-                alt=""
-                className="bg-cover hover:cursor-pointer"
-              />
-            </div>
-            <div className="p-2 border border-gray-500 w-10 h-10 flex justify-center items-center rounded-full">
-              <img
-                src={linkedin}
-                alt=""
-                className="bg-cover hover:cursor-pointer"
-              />
-            </div> */}
           </div>
 
           <div className="flex items-center justify-center mt-4">

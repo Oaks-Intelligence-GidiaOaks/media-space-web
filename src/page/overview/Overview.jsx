@@ -44,7 +44,9 @@ const Overview = () => {
   const user = useSelector((state) => state.user.user);
 
   const { data: overallActivity, isLoading: loadingOverallActivity } =
-    useGetUserOverallActivityQuery();
+    useGetUserOverallActivityQuery(undefined, {
+      skip: user?.role === "OrgAdmin"
+    });
 
   const userActivity = [];
 
@@ -56,18 +58,30 @@ const Overview = () => {
   }
 
   const { data: topOrganization, isLoading: loadingTopOrg } =
-    useGetTopOrganizationQuery();
+    useGetTopOrganizationQuery(undefined, {
+      skip: user?.role === "OrgAdmin"
+    });
   const topOrg = topOrganization?.data;
   // console.log(topOrg);
 
-  const { data: statsData, isLoading: loadingStats } = useGetUserStatsQuery();
+  const { data: statsData, isLoading: loadingStats } = useGetUserStatsQuery(
+    undefined,
+    {
+      skip: user?.role === "OrgAdmin"
+    }
+  );
   const userStats = [
     { label: "New", value: statsData?.data?.new_users?.total },
     { label: "Returning", value: statsData?.data?.returning_users?.total },
     { label: "Inactive", value: statsData?.data?.inactive_users?.total }
   ];
 
-  const { data: subscriptionData, isLoading } = useGetSubscriptionQuery();
+  const { data: subscriptionData, isLoading } = useGetSubscriptionQuery(
+    undefined,
+    {
+      skip: user?.role === "OrgAdmin"
+    }
+  );
   const subscription = [
     { label: "Paid", value: subscriptionData?.data?.paid_subscription?.total },
     {
@@ -127,7 +141,7 @@ const Overview = () => {
                 </div>
 
                 {loadingOverallActivity ? (
-                  <ShimmerThumbnail width={"100%"} height={"100%"} />
+                  <ShimmerThumbnail />
                 ) : (
                   <div className="linechart py-3 px-3 hidden sm:block  max-w-full shadow hover:shadow-lg">
                     <LineChart data={userActivity} xKey="month" yKey="count" />
@@ -144,7 +158,7 @@ const Overview = () => {
 
                 <div className="card-list flex flex-col gap-7">
                   {loadingTopOrg ? (
-                    <ShimmerThumbnail width={"100%"} height={400} />
+                    <ShimmerThumbnail height={400} />
                   ) : (
                     topOrg?.map((org) => (
                       <div

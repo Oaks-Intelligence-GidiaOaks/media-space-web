@@ -1,4 +1,11 @@
-import { GETUSER, LOGIN, REGISTER, DEACTIVATE_USER } from "./constants";
+import {
+  GETUSER,
+  LOGIN,
+  REGISTER,
+  DEACTIVATE_USER,
+  GET_CODE,
+  RESET_PASSWORD
+} from "./constants";
 import apiSlice from "./api/apiSlice";
 import { updateUser } from "../redux/slices/user.slice";
 
@@ -9,7 +16,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
       query: (userData) => ({
         url: LOGIN,
         body: userData,
-        method: "POST",
+        method: "POST"
       }),
       onQueryStarted: async (credentials, { dispatch, queryFulfilled }) => {
         try {
@@ -24,7 +31,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
             updateUser({
               token: accessToken,
               user,
-              refreshToken: refreshToken,
+              refreshToken: refreshToken
             })
           );
         } catch (error) {
@@ -36,7 +43,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         // console.log(response, "rtk");
         return response;
       },
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User"]
     }),
 
     // Register users route
@@ -44,48 +51,46 @@ export const userApiSlice = apiSlice.injectEndpoints({
       query: (userData) => ({
         url: REGISTER,
         body: userData,
-        method: "POST",
+        method: "POST"
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User"]
     }),
 
     // Get user route
     getUser: builder.query({
       query: () => ({
         url: GETUSER,
-        method: "GET",
+        method: "GET"
       }),
-      providesTags: ["User"],
+      providesTags: ["User"]
     }),
 
     deActivateUser: builder.mutation({
       query: ({ id }) => ({
         url: `${DEACTIVATE_USER}/${id}`,
-        method: "PATCH",
+        method: "PATCH"
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User"]
     }),
 
-    // // update user route
-    // updateUser: builder.mutation({
-    //   query: (data) => ({
-    //     url: GETUSER,
-    //     method: "PUT",
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["User"],
-    // }),
+    getCode: builder.mutation({
+      query: (data) => ({
+        url: GET_CODE,
+        method: "POST",
+        body: data
+      }),
+      providesTags: ["User"]
+    }),
 
-    // // Update user password
-    // updatePassword: builder.mutation({
-    //   query: (data) => ({
-    //     url: UPDATE_USER_PASSWORD,
-    //     method: "PUT",
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["User"],
-    // }),
-  }),
+    updatePassword: builder.mutation({
+      query: (data) => ({
+        url: RESET_PASSWORD,
+        method: "POST",
+        body: data
+      }),
+      providesTags: ["User"]
+    })
+  })
 });
 
 export const {
@@ -93,4 +98,6 @@ export const {
   useRegisterUserMutation,
   useGetUserQuery,
   useDeActivateUserMutation,
+  useGetCodeMutation,
+  useUpdatePasswordMutation
 } = userApiSlice;

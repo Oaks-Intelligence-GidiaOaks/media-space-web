@@ -1,51 +1,57 @@
 import { useState } from "react";
-import { AiOutlineMail } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import facebook from "../assets/facebook.svg";
-import goggle from "../assets/goggle.svg";
-import { InputField, PasswordField } from "../components/ui";
+import { PasswordField, InputField } from "../components/ui";
 import { Form } from "react-final-form";
 import validate from "validate.js";
 import { useEffect } from "react";
 import rtkMutation from "../utils/rtkMutation";
 import { showAlert } from "../static/alert";
-import { useLoginUserMutation } from "../service/user.service";
-import {
-  DASHBOARD,
-  INDEX,
-  REGISTER,
-  FORGOT_PASSWORD
-} from "../routes/CONSTANT";
+import { INDEX, LOGIN, FORGOT_PASSWORD } from "../routes/CONSTANT";
 import * as images from "../assets";
+import {
+  useUpdatePasswordMutation,
+  useGetCodeMutation
+} from "../service/user.service";
+import { TbPasswordFingerprint } from "react-icons/tb";
+import PropTypes from "prop-types"; // Import PropTypes
 
 const constraints = {
-  email: {
+  code: {
     presence: true
   },
-  password: {
-    presence: true,
-    length: {
-      minimum: 6
-    }
+  newPassword: {
+    presence: true
+  },
+  confirmPassword: {
+    presence: true
   }
 };
 
-const Login = () => {
+const ResetPassword = ({ email }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!email) {
+      navigate(FORGOT_PASSWORD);
+    }
+  }, [email, navigate]);
+
   const [eyeState, setEyeState] = useState(false);
+  const [timer, setTimer] = useState(60);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const toggleEye = (e) => {
     e.preventDefault();
     setEyeState((prev) => !prev);
   };
 
-  const [loginUser, { error, isSuccess }] = useLoginUserMutation({
+  const [Reset, { error, isSuccess }] = useUpdatePasswordMutation({
     provideTag: ["User"]
   });
 
-  const navigate = useNavigate();
-
   const onSubmit = async (values) => {
-    await rtkMutation(loginUser, values);
+    console.log(values);
+    await rtkMutation(Reset, values);
   };
 
   const validateForm = (values) => {
@@ -54,12 +60,42 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      showAlert("", "Login Successful!", "success");
-      navigate(DASHBOARD);
+      showAlert("Password changed Successfully!", "Pls Login", "success");
+      navigate(LOGIN);
     } else if (error) {
-      showAlert("Oops", error.data.message || "An error occurred", "error");
+      showAlert("", error?.data?.message, "error");
     }
   }, [isSuccess, error, navigate]);
+
+  const [Forgot, { error: otpError, isSuccess: otpSuccess, isLoading }] =
+    useGetCodeMutation({
+      provideTag: ["User"]
+    });
+
+  const resendOtp = async () => {
+    await rtkMutation(Forgot, { email });
+    setTimer(60);
+    setIsButtonDisabled(true);
+  };
+
+  useEffect(() => {
+    if (otpSuccess) {
+      showAlert("", "Otp has been resent", "success");
+    } else if (otpError) {
+      showAlert("Oops", otpError.data.message || "An error occurred", "error");
+    }
+  }, [otpSuccess, otpError]);
+
+  useEffect(() => {
+    if (timer > 0) {
+      const intervalId = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+      return () => clearInterval(intervalId);
+    } else {
+      setIsButtonDisabled(false);
+    }
+  }, [timer]);
 
   return (
     <div className="flex lg:h-screen bg-[]  flex-col lg:flex-row ">
@@ -94,7 +130,7 @@ const Login = () => {
         <div className="sm:mt-20 lg:mt-0 2xl:mt-40 mx-auto w-[80%]">
           <div className="">
             <h1 className="font-Inter mb-7 lg:py-0 mx-auto flex justify-center items-center  text-primary-dark-green font-bold text-3xl">
-              Hello, Welcome Back
+              Reset Password
             </h1>
             <Form
               onSubmit={onSubmit}
@@ -102,59 +138,48 @@ const Login = () => {
               render={({ handleSubmit, form, submitting }) => (
                 <form onSubmit={handleSubmit}>
                   <InputField
-                    id="email"
-                    type="email"
-                    name="email"
-                    label="Email"
+                    id="code"
+                    type="number"
+                    name="code"
+                    label="Enter OTP"
                     component="input"
-                    icon={AiOutlineMail}
                     placeholder=" "
                   />
-                  {form.getState().submitFailed &&
-                    form.getState().errors.email && (
-                      <small className="text-red-600">
-                        {form.getState().errors.email}
-                      </small>
-                    )}
-                  <PasswordField
-                    name="password"
-                    id="password"
-                    component="input"
-                    eyeState={eyeState}
-                    toggleEye={toggleEye}
-                    label="Password"
-                    placeholder=" "
-                  />
-                  {form.getState().submitFailed &&
-                    form.getState().errors.password && (
-                      <small className="text-red-600">
-                        {form.getState().errors.password}
-                      </small>
-                    )}
-                  <div className="flex justify-between mt-4 items-center">
-                    <div className="flex items-center gap-2">
-                      <div>
-                        <input
-                          type="checkbox"
-                          name=""
-                          id=""
-                          className="text-[#FF3A29]"
-                        />
-                        <label htmlFor="Remember Me"></label>
-                      </div>
-                      <span className="text-xs font-Inter font-light ">
-                        Keep me sign in
-                      </span>
-                    </div>
 
-                    <span className="text-xs font-Inter font-light text-primary-red hover:underline">
-                      <Link to={FORGOT_PASSWORD}>forgot password?</Link>
-                    </span>
-                  </div>
+                  <PasswordField
+                    id="newPassword"
+                    name="newPassword"
+                    label="New Password"
+                    component="input"
+                    icon={TbPasswordFingerprint}
+                    placeholder=" "
+                    toggleEye={toggleEye}
+                    eyeState={eyeState}
+                  />
+
+                  <PasswordField
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    component="input"
+                    icon={TbPasswordFingerprint}
+                    placeholder=" "
+                    toggleEye={toggleEye}
+                    eyeState={eyeState}
+                  />
+
+                  {form.getState().submitFailed &&
+                    (form.getState().errors.code ||
+                      form.getState().errors.newPassword ||
+                      form.getState().errors.confirmPassword) && (
+                      <small className="text-red-600">
+                        Please fill all the fields correctly
+                      </small>
+                    )}
 
                   <button
                     type="submit"
-                    className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 bg-primary-dark-green text-white hover:opacity-85"
+                    className="w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85"
                   >
                     {submitting ? (
                       <>
@@ -165,44 +190,39 @@ const Login = () => {
                         </span>
                       </>
                     ) : (
-                      "Log In"
+                      "Reset Password"
                     )}
                   </button>
                 </form>
               )}
             />
+
+            <button
+              className={`w-full mt-4 font-Montserrat font-bold py-2 px-8 mb-4 rounded-full bg-primary-dark-green text-white hover:opacity-85 ${
+                isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              onClick={resendOtp}
+              disabled={isButtonDisabled}
+            >
+              {isLoading
+                ? "Sending..."
+                : `Resend OTP ${isButtonDisabled ? `(${timer}s)` : ""}`}
+            </button>
           </div>
 
           <div className="mt-4 grid grid-cols-3 lg:gap-3 items-center w-full">
             <hr className="outline-gray-500" />
             <p className="text-center text-xs font-Montserrat text-gray-500 whitespace-nowrap">
-              Or Sign Up With{" "}
+              OR
             </p>
             <hr className="outline-gray-500" />
           </div>
 
-          <div className="flex items-center justify-center w-full mt-4 gap-5">
-            <div className="p-2 border border-gray-500 w-10 h-10 flex justify-center items-center rounded-full">
-              <img
-                src={goggle}
-                alt=""
-                className="bg-cover hover:cursor-pointer"
-              />
-            </div>
-            <div className="p-2 border border-gray-500 w-10 h-10 flex justify-center items-center rounded-full">
-              <img
-                src={facebook}
-                alt=""
-                className="bg-cover hover:cursor-pointer"
-              />
-            </div>
-          </div>
-
           <div className="flex items-center justify-center mt-4">
-            <button className="font-Inter font-medium text-base text-primary-gray ">
-              Don’t have an account?
-              <Link to={REGISTER} className="pl-1 text-[#3D7100]">
-                Register Here
+            <button className="font-Inter font-medium text-base text-primary-gray flex gap-4">
+              Go back to Login
+              <Link to={LOGIN} className=" text-primary-red">
+                Sign In
               </Link>
             </button>
           </div>
@@ -212,4 +232,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+ResetPassword.propTypes = {
+  email: PropTypes.string.isRequired
+};
+
+export default ResetPassword;
