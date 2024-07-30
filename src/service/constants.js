@@ -41,3 +41,5 @@ export const PAYMENT_INIT = "admin/subscription/init-payment";
 export const SUBSCRIPTION_STATS = "admin/subscription/statistics";
 export const SUBSCRIPTION_HISTORY = "admin/subscription/history";
 export const VERIFY_SUBSCRIPTION = "admin/subscription/verify-payment";
+export const GET_CODE = "admin/user/forgot_password";
+export const RESET_PASSWORD = "admin/user/reset_password";

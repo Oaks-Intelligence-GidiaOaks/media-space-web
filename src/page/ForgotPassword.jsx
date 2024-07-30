@@ -1,51 +1,36 @@
 import { useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import facebook from "../assets/facebook.svg";
-import goggle from "../assets/goggle.svg";
-import { InputField, PasswordField } from "../components/ui";
+import { InputField } from "../components/ui";
 import { Form } from "react-final-form";
 import validate from "validate.js";
 import { useEffect } from "react";
 import rtkMutation from "../utils/rtkMutation";
 import { showAlert } from "../static/alert";
-import { useLoginUserMutation } from "../service/user.service";
-import {
-  DASHBOARD,
-  INDEX,
-  REGISTER,
-  FORGOT_PASSWORD
-} from "../routes/CONSTANT";
+import { useGetCodeMutation } from "../service/user.service";
+import { INDEX, LOGIN } from "../routes/CONSTANT";
 import * as images from "../assets";
+import ResetPassword from "./ResetPassword";
 
 const constraints = {
   email: {
-    presence: true
-  },
-  password: {
     presence: true,
-    length: {
-      minimum: 6
-    }
+    email: true
   }
 };
 
-const Login = () => {
-  const [eyeState, setEyeState] = useState(false);
-
-  const toggleEye = (e) => {
-    e.preventDefault();
-    setEyeState((prev) => !prev);
-  };
-
-  const [loginUser, { error, isSuccess }] = useLoginUserMutation({
+const ForgotPassword = () => {
+  const [Forgot, { error, isSuccess }] = useGetCodeMutation({
     provideTag: ["User"]
   });
 
   const navigate = useNavigate();
+  const [email, setEmail] = useState();
 
   const onSubmit = async (values) => {
-    await rtkMutation(loginUser, values);
+    console.log(values);
+    await rtkMutation(Forgot, values);
+    setEmail(values.email);
   };
 
   const validateForm = (values) => {
@@ -54,12 +39,19 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      showAlert("", "Login Successful!", "success");
-      navigate(DASHBOARD);
+      showAlert(
+        "Otp has been sent",
+        "Check your email for your password reset code",
+        "success"
+      );
     } else if (error) {
       showAlert("Oops", error.data.message || "An error occurred", "error");
     }
   }, [isSuccess, error, navigate]);
+
+  if (isSuccess) {
+    return <ResetPassword email={email} />;
+  }
 
   return (
     <div className="flex lg:h-screen bg-[]  flex-col lg:flex-row ">
@@ -93,8 +85,8 @@ const Login = () => {
       <div className="w-full h-screen flex-1 flex flex-col justify-center items-center rounded-tl-[10%]  lg:rounded-tl-[20%]  mx-auto pt-20 px-8 lg:p-16 bg-white">
         <div className="sm:mt-20 lg:mt-0 2xl:mt-40 mx-auto w-[80%]">
           <div className="">
-            <h1 className="font-Inter mb-7 lg:py-0 mx-auto flex justify-center items-center  text-primary-dark-green font-bold text-3xl">
-              Hello, Welcome Back
+            <h1 className="font-Inter mb-12 lg:py-0 mx-auto flex justify-center items-center  text-primary-dark-green font-bold text-3xl">
+              Forgot Password
             </h1>
             <Form
               onSubmit={onSubmit}
@@ -116,41 +108,6 @@ const Login = () => {
                         {form.getState().errors.email}
                       </small>
                     )}
-                  <PasswordField
-                    name="password"
-                    id="password"
-                    component="input"
-                    eyeState={eyeState}
-                    toggleEye={toggleEye}
-                    label="Password"
-                    placeholder=" "
-                  />
-                  {form.getState().submitFailed &&
-                    form.getState().errors.password && (
-                      <small className="text-red-600">
-                        {form.getState().errors.password}
-                      </small>
-                    )}
-                  <div className="flex justify-between mt-4 items-center">
-                    <div className="flex items-center gap-2">
-                      <div>
-                        <input
-                          type="checkbox"
-                          name=""
-                          id=""
-                          className="text-[#FF3A29]"
-                        />
-                        <label htmlFor="Remember Me"></label>
-                      </div>
-                      <span className="text-xs font-Inter font-light ">
-                        Keep me sign in
-                      </span>
-                    </div>
-
-                    <span className="text-xs font-Inter font-light text-primary-red hover:underline">
-                      <Link to={FORGOT_PASSWORD}>forgot password?</Link>
-                    </span>
-                  </div>
 
                   <button
                     type="submit"
@@ -165,7 +122,7 @@ const Login = () => {
                         </span>
                       </>
                     ) : (
-                      "Log In"
+                      "Get Code"
                     )}
                   </button>
                 </form>
@@ -176,33 +133,16 @@ const Login = () => {
           <div className="mt-4 grid grid-cols-3 lg:gap-3 items-center w-full">
             <hr className="outline-gray-500" />
             <p className="text-center text-xs font-Montserrat text-gray-500 whitespace-nowrap">
-              Or Sign Up With{" "}
+              OR
             </p>
             <hr className="outline-gray-500" />
           </div>
 
-          <div className="flex items-center justify-center w-full mt-4 gap-5">
-            <div className="p-2 border border-gray-500 w-10 h-10 flex justify-center items-center rounded-full">
-              <img
-                src={goggle}
-                alt=""
-                className="bg-cover hover:cursor-pointer"
-              />
-            </div>
-            <div className="p-2 border border-gray-500 w-10 h-10 flex justify-center items-center rounded-full">
-              <img
-                src={facebook}
-                alt=""
-                className="bg-cover hover:cursor-pointer"
-              />
-            </div>
-          </div>
-
           <div className="flex items-center justify-center mt-4">
-            <button className="font-Inter font-medium text-base text-primary-gray ">
-              Don’t have an account?
-              <Link to={REGISTER} className="pl-1 text-[#3D7100]">
-                Register Here
+            <button className="font-Inter font-medium text-base text-primary-gray flex gap-4">
+              Go back to Login
+              <Link to={LOGIN} className=" text-primary-red">
+                Sign In
               </Link>
             </button>
           </div>
@@ -212,4 +152,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
