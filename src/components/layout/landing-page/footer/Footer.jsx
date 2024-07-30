@@ -70,19 +70,19 @@ function Footer() {
 
           <div className="flex flex-col gap-5">
             <p className="link-head text-[#3D7100]">Social</p>
-            <Link to={""} className="footer-link text-black">
+            <Link to={"https://x.com/kommunita"} className="footer-link text-black">
               X
             </Link>
-            <Link to={""} className="footer-link text-black">
+            <Link to={"https://instagram.com/kommunitaHQ"} className="footer-link text-black">
               Instagram
             </Link>
-            <Link to={""} className="footer-link text-black">
+            {/* <Link to={""} className="footer-link text-black">
               Linkedin
-            </Link>
-            <Link to={""} className="footer-link text-black">
+            </Link> */}
+            <Link to={"https://www.facebook.com/profile.php?id=61561857346731&mibextid=ZbWKwL"} className="footer-link text-black">
             Facebook
             </Link>
-            <Link to={""} className="footer-link text-black">
+            <Link to={"https://www.tiktok.com/@kommunita?_t=8oINGoOuikn&_r=1"} className="footer-link text-black">
             Tiktok
             </Link>
           </div>

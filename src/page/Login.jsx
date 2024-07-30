@@ -139,7 +139,6 @@ const Login = () => {
               {/* <img src={images.logo} alt="logo" /> */}
             </Link>
             <img
-            
               // src={BgGroup}
               src={images.user_phone}
               alt="Background"
@@ -157,11 +156,7 @@ const Login = () => {
           </div>
 
           <div className="absolute right-0 left-0 top-0 h-full w-full scale-100">
-            <img
-              src={images.world_2}
-              alt=""
-              className="mt-24 w- mx-auto   "
-            />
+            <img src={images.world_2} alt="" className="mt-24 w- mx-auto   " />
             {/* <motion.img
            
               initial={{ opacity: 0, scale: 0.5 }}
@@ -294,9 +289,9 @@ const Login = () => {
 
           <div className="flex items-center justify-center mt-4">
             <button className="font-Inter font-medium text-base text-primary-gray ">
-            Don’t have an account?  
-              <Link to={REGISTER} className=" text-[#3D7100]"> 
-               Register Here 
+              Don’t have an account?{" "}
+              <Link to={REGISTER} className=" text-[#3D7100]">
+                Register Here
               </Link>
             </button>
           </div>

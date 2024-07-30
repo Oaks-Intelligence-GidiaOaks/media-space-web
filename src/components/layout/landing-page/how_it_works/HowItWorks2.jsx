@@ -69,7 +69,7 @@ const HowItWorks2 = () => {
         <div className="rounded pt-10 pl-10 pr-20 flex-1 flex flex-col md:flex-row xl:flex-col justify-between gap-10 h-full">
           <div className="flex-grow flex flex-col xl:pl-24 justify-end">
             <h4 className="text-[2rem] font-semibold text-[#2D2B2B]">
-              Engage Community
+              Engage Your Community
             </h4>
             <div className="text-[1rem] text-[#5E5E6B]">
               <ul className="">
@@ -78,11 +78,11 @@ const HowItWorks2 = () => {
                   seamless audio and video room integration.
                 </li>
                 <li className="py-2 text-[1rem]">
-                  - Get direct access to brands
+                  - Get direct access to brands.
                 </li>
                 <li className="py-2 text-[1rem]">
                   - Share various types of content and run surveys <br /> to
-                  gather feedback
+                  gather feedback.
                 </li>
               </ul>
             </div>
@@ -101,17 +101,17 @@ const HowItWorks2 = () => {
         <div className="rounded pt-10 pl-10 w-full xl:w-[45%] flex flex-col md:flex-row xl:flex-col justify-between gap-10 h-full">
           <div className="flex-grow">
             <h4 className="text-[2rem] font-semibold text-[#2D2B2B]">
-              Increase productivity
+              Increase Productivity
             </h4>
             <div className="text-[1rem] text-[#5E5E6B]">
               <ul>
                 <li>
                   - Structure communications by assigning <br /> specific roles
-                  and permissions to community <br /> members
+                  and permissions to community <br /> members.
                 </li>
                 <li>
                   - Maintain a cohesive workflow by connecting <br /> with your
-                  existing CRM and email marketing tool
+                  existing CRM and email marketing tool.
                 </li>
                 <li>
                   - Reach and attract your ideal audience with <br /> precise
@@ -155,7 +155,7 @@ const HowItWorks2 = () => {
             Analyze and Improve
             </h4>
             <p className="text-[1rem] text-[#5E5E6B]">
-            Monitor and analyze community engagement, <br /> growth, and overall performance
+            Monitor and analyze community engagement, <br /> growth, and overall performance.
             </p>
           </div>
           <div className="w-full flex xl:justify-end h-full mt-auto xl:pr-10">

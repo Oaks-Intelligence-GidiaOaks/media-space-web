@@ -71,7 +71,7 @@ function Nav() {
   useClickAway(ref, () => setMenuOpen(false));
 
   return (
-    <section className={`sticky top-0 w-full ${pricing || support ? "bg-white" : "heroimg"}   z-50`}>
+    <section className={`sticky top-0 w-full ${pricing || support ? "bg-white" : "nav-bg"}   z-50`}>
       <div className="w-full mx-auto px-5 md:px-20 lg:px-10 xl:px-20 py-4 flex justify-between items-center gap-5">
         <div className="logo">
           <Link to={INDEX} className="flex" smooth={true}>
