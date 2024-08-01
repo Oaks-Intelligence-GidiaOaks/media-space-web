@@ -51,7 +51,7 @@ const Analysis = () => {
 
   return (
     <>
-      <div className="px-3 pt-5 pb-5">
+      <div className="pt-5 pb-5">
         <div className="">
           {user && user.role === "OrgAdmin" ? (
             <>
@@ -68,7 +68,7 @@ const Analysis = () => {
             </>
           ) : null}
 
-          <div className="flex justify-between gap-10 pb-10">
+          <div className="flex flex-col md:flex-row justify-between gap-10 pb-10">
             <div className="wordcloud w-full h-[449px] rounded-[13.17px] border shadow border-[#E6EDFF] bg-white">
               <div className="px-3 pt-3">
                 <div className="flex justify-between items-center">
@@ -182,7 +182,7 @@ const Analysis = () => {
             </div>
           </div>
 
-          <div className="flex gap-10 justify-between">
+          <div className="flex flex-col md:flex-row gap-10 justify-between w-full">
             <LineChart />
 
             <div className="net-sentiment w-full max-w-[376px] h-[537.02px] border  rounded-[13.17px] shadow border-[#E6EDFF] bg-white">

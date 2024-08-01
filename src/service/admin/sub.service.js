@@ -3,7 +3,10 @@ import {
   PAYMENT_INIT,
   SUBSCRIPTION_HISTORY,
   SUBSCRIPTION_STATS,
-  VERIFY_SUBSCRIPTION
+  VERIFY_SUBSCRIPTION,
+  CANCEL_PLAN,
+  RENEW_PLAN,
+  UPGRADE_PLAN
 } from "../constants";
 import apiSlice from "../api/apiSlice";
 
@@ -49,6 +52,31 @@ export const AdminApiSlice = apiSlice.injectEndpoints({
         body: body
       })
       // providesTags: ["Plans"],
+    }),
+
+    cancelSubscription: builder.query({
+      query: () => ({
+        url: CANCEL_PLAN,
+        method: "GET"
+      })
+      // providesTags: ["Plans"],
+    }),
+
+    renewSubscription: builder.query({
+      query: () => ({
+        url: RENEW_PLAN,
+        method: "GET"
+      })
+      // providesTags: ["Plans"],
+    }),
+
+    upgradeSubscription: builder.mutation({
+      query: (body) => ({
+        url: UPGRADE_PLAN,
+        method: "POST",
+        body: body
+      }),
+      invalidatesTags: ["Plans"]
     })
   })
 });
@@ -58,5 +86,8 @@ export const {
   useInitializePaymentMutation,
   useSubscriptionStatsQuery,
   useSubscriptionHistoryQuery,
-  useVerifyPaymentMutation
+  useVerifyPaymentMutation,
+  useLazyRenewSubscriptionQuery,
+  useLazyCancelSubscriptionQuery,
+  useUpgradeSubscriptionMutation
 } = AdminApiSlice;
