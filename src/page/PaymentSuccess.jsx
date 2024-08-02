@@ -1,9 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { showAlert } from "../static/alert";
 import "./style.css";
 import { useVerifyPaymentMutation } from "../service/admin/sub.service";
-import rtkMutation from "../utils/rtkMutation";
 import { Spinner } from "flowbite-react";
 import { useDispatch } from "react-redux";
 import { clearFormData } from "../redux/slices/register.slice";
@@ -12,55 +11,49 @@ const PaymentSuccess = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const params = new URLSearchParams(location.search);
+  const gateway = params.get("gateway");
+
   const [verifyPayment, { isLoading, isSuccess, error }] =
     useVerifyPaymentMutation();
 
-  const gateway = params.get("gateway");
-
   const handleGateway = async (gateway) => {
+    let values = {};
     switch (gateway) {
-      case "paystack": {
-        const trxref = params.get("trxref");
-        const reference = params.get("reference");
-        const values = { gateway, trxref, reference };
-        await rtkMutation(verifyPayment, values);
+      case "paystack":
+        values = {
+          gateway,
+          trxref: params.get("trxref"),
+          reference: params.get("reference")
+        };
         break;
-      }
-      case "flutterwave": {
-        const tx_ref = params.get("tx_ref");
-        const transaction_id = params.get("transaction_id");
-        const values = { gateway, tx_ref, transaction_id };
-        await rtkMutation(verifyPayment, values);
+      case "flutterwave":
+        values = {
+          gateway,
+          tx_ref: params.get("tx_ref"),
+          transaction_id: params.get("transaction_id")
+        };
         break;
-      }
-      case "stripe": {
+      case "stripe":
         showAlert("Success", "Payment processed successfully", "success");
         navigate("/signin");
-        break;
-      }
+        return;
       default:
-        showAlert("", "Payment method not recognized", "error");
+        showAlert("Error", "Payment method not recognized", "error");
+        return;
     }
+    await verifyPayment(values);
   };
-
-  useEffect(() => {
-    if (gateway) {
-      handleGateway(gateway);
-    }
-  }, [gateway]);
 
   useEffect(() => {
     if (isSuccess) {
       dispatch(clearFormData());
       showAlert("Success", "Payment processed successfully", "success");
       navigate("/signin");
-    }
-    if (error) {
+    } else if (error) {
       showAlert(
         "Error",
-        error?.data?.message || "An error occured verifying your payment",
+        error?.data?.message || "An error occurred verifying your payment",
         "error"
       );
       navigate("/signin");
@@ -69,22 +62,27 @@ const PaymentSuccess = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      {isLoading ? (
-        <div className="flex flex-col items-center">
-          <Spinner size={40} color={"#34b53a"} />
-        </div>
-      ) : (
-        <div className="flex flex-col items-center">
-          <p className="success-msg pb-24">Thank You For Subscribing</p>
-          <p className="confirmed-msg pb-10">Your payment has been confirmed</p>
-          <Link
-            className="success-btn text-center items-center justify-center p-5"
-            to="/signin"
-          >
-            Proceed to login
-          </Link>
-        </div>
-      )}
+      <div className="flex flex-col items-center">
+        <p className="success-msg pb-24">Thank You For Subscribing</p>
+        <p className="confirmed-msg pb-10">Your payment has been confirmed</p>
+        <button
+          className="success-btn text-center items-center justify-center p-5"
+          onClick={() => handleGateway(gateway)}
+          disabled={!gateway}
+        >
+          {isLoading ? (
+            <>
+              <span className="loading-dots">
+                <span className="loading-dots-dot"></span>
+                <span className="loading-dots-dot"></span>
+                <span className="loading-dots-dot"></span>
+              </span>
+            </>
+          ) : (
+            "Proceed to Login"
+          )}
+        </button>
+      </div>
     </div>
   );
 };
