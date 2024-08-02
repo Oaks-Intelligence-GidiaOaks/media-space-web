@@ -233,7 +233,7 @@ const ResetPassword = ({ email }) => {
 };
 
 ResetPassword.propTypes = {
-  email: PropTypes.string.isRequired
+  email: PropTypes.string
 };
 
 export default ResetPassword;

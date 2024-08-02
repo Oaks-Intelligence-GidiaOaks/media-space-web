@@ -3,91 +3,68 @@ import ReactApexChart from "react-apexcharts";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import "./style.css";
 
 dayjs.extend(customParseFormat);
 
 const parseTrendData = (trendData, filter) => {
-  console.log(trendData);
   const parsedData = { positive: [], negative: [], neutral: [] };
   const monthData = {};
 
   if (!trendData) return parsedData;
 
-  Object.entries(trendData.positive || {}).forEach(([date, value]) => {
-    let parsedDate;
+  const parseDate = (date, format) => {
+    return dayjs(date, format).format();
+  };
 
-    switch (filter) {
-      case "year":
-        parsedDate = dayjs(date, "YY-MM").format("YYYY-MM");
-        break;
-      case "30-days":
-      case "7-days":
-        parsedDate = dayjs(date, "YY-MM-DD").format("YYYY-MM-DD");
-        break;
-      case "1-day":
-        parsedDate = dayjs(date, "HH:mm").format("YYYY-MM-DD HH:mm");
-        break;
-      default:
-        parsedDate = new Date();
-    }
+  const addData = (data, type) => {
+    Object.entries(data || {}).forEach(([date, value]) => {
+      let parsedDate;
+      switch (filter) {
+        case "year":
+          parsedDate = parseDate(date, "YY-MM");
+          break;
+        case "30-days":
+        case "7-days":
+          parsedDate = parseDate(date, "YY-MM-DD");
+          break;
+        case "1-day":
+          parsedDate = parseDate(date, "HH:mm");
+          break;
+        default:
+          parsedDate = new Date();
+      }
+      if (!monthData[parsedDate]) {
+        monthData[parsedDate] = { positive: 0, negative: 0, neutral: 0 };
+      }
+      monthData[parsedDate][type] += value;
+    });
+  };
 
-    if (!monthData[parsedDate]) {
-      monthData[parsedDate] = { positive: 0, negative: 0, neutral: 0 };
-    }
-    monthData[parsedDate].positive += value;
-  });
+  addData(trendData.positive, "positive");
+  addData(trendData.negative, "negative");
+  addData(trendData.neutral, "neutral");
 
-  Object.entries(trendData.negative || {}).forEach(([date, value]) => {
-    let parsedDate;
+  // Add dummy data for the last month
+  const lastDate = Object.keys(monthData).sort().pop();
+  const lastDateObj = new Date(lastDate);
+  const nextMonth = new Date(
+    lastDateObj.getFullYear(),
+    filter === "year" ? lastDateObj.getMonth() + 1 : lastDateObj.getMonth() - 1,
+    1
+  );
 
-    switch (filter) {
-      case "year":
-        parsedDate = dayjs(date, "YY-MM").format("YYYY-MM");
-        break;
-      case "30-days":
-      case "7-days":
-        parsedDate = dayjs(date, "YY-MM-DD").format("YYYY-MM-DD");
-        break;
-      case "1-day":
-        parsedDate = dayjs(date, "HH:mm").format("YYYY-MM-DD HH:mm");
-        break;
-      default:
-        parsedDate = new Date();
-    }
+  const dummyDataPoint = {
+    x: nextMonth,
+    y: 0
+  };
 
-    if (!monthData[parsedDate]) {
-      monthData[parsedDate] = { positive: 0, negative: 0, neutral: 0 };
-    }
-    monthData[parsedDate].negative += value;
-  });
-
-  Object.entries(trendData.neutral || {}).forEach(([date, value]) => {
-    let parsedDate;
-
-    switch (filter) {
-      case "year":
-        parsedDate = dayjs(date, "YY-MM").format("YYYY-MM");
-        break;
-      case "30-days":
-      case "7-days":
-        parsedDate = dayjs(date, "YY-MM-DD").format("YYYY-MM-DD");
-        break;
-      case "1-day":
-        parsedDate = dayjs(date, "HH:mm").format("YYYY-MM-DD HH:mm");
-        break;
-      default:
-        parsedDate = new Date();
-    }
-
-    if (!monthData[parsedDate]) {
-      monthData[parsedDate] = { positive: 0, negative: 0, neutral: 0 };
-    }
-    monthData[parsedDate].neutral += value;
-  });
+  parsedData.positive.push(dummyDataPoint);
+  parsedData.negative.push(dummyDataPoint);
+  parsedData.neutral.push(dummyDataPoint);
 
   Object.keys(monthData).forEach((date) => {
     const { positive, negative, neutral } = monthData[date];
-
     parsedData.positive.push({ x: new Date(date), y: positive });
     parsedData.negative.push({ x: new Date(date), y: negative });
     parsedData.neutral.push({ x: new Date(date), y: neutral });
@@ -130,7 +107,9 @@ const DynamicLineChart = ({ trendsData = {} }) => {
       result = parseTrendData(trendsData["1 day_trend"], filter);
     }
 
-    console.log(result, "results");
+    result.positive = result.positive.sort((a, b) => a.x - b.x);
+    result.negative = result.negative.sort((a, b) => a.x - b.x);
+    result.neutral = result.neutral.sort((a, b) => a.x - b.x);
 
     return result;
   }, [filter, selectedYear, trendsData]);
@@ -143,11 +122,18 @@ const DynamicLineChart = ({ trendsData = {} }) => {
     },
     xaxis: {
       type: "datetime",
-      categories: filteredData.positive.map((item) => item.x.valueOf()),
-      tickAmount: 12,
+      categories: filteredData.positive.map((item) => item.x.toISOString()),
+      tickAmount:
+        filter === "year"
+          ? 12
+          : filter === "30-days"
+          ? 30
+          : filter === "7-days"
+          ? 7
+          : 24,
       labels: {
         style: {
-          fontSize: "12px",
+          fontSize: "10px",
           fontFamily: "Inter"
         },
         formatter: (value) => {
@@ -163,15 +149,24 @@ const DynamicLineChart = ({ trendsData = {} }) => {
               return dayjs(value).format("MMM D");
           }
         }
+      },
+      range:
+        filter === "year"
+          ? 31536000000
+          : filter === "30-days"
+          ? 2592000000
+          : filter === "7-days"
+          ? 604800000
+          : 86400000,
+      padding: {
+        left: 0,
+        right: 0
       }
     },
     responsive: [
       {
         breakpoint: 600,
         options: {
-          chart: {
-            height: 300
-          },
           legend: {
             position: "bottom"
           }

@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { useGetNewSignupQuery } from "../../service/admin/newSignup.service";
 import { useGetAminUserStatsQuery } from "../../service/admin/statistics.service";
 import { ShimmerThumbnail } from "react-shimmer-effects";
-import { IoIosCheckmark } from "react-icons/io";
 import { TiDelete } from "react-icons/ti";
 import rtkMutation from "../../utils/rtkMutation";
 import { useDeActivateUserMutation } from "../../service/user.service";
@@ -17,7 +16,13 @@ import PaginationControls from "../../components/ui/PaginationControls";
 
 function Users() {
   const user = useSelector((state) => state.user.user);
-  const { data: userStats, isLoading: loadStats } = useGetAminUserStatsQuery();
+  const {
+    data: userStats,
+    isLoading: loadStats,
+    refetch: fetchStats
+  } = useGetAminUserStatsQuery();
+
+  console.log(userStats);
 
   const { data: userData, isLoading, refetch } = useGetNewSignupQuery();
   const list = userData?.data || [];
@@ -46,6 +51,7 @@ function Users() {
     try {
       await rtkMutation(Deactivate, { id: id });
       refetch();
+      fetchStats();
       showAlert("", "user has been deactivated Successfully", "success");
     } catch (error) {
       console.error("Error deleting Asset:", error);
@@ -130,12 +136,8 @@ function Users() {
                       <Table hoverable>
                         <Table.Head className="users-table-head">
                           <Table.HeadCell>No.</Table.HeadCell>
-                          <Table.HeadCell>Date</Table.HeadCell>
                           <Table.HeadCell>Name</Table.HeadCell>
-                          <Table.HeadCell>Organization Name</Table.HeadCell>
                           <Table.HeadCell>Email Address</Table.HeadCell>
-                          <Table.HeadCell>Location</Table.HeadCell>
-                          <Table.HeadCell>Organization Size</Table.HeadCell>
                           <Table.HeadCell>Status</Table.HeadCell>
                           <Table.HeadCell>Action</Table.HeadCell>
                         </Table.Head>
@@ -146,14 +148,9 @@ function Users() {
                               key={row._id}
                             >
                               <Table.Cell>{row.index || index + 1}</Table.Cell>
-                              <Table.Cell>{row.createdAt}</Table.Cell>
                               <Table.Cell>{row.display_name}</Table.Cell>
-                              <Table.Cell>{"N/A"}</Table.Cell>
                               <Table.Cell>{row.email}</Table.Cell>
-                              <Table.Cell>{row.location ?? ""}</Table.Cell>
-                              <Table.Cell>
-                                {row.organizationSize ?? ""}
-                              </Table.Cell>
+
                               <Table.Cell>
                                 {row.disabled === false ? (
                                   <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">

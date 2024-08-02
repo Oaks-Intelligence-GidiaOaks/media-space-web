@@ -184,7 +184,6 @@ const Analysis = () => {
 
           <div className="flex flex-col md:flex-row gap-10 justify-between w-full">
             <LineChart />
-
             <div className="net-sentiment w-full max-w-[376px] h-[537.02px] border  rounded-[13.17px] shadow border-[#E6EDFF] bg-white">
               <div className="p-3 h-full">
                 <div className="flex items-center justify-between">

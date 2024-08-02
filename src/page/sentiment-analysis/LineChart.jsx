@@ -6,6 +6,7 @@ const LineChart = () => {
   const { data: trendsData, isLoading: loadTrends } =
     useGetSentimentTrendQuery();
   const trends = trendsData?.data?.trends;
+  console.log(trends);
 
   return (
     <div className="flex w-full border rounded-[13.17px] border-[#E6EDFF] bg-white h-[537.02px] shadow">

@@ -42,10 +42,14 @@ function History() {
   const { data: planQuery } = useGetUserPlansQuery();
   const planData = planQuery?.data;
 
-  const { data, isLoading } = useSubscriptionStatsQuery();
-  const [triggerRenew, { isSuccess: renewSuccess }] =
+  const {
+    data,
+    isLoading,
+    refetch: subscriptionStats
+  } = useSubscriptionStatsQuery();
+  const [triggerRenew, { isSuccess: renewSuccess, error: renewError }] =
     useLazyRenewSubscriptionQuery();
-  const [triggerCancel, { isSuccess: cancelSuccess }] =
+  const [triggerCancel, { isSuccess: cancelSuccess, error: cancelError }] =
     useLazyCancelSubscriptionQuery();
 
   const dispatch = useDispatch();
@@ -67,6 +71,7 @@ function History() {
     page_size: pageSize
   });
   const list = history?.data?.data || [];
+  console.log(list);
   const totalPages = Math.ceil(page / history?.data?.page_size);
 
   const handleAction = async (id, action) => {
@@ -86,12 +91,6 @@ function History() {
         if (result.isConfirmed) {
           console.log("renew plan");
           triggerRenew();
-          if (renewSuccess) {
-            showAlert("Plan renewed successfully", "", "success");
-            handleLogout(dispatch);
-          } else {
-            showAlert("Failed to renew", "Pls try again", "error");
-          }
         }
         break;
       }
@@ -108,12 +107,6 @@ function History() {
         if (result.isConfirmed) {
           console.log("cancel plan");
           triggerCancel();
-          if (cancelSuccess) {
-            showAlert("Plan renewed successfully", "", "success");
-            handleLogout(dispatch);
-          } else {
-            showAlert("Failed to renew", "Pls try again", "error");
-          }
         }
         break;
       }
@@ -122,6 +115,36 @@ function History() {
         break;
     }
   };
+
+  useEffect(() => {
+    if (renewSuccess) {
+      refetch();
+      subscriptionStats();
+      showAlert("Plan renewed successfully", "", "success");
+    } else if (renewError) {
+      showAlert(
+        "Oops",
+        renewError.data.message || "An error occurred",
+        "error"
+      );
+    }
+  }, [renewError, renewSuccess, dispatch, refetch, subscriptionStats]);
+
+  useEffect(() => {
+    if (cancelSuccess) {
+      refetch();
+      subscriptionStats();
+      handleLogout(dispatch);
+
+      showAlert("Plan canceled successfully", "", "success");
+    } else if (cancelError) {
+      showAlert(
+        "Oops",
+        cancelError.data.message || "An error occurred",
+        "error"
+      );
+    }
+  }, [cancelError, cancelSuccess, dispatch, refetch, subscriptionStats]);
 
   const formatDate = (timestamp) => {
     return new Date(timestamp).toISOString().split("T")[0];
@@ -141,13 +164,14 @@ function History() {
   useEffect(() => {
     if (isSuccess) {
       refetch();
+      subscriptionStats();
       showAlert("Plan upgraded successfully", "", "success");
       setUpgradeModal(false);
       handleLogout(dispatch);
     } else if (error) {
       showAlert("Oops", error.data.message || "An error occurred", "error");
     }
-  }, [error, isSuccess, dispatch, refetch]);
+  }, [error, isSuccess, dispatch, refetch, subscriptionStats]);
 
   const plan_id = user?.organization_id?.plan_id;
   // console.log(plan_id);
@@ -270,6 +294,11 @@ function History() {
                                         <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-[#34C759] ring-1 ring-inset gap-1 ring-green-600/20">
                                           <span className="h-[8px] w-[8px] bg-[#34C759] rounded-full"></span>{" "}
                                           Active
+                                        </span>
+                                      ) : row.status === "Inactive" ? (
+                                        <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-[#302f2f] ring-1 gap-1  ring-inset ring-red-600/10">
+                                          <span className="h-[8px] w-[8px] bg-[#302f2f] rounded-full"></span>{" "}
+                                          Inactive
                                         </span>
                                       ) : (
                                         <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-[#FF0000] ring-1 gap-1  ring-inset ring-red-600/10">
