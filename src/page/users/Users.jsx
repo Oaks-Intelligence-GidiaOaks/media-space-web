@@ -10,9 +10,13 @@ import { useGetAminUserStatsQuery } from "../../service/admin/statistics.service
 import { ShimmerThumbnail } from "react-shimmer-effects";
 import { TiDelete } from "react-icons/ti";
 import rtkMutation from "../../utils/rtkMutation";
-import { useDeActivateUserMutation } from "../../service/user.service";
+import {
+  useDeActivateUserMutation,
+  useActivateUserMutation
+} from "../../service/user.service";
 import { showAlert } from "../../static/alert";
 import PaginationControls from "../../components/ui/PaginationControls";
+import { IoIosCheckmark } from "react-icons/io";
 
 function Users() {
   const user = useSelector((state) => state.user.user);
@@ -45,14 +49,19 @@ function Users() {
   );
 
   const [Deactivate] = useDeActivateUserMutation();
+  const [Activate] = useActivateUserMutation();
 
   const handleAction = async (id, action) => {
-    // console.log(id, action);
     try {
-      await rtkMutation(Deactivate, { id: id });
+      if (action === "approve") {
+        await rtkMutation(Activate, { id: id });
+        showAlert("", "user has been activated Successfully", "success");
+      } else {
+        await rtkMutation(Deactivate, { id: id });
+        showAlert("", "user has been deactivated Successfully", "success");
+      }
       refetch();
       fetchStats();
-      showAlert("", "user has been deactivated Successfully", "success");
     } catch (error) {
       console.error("Error deleting Asset:", error);
       showAlert(
@@ -164,7 +173,7 @@ function Users() {
                               </Table.Cell>
                               <Table.Cell>
                                 <Dropdown>
-                                  {/* <DropdownItem
+                                  <DropdownItem
                                     onClick={() =>
                                       handleAction(row._id, "approve")
                                     }
@@ -180,7 +189,7 @@ function Users() {
                                         </p>
                                       </small>
                                     </div>
-                                  </DropdownItem> */}
+                                  </DropdownItem>
                                   <DropdownItem
                                     onClick={() =>
                                       handleAction(row._id, "delete")

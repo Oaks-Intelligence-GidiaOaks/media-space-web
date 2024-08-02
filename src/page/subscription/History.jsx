@@ -239,6 +239,7 @@ function History() {
                 <option value="yearly">Yearly Subscriptions</option>
                 <option value="monthly">Monthly Subscriptions</option>
                 <option value="active">Active Subscriptions</option>
+                <option value="inactive">Inactive Subscriptions</option>
                 <option value="expired">Expired Subscriptions</option>
               </select>
               {isFetching ? (
@@ -399,7 +400,7 @@ function History() {
           onClose={() => setUpgradeModal(false)}
           size={"xl"}
         >
-          <Modal.Header>Update Plan</Modal.Header>
+          <Modal.Header>Upgrade Plan</Modal.Header>
           <Modal.Body>
             <Form
               onSubmit={onSubmit}

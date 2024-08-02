@@ -46,3 +46,4 @@ export const RESET_PASSWORD = "admin/user/reset_password";
 export const CANCEL_PLAN = "admin/subscription/cancel";
 export const RENEW_PLAN = "admin/subscription/renew";
 export const UPGRADE_PLAN = "admin/subscription/upgrade";
+export const ACTIVATE_USER = "admin/user/activate";

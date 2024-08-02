@@ -32,7 +32,7 @@ const TitleBar = () => {
   );
 
   return (
-    <div className="h-10 pb-10 flex justify-between pt-10 w-full pl-1 sm:pl-0 pr-2 sticky top-0 bg-white">
+    <div className="h-10 pb-10 flex justify-between pt-10 w-full pl-1 sm:pl-0 pr-2 sticky top-0 bg-white z-50">
       <div
         className="flex gap-1 flex-nowrap items-center w-fit cursor-pointer"
         onClick={navigateToOverview}

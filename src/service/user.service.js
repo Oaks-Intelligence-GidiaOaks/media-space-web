@@ -4,7 +4,8 @@ import {
   REGISTER,
   DEACTIVATE_USER,
   GET_CODE,
-  RESET_PASSWORD
+  RESET_PASSWORD,
+  ACTIVATE_USER
 } from "./constants";
 import apiSlice from "./api/apiSlice";
 import { updateUser } from "../redux/slices/user.slice";
@@ -89,6 +90,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data
       }),
       providesTags: ["User"]
+    }),
+
+    ActivateUser: builder.mutation({
+      query: ({ id }) => ({
+        url: `${ACTIVATE_USER}/${id}`,
+        method: "PATCH"
+      }),
+      invalidatesTags: ["User"]
     })
   })
 });
@@ -99,5 +108,6 @@ export const {
   useGetUserQuery,
   useDeActivateUserMutation,
   useGetCodeMutation,
-  useUpdatePasswordMutation
+  useUpdatePasswordMutation,
+  useActivateUserMutation
 } = userApiSlice;
