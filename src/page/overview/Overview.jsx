@@ -281,7 +281,7 @@ const Overview = () => {
               )}
             </div>
             <div className="flex gap-10 flex-col lg:flex-row lg:gap-10">
-              <div className="linechart py-5 px-3 hidden sm:block w-full shadow hover:shadow-lg">
+              <div className="linechart py-5 px-3 w-full shadow hover:shadow-lg">
                 {loadingActivityData ? (
                   <ShimmerThumbnail width={800} height={"100%"} />
                 ) : (

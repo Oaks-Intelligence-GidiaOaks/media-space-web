@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import hamburgerMenu from "../../../../assets/sidebar/menu.svg";
 import closeMenu from "../../../../assets/sidebar/close.svg";
+import { useGetFeaturesQuery } from "../../../../service/superadmin/plan.service.js";
+import { useSelector } from "react-redux";
 
 /* eslint-disable react/prop-types */
 const Sidebar = ({ sidebarItems }) => {
@@ -27,25 +29,6 @@ const Sidebar = ({ sidebarItems }) => {
       return "text-secondary-white";
     }
   };
-
-  // calculate currentpageindex on page mount.
-  // useEffect(() => {
-  //   if (pathname.includes("organizations") && pathname.includes("users")) {
-  //     setCurrentTabIndex(2);
-  //   } else if (pathname.includes("overview")) {
-  //     setCurrentTabIndex(0);
-  //   } else if (pathname.includes("users") && pathname.includes("staff")) {
-  //     setCurrentTabIndex(3);
-  //   } else if (pathname.includes("users")) {
-  //     setCurrentTabIndex(1);
-  //   } else if (pathname.includes("subscription")) {
-  //     setCurrentTabIndex(4);
-  //   } else if (pathname.includes("survey")) {
-  //     setCurrentTabIndex(5);
-  //   } else if (pathname.includes("settings")) {
-  //     setCurrentTabIndex(6);
-  //   }
-  // }, [pathname]);
 
   useEffect(() => {
     if (pathname.includes("overview")) {
@@ -74,6 +57,15 @@ const Sidebar = ({ sidebarItems }) => {
     );
   }, [currentTabIndex]);
 
+  const { data: featuresList } = useGetFeaturesQuery();
+  const availableFeatures = featuresList?.data;
+  console.log(availableFeatures);
+
+  const features = useSelector(
+    (state) => state?.user?.user?.organization_features
+  );
+  // console.log(features);
+
   return (
     // sidebar container
     <>
@@ -101,7 +93,7 @@ const Sidebar = ({ sidebarItems }) => {
                       sidebarItem.route
                     )}`}
                     style={{
-                      transition: "all 300ms ease",
+                      transition: "all 300ms ease"
                     }}
                   />
                   <p
@@ -109,7 +101,7 @@ const Sidebar = ({ sidebarItems }) => {
                       sidebarItem.route
                     )}`}
                     style={{
-                      transition: "all 300ms ease",
+                      transition: "all 300ms ease"
                     }}
                   >
                     {sidebarItem.title}
@@ -122,7 +114,7 @@ const Sidebar = ({ sidebarItems }) => {
               className={`absolute w-full h-[3.75rem] bg-[rgba(255,255,255,0.2)] left-0`}
               style={{
                 top: indicatorPosition,
-                transition: "all 300ms ease",
+                transition: "all 300ms ease"
               }}
             />
           </div>
@@ -147,7 +139,7 @@ const Sidebar = ({ sidebarItems }) => {
           style={{
             left: showMenu ? "-100px" : 0,
             transition: "all 200ms ease-in-out",
-            boxShadow: "5px 7px 12px rgba(0,0,0,0.3)",
+            boxShadow: "5px 7px 12px rgba(0,0,0,0.3)"
           }}
           className="w-full h-fit py-10 rounded-[1.25rem] relative bg-primary-black mt-14 after:content('') after:text-white after:absolute after:w-full after:h-1/2 after:block after:-right-[6px] after:-z-10 after:rounded-[1.25rem] after:bg-gradient-to-b after:from-[#EB9207] after:to-[transparent] after:top-[6%]"
         >
@@ -174,7 +166,7 @@ const Sidebar = ({ sidebarItems }) => {
                       sidebarItem.route
                     )}`}
                     style={{
-                      transition: "all 300ms ease",
+                      transition: "all 300ms ease"
                     }}
                     alt={sidebarItem.title}
                   />
@@ -198,7 +190,7 @@ const Sidebar = ({ sidebarItems }) => {
               className={`absolute w-full h-[3.75rem] bg-[rgba(255,255,255,0.2)] left-0`}
               style={{
                 top: indicatorPosition,
-                transition: "all 300ms ease",
+                transition: "all 300ms ease"
               }}
             />
           </div>

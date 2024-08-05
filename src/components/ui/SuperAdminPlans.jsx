@@ -23,7 +23,7 @@ const SuperAdminPlans = ({
   monthly_price_naira,
   monthly_price_dollar,
   yearly_price_naira,
-  yearly_price_dollar,
+  yearly_price_dollar
 }) => {
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -35,15 +35,16 @@ const SuperAdminPlans = ({
     yearly_price_naira,
     yearly_price_dollar,
     trial_period: "",
-    features: allFeatures.map((feature) => feature._id),
+    features: allFeatures.map((feature) => feature._id)
   });
 
   const { data: featuresList } = useGetFeaturesQuery();
   const availableFeatures = featuresList?.data;
+  console.log(availableFeatures);
 
   const featureOptions = availableFeatures?.map((feature) => ({
     value: feature._id,
-    label: feature.module_name,
+    label: feature.module_name
   }));
 
   const handleInputChange = (e) => {
@@ -294,17 +295,14 @@ SuperAdminPlans.propTypes = {
   onSave: PropTypes.func.isRequired, // prop type for the onSave callback
   monthly_price_naira: PropTypes.oneOfType([
     PropTypes.number,
-    PropTypes.string,
+    PropTypes.string
   ]),
   monthly_price_dollar: PropTypes.oneOfType([
     PropTypes.number,
-    PropTypes.string,
+    PropTypes.string
   ]),
   yearly_price_naira: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  yearly_price_dollar: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+  yearly_price_dollar: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 export default SuperAdminPlans;

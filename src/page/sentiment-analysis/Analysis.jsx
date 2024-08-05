@@ -56,7 +56,7 @@ const Analysis = () => {
           {user && user.role === "OrgAdmin" ? (
             <>
               <div className="flex flex-col">
-                <p className="analysis-greetings">
+                <p className="analysis-greetings text-[22px] md:text-[30px]">
                   Welcome Back, {user?.display_name}
                 </p>
                 <p className="analysis-greetings-text">
