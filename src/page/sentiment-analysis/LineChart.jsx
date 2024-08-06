@@ -9,7 +9,7 @@ const LineChart = () => {
   console.log(trends);
 
   return (
-    <div className="flex w-full border rounded-[13.17px] border-[#E6EDFF] bg-white h-[537.02px] shadow">
+    <div className="w-full border hidden md:flex rounded-[13.17px] border-[#E6EDFF] bg-white h-[537.02px] shadow">
       {loadTrends ? (
         <div className="flex items-center justify-center h-full w-full">
           <Spinner />

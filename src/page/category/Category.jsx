@@ -27,23 +27,23 @@ import { showAlert } from "../../static/alert";
 
 const constraints = {
   media: {
-    presence: true,
+    presence: true
   },
   description: {
-    presence: true,
+    presence: true
   },
   visibility: {
-    presence: true,
+    presence: true
   },
   exposure_time: {
-    presence: true,
+    presence: true
   },
   duration: {
-    presence: true,
+    presence: true
   },
   landing_page_link: {
-    presence: true,
-  },
+    presence: true
+  }
 };
 
 const Category = () => {
@@ -85,8 +85,8 @@ const Category = () => {
       const response = await axios.post(`${apiUrl}/admin/advert`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
+          ...(token && { Authorization: `Bearer ${token}` })
+        }
       });
 
       console.log("Post submitted successfully:", response.data);
@@ -129,6 +129,10 @@ const Category = () => {
     setPreviewAds(!previewAds);
   };
 
+  const features = useSelector(
+    (state) => state?.user?.user?.organization_features
+  );
+
   // DELETE ADs FUNCTION
 
   return (
@@ -154,53 +158,59 @@ const Category = () => {
                 <div className="mb-[50px]">
                   <div className="border-gray-200 dark:border-gray-700">
                     <ul
-                      className="flex flex-wrap -mb-px sm:text-xl text-gray-400 text-center justify-center gap-2 md:gap-5 lg:gap-10"
+                      className="flex flex-row -mb-px sm:text-xl text-gray-400 text-center justify-center gap-2 md:gap-5 lg:gap-10"
                       role="tablist"
                     >
-                      <li className="me-2" role="presentation">
-                        <button
-                          className={`inline-block p-4 rounded-t-lg  ${
-                            activeTab === "post"
-                              ? "border-[#4C9C25] text-[#4C9C25] md:font-semibold"
-                              : "text-[#8D92AC]"
-                          }`}
-                          onClick={() => handleTabClick("post")}
-                          role="tab"
-                          aria-controls="post"
-                          aria-selected={activeTab === "post"}
-                        >
-                          <div className="flex gap-2 items-center">
-                            <img
-                              src={activeTab === "post" ? postActive : post}
-                              alt=""
-                            />
-                            <p>Post</p>
-                          </div>
-                        </button>
-                      </li>
-                      <li className="me-2" role="presentation">
-                        <button
-                          className={`inline-block p-4 rounded-t-lg  ${
-                            activeTab === "polls"
-                              ? "border-[#4C9C25] text-[#4C9C25] md:font-semibold"
-                              : "text-[#8D92AC]"
-                          }`}
-                          onClick={() => handleTabClick("polls")}
-                          role="tab"
-                          aria-controls="polls"
-                          aria-selected={activeTab === "polls"}
-                        >
-                          <div className="flex gap-2 items-center">
-                            <img
-                              src={
-                                activeTab === "polls" ? surveyActive : survey
-                              }
-                              alt=""
-                            />
-                            <p>Polls and Survey</p>
-                          </div>
-                        </button>
-                      </li>
+                      {features.includes("Post") && (
+                        <li className="me-2" role="presentation">
+                          <button
+                            className={`inline-block p-4 rounded-t-lg  ${
+                              activeTab === "post"
+                                ? "border-[#4C9C25] text-[#4C9C25] md:font-semibold"
+                                : "text-[#8D92AC]"
+                            }`}
+                            onClick={() => handleTabClick("post")}
+                            role="tab"
+                            aria-controls="post"
+                            aria-selected={activeTab === "post"}
+                          >
+                            <div className="flex gap-2 items-center">
+                              <img
+                                src={activeTab === "post" ? postActive : post}
+                                alt=""
+                              />
+                              <p>Post</p>
+                            </div>
+                          </button>
+                        </li>
+                      )}
+
+                      {features.includes("Poll") && (
+                        <li className="me-2" role="presentation">
+                          <button
+                            className={`inline-block p-4 rounded-t-lg  ${
+                              activeTab === "polls"
+                                ? "border-[#4C9C25] text-[#4C9C25] md:font-semibold"
+                                : "text-[#8D92AC]"
+                            }`}
+                            onClick={() => handleTabClick("polls")}
+                            role="tab"
+                            aria-controls="polls"
+                            aria-selected={activeTab === "polls"}
+                          >
+                            <div className="flex gap-2 items-center">
+                              <img
+                                src={
+                                  activeTab === "polls" ? surveyActive : survey
+                                }
+                                alt=""
+                              />
+                              <p>Polls</p>
+                            </div>
+                          </button>
+                        </li>
+                      )}
+
                       <li className="me-2" role="presentation">
                         <button
                           className={`inline-block p-4 rounded-t-lg ${

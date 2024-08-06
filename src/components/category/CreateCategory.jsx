@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import upload from "../../assets/upload.png";
 import {
   useGetCategoryQuery,
-  useToggleCategoryByIdMutation,
+  useToggleCategoryByIdMutation
 } from "../../service/category.service";
 import PaginationControls from "../ui/PaginationControls";
 import { CategoryCard } from "../layout/super-admin-layout";
@@ -18,7 +18,7 @@ const CreateCategory = () => {
   const {
     data: categoryData,
     isLoading: loadCategory,
-    refetch: refetchCategory,
+    refetch: refetchCategory
   } = useGetCategoryQuery();
 
   const token = useSelector((state) => state.user?.token);
@@ -76,6 +76,7 @@ const CreateCategory = () => {
       await toggleCategory(catId);
       refetchCategory();
       console.log("Category toggled successfully");
+      showAlert("", "Category toggled successfully", "success");
     } catch (error) {
       console.error("Error deleting Category:", error);
     }
@@ -112,8 +113,8 @@ const CreateCategory = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            ...(token && { Authorization: `Bearer ${token}` }),
-          },
+            ...(token && { Authorization: `Bearer ${token}` })
+          }
         }
       );
 
@@ -147,8 +148,8 @@ const CreateCategory = () => {
         {
           headers: {
             // "Content-Type": "multipart/form-data",
-            ...(token && { Authorization: `Bearer ${token}` }),
-          },
+            ...(token && { Authorization: `Bearer ${token}` })
+          }
         }
       );
 
@@ -182,34 +183,29 @@ const CreateCategory = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <div className="mb-4 flex flex-col">
-          <select
-            name="visibility"
-            id="visibility"
-            component="select"
-            type="text"
-            value={selectedCategory}
-            onChange={(e) => {
-              setSelectedCategory(e.target.value);
-            }}
-            className="h-[38px] focus:outline-none focus:ring-0 ad-input"
-          >
-            <option value="All Categories">All Categories</option>
-            <option value="Public">Public</option>
-            <option value="Staff">Staff</option>
-            <option value="Subscribers">Subscribers</option>
-            <option value="Followers">Followers</option>
-          </select>
-        </div>
-        <div>
-          <button
-            className="ads-btn mr-5"
-            onClick={() => setOpenCreatecategory(true)}
-          >
-            Create Category
-          </button>
-        </div>
+      <div className="flex justify-between items-center mb-4">
+        <select
+          name="visibility"
+          id="visibility"
+          type="text"
+          value={selectedCategory}
+          onChange={(e) => {
+            setSelectedCategory(e.target.value);
+          }}
+          className="h-[38px] focus:outline-none focus:ring-0 ad-input"
+        >
+          <option value="All Categories">All Categories</option>
+          <option value="Public">Public</option>
+          <option value="Staff">Staff</option>
+          <option value="Subscribers">Subscribers</option>
+          <option value="Followers">Followers</option>
+        </select>
+        <button
+          className="ads-btn mr-0 md:mr-5"
+          onClick={() => setOpenCreatecategory(true)}
+        >
+          Create Category
+        </button>
       </div>
       <div className="flex gap-5 flex-wrap">
         {category && category.length > 0 ? (

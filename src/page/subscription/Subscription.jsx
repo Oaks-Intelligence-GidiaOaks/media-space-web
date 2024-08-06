@@ -206,7 +206,11 @@ const Subscription = () => {
               </div> */}
 
               <div className="overflow-x-auto">
-                <Tabs aria-label="Full width tabs" style="fullWidth">
+                <Tabs
+                  aria-label="Full width tabs"
+                  style="fullWidth"
+                  className="w-[330px] md:w-full"
+                >
                   {/* CATEGORY SECTION */}
                   {/* <Tabs.Item active title="Category" icon={""}>
                     <CreateCategory />

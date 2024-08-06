@@ -14,48 +14,66 @@ const sidebarItems = [
   {
     title: "Overview",
     route: "dashboard/overview",
-    icon: overview
+    icon: overview,
+    feature: "",
+    roles: ["SuperAdmin", "OrgAdmin"]
   },
   {
     title: "Sentiment Analysis",
     route: "dashboard/analysis",
-    icon: psychology
+    icon: psychology,
+    feature: "Sentiment Analysis",
+    roles: ["OrgAdmin"]
   },
   {
     title: "Create post",
     route: "dashboard/category",
-    icon: pen
+    icon: pen,
+    feature: "Category Management",
+    roles: ["OrgAdmin"]
   },
   {
     title: "Users Acquisition",
     route: "dashboard/users",
-    icon: user
+    icon: user,
+    feature: "Account Management",
+    roles: ["OrgAdmin"]
   },
-  // {
-  //   title: "Organizations",
-  //   route: "dashboard/organizations",
-  //   icon: organizations,
-  // },
+  {
+    title: "Organizations",
+    route: "dashboard/organizations",
+    icon: organizations,
+    feature: "Account Management",
+    roles: ["SuperAdmin"]
+  },
   {
     title: "Staff",
     route: "dashboard/staff",
-    icon: user_charts
+    icon: user_charts,
+    feature: "Role Allocation",
+    roles: ["OrgAdmin"]
   },
   {
     title: "Ads & Subscription",
     route: "dashboard/subscription",
-    icon: money
+    icon: money,
+    feature: "Targeted Advertising",
+    roles: ["SuperAdmin", "OrgAdmin"]
   },
   {
     title: "Survey",
     route: "dashboard/survey",
-    icon: bell
+    icon: bell,
+    feature: "Survey",
+    roles: ["OrgAdmin"]
+  },
+  {
+    title: "Settings",
+    route: "dashboard/settings",
+    icon: settings,
+    feature: "Self Service",
+    roles: ["SuperAdmin", "OrgAdmin"]
   }
-  // {
-  //   title: "Settings",
-  //   route: "dashboard/settings",
-  //   icon: settings,
-  // },
 ];
 
 export default sidebarItems;

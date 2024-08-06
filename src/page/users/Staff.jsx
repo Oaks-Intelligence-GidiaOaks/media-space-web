@@ -14,32 +14,32 @@ import { showAlert } from "../../static/alert";
 import {
   useGetAllStaffQuery,
   useToggleStaffMutation,
-  useGetOrganizationListQuery,
+  useGetOrganizationListQuery
 } from "../../service/admin/staff.service";
 import { useGetAllBadgeQuery } from "../../service/admin/badge.service";
 import { Table } from "flowbite-react";
 
 const constraints = {
   title: {
-    presence: true,
+    presence: true
   },
   department: {
-    presence: true,
+    presence: true
   },
   color: {
     presence: true,
     format: {
       pattern: /^#[0-9A-Fa-f]{6}$/, // Regular expression pattern for hex color code
-      message: "^Invalid color format. Please use hexadecimal color code.",
-    },
-  },
+      message: "^Invalid color format. Please use hexadecimal color code."
+    }
+  }
 };
 
 function Staff() {
   const {
     data: adminbadges,
     isLoading: adminBadgeloading,
-    refetch: badgeRefetch,
+    refetch: badgeRefetch
   } = useGetAllBadgeQuery();
   console.log(adminbadges);
 
@@ -59,7 +59,7 @@ function Staff() {
   const [createdBadgesModal, setOpenCreatedBadgesModal] = useState(false);
 
   const [createBadge, { error, isSuccess }] = useCreateBadgeMutation({
-    provideTag: ["Badge"],
+    provideTag: ["Badge"]
   });
 
   const onSubmit = async (values) => {
@@ -105,9 +105,9 @@ function Staff() {
 
   const [
     addRemoveStaff,
-    { error: staffToggleError, isSuccess: staffToggleSuccess },
+    { error: staffToggleError, isSuccess: staffToggleSuccess }
   ] = useToggleStaffMutation({
-    provideTag: ["Staff"],
+    provideTag: ["Staff"]
   });
 
   const { refetch } = useGetAllStaffQuery();
@@ -170,12 +170,12 @@ function Staff() {
               </div>
 
               <div className="staff-section pt-5 pb-5">
-                <div className="flex pb-5 justify-between items-center border rounded-md p-3">
-                  <div className="flex items-center gap-5">
+                <div className="flex flex-col md:flex-row pb-5 justify-start md:justify-between items-start md:items-center flex-wrap border rounded-md p-3">
+                  <div className="flex flex-col md:flex-row items-center gap-5">
                     <select
                       name=""
                       id=""
-                      className="w-[200px] h-[39px] focus:outline-none focus:ring-0 text-[12px]"
+                      className="w-full max-w-[200px] h-[39px] focus:outline-none focus:ring-0 text-[12px]"
                       value={filterCriteria}
                       onChange={handleFilterChange}
                     >
@@ -184,27 +184,25 @@ function Staff() {
                       <option value="without_badge">Staff Without Badge</option>
                     </select>
 
-                    <div>
-                      <div className="flex items-center gap-5">
-                        <select
-                          name="staffSelect"
-                          id="staffSelect"
-                          className="w-[200px] h-[39px] focus:outline-none focus:ring-0 text-[12px]"
-                          value={selectedStaffId}
-                          onChange={handleStaffSelectChange}
-                        >
-                          <option value="">Select Staff</option>
-                          {userList &&
-                            userList.data.map((staff) => (
-                              <option key={staff._id} value={staff._id}>
-                                {staff.display_name}
-                              </option>
-                            ))}
-                        </select>
-                        <button className="ads-btn" onClick={toggle}>
-                          Add Staff
-                        </button>
-                      </div>
+                    <div className="flex items-center gap-5 mb-3 md:mb-0">
+                      <select
+                        name="staffSelect"
+                        id="staffSelect"
+                        className="w-full max-w-[200px] h-[39px] focus:outline-none focus:ring-0 text-[12px]"
+                        value={selectedStaffId}
+                        onChange={handleStaffSelectChange}
+                      >
+                        <option value="">Select Staff</option>
+                        {userList &&
+                          userList.data.map((staff) => (
+                            <option key={staff._id} value={staff._id}>
+                              {staff.display_name}
+                            </option>
+                          ))}
+                      </select>
+                      <button className="ads-btn" onClick={toggle}>
+                        Add Staff
+                      </button>
                     </div>
                   </div>
 
