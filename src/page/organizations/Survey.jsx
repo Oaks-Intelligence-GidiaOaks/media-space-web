@@ -8,7 +8,7 @@ import {
   useActiveSurveyQuery,
   useEndSurveyMutation,
   useSurveyHistoryQuery,
-  useDeleteSurveyMutation,
+  useDeleteSurveyMutation
   // useSurveyResponsesQuery,
 } from "../../service/admin/survey.service";
 import { showAlert } from "../../static/alert";
@@ -28,14 +28,14 @@ function Survey() {
   const {
     data: surveyData,
     isLoading: surveyLoading,
-    refetch,
+    refetch
   } = useGetAllSurveyQuery();
 
   const surveyRows = surveyData?.data;
   const {
     data: activeSurvey,
     isLoading: activeSurveyloading,
-    refetch: activeSurveyRefetch,
+    refetch: activeSurveyRefetch
   } = useActiveSurveyQuery();
   const { data: surveryHistory, isLoading: surveyHistoryLoading } =
     useSurveyHistoryQuery();
@@ -125,8 +125,8 @@ function Survey() {
       {
         question_text: "",
         answer_type: "multiple_choice",
-        answer_options: [],
-      },
+        answer_options: []
+      }
     ]);
   };
 
@@ -157,7 +157,7 @@ function Survey() {
 
   const [createSurvey, { error, isSuccess, isLoading }] =
     useCreateSurveyMutation({
-      provideTag: ["Survey"],
+      provideTag: ["Survey"]
     });
 
   const handleSubmit = async () => {
@@ -186,7 +186,11 @@ function Survey() {
       <h1 className="text-[25px] px-3 bold py-5">Survey</h1>
 
       <div className="overflow-x-auto">
-        <Tabs aria-label="Full width tabs" style="fullWidth">
+        <Tabs
+          aria-label="Full width tabs"
+          className="bg-white"
+          style="fullWidth"
+        >
           <Tabs.Item active title="Create Survey">
             <div className="max-w-[436px] w-full border p-5 rounded-md">
               <div className="flex flex-col justify-start mb-5 gap-5">
@@ -346,6 +350,11 @@ function Survey() {
                 <button
                   onClick={handleSubmit}
                   className="text-sm w-full text-white bg-[#34B53A] p-2 border rounded-md"
+                  disabled={
+                    !topic &&
+                    !description &&
+                    (!Array.isArray(questions) || questions.length === 0)
+                  }
                 >
                   {isLoading ? (
                     <>
@@ -356,7 +365,7 @@ function Survey() {
                       </span>
                     </>
                   ) : (
-                    "Submit"
+                    "Create"
                   )}
                 </button>
               </div>

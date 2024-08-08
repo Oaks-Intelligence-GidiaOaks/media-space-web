@@ -9,7 +9,12 @@ function Modals({ title, openModal, modalSize, onClose, btnText, children }) {
       show={openModal}
       size={modalSize}
       onClose={onClose}
-      style={{ borderRadius: "5.489px", padding: "0" }}
+      className="bg-gray-400"
+      style={{
+        borderRadius: "5.489px",
+        padding: "0",
+        zIndex: "100"
+      }}
     >
       <div className="flex justify-between items-center mr-6 ml-6 py-4">
         <p className="modal-title">{title}</p>
@@ -38,7 +43,7 @@ Modals.propTypes = {
   modalSize: PropTypes.string.isRequired,
   btnText: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default Modals;
