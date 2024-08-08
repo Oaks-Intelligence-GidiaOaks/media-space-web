@@ -47,3 +47,6 @@ export const CANCEL_PLAN = "admin/subscription/cancel";
 export const RENEW_PLAN = "admin/subscription/renew";
 export const UPGRADE_PLAN = "admin/subscription/upgrade";
 export const ACTIVATE_USER = "admin/user/activate";
+export const POST = "admin/user/post";
+export const POLLS = "admin/user/poll";
+export const POLLHISTORY = "admin/user/poll/history";

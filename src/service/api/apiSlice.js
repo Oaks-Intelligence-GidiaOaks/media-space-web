@@ -16,9 +16,11 @@ const apiSlice = createApi({
     "Category",
     "sentimentAnalysis",
     "Plans",
+    "Post",
+    "Polls"
   ],
   endpoints: (builder) => ({}),
-  keepUnusedDataFor: 50000,
+  keepUnusedDataFor: 50000
 });
 
 export default apiSlice;
