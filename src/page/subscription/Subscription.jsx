@@ -431,7 +431,8 @@ const Subscription = () => {
                         id="exposure_time"
                         component="input"
                         type="number"
-                        min="0"
+                        min={1}
+                        max={6}
                         className="h-[38px] focus:outline-none focus:ring-0 ad-input"
                       />
                       {form.getState().submitFailed &&
@@ -456,7 +457,8 @@ const Subscription = () => {
                         id="duration"
                         component="input"
                         type="number"
-                        min="0"
+                        min={1}
+                        max={7}
                         className="h-[38px] focus:outline-none focus:ring-0 ad-input"
                       />
 

@@ -20,11 +20,24 @@ const Sidebar = ({ sidebarItems }) => {
 
   const role = useSelector((state) => state?.user?.user?.role);
 
-  const filteredItems = sidebarItems.filter(
-    (item) =>
-      (!item.feature || features.includes(item.feature)) &&
-      (!item.roles || item.roles.includes(role))
-  );
+  const filteredItems = sidebarItems.filter((item) => {
+    if (item.feature) {
+      if (Array.isArray(item.feature)) {
+        const hasFeature = item.feature.some((feature) =>
+          features.includes(feature)
+        );
+        if (!hasFeature) return false;
+      } else {
+        if (!features.includes(item.feature)) return false;
+      }
+    }
+
+    if (item.roles && !item.roles.includes(role)) {
+      return false;
+    }
+
+    return true;
+  });
 
   const activeIconStyling = (route) => {
     if (pathname.includes(route)) {

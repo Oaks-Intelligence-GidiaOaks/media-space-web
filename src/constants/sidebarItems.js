@@ -1,7 +1,5 @@
 import overview from "../assets/sidebar/overview.svg";
 import organizations from "../assets/sidebar/organizations.svg";
-import subscription from "../assets/sidebar/subscription.svg";
-import notifications from "../assets/sidebar/notifications.svg";
 import settings from "../assets/sidebar/settings.svg";
 import bell from "../assets/sidebar/bell.svg";
 import user from "../assets/sidebar/user.svg";
@@ -29,7 +27,7 @@ const sidebarItems = [
     title: "Create post",
     route: "dashboard/category",
     icon: pen,
-    feature: "Category Management",
+    feature: ["Category Management", "Post", "Polls"],
     roles: ["OrgAdmin"]
   },
   {
@@ -71,7 +69,7 @@ const sidebarItems = [
     title: "Settings",
     route: "dashboard/settings",
     icon: settings,
-    feature: "Self Service",
+    feature: ["Self Service", "Account Management"],
     roles: ["SuperAdmin", "OrgAdmin"]
   }
 ];

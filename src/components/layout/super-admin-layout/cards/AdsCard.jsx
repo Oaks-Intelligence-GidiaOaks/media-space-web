@@ -21,7 +21,7 @@ function AdsCard({
   durationTime,
   exposureTime,
   visible,
-  refetch,
+  refetch
 }) {
   // Assuming you want to display only the first media URL if present
   const mediaUrl = media.length > 0 ? media[0].media_url : null;
@@ -127,8 +127,8 @@ function AdsCard({
           headers: {
             "Content-Type": "multipart/form-data",
             // "Content-Type": "application/json",
-            ...(token && { Authorization: `Bearer ${token}` }),
-          },
+            ...(token && { Authorization: `Bearer ${token}` })
+          }
         }
       );
 
@@ -354,7 +354,7 @@ function AdsCard({
                     onChange={(e) => setDuration(e.target.value)}
                     type="number"
                     min={1}
-                    max={6}
+                    max={7}
                     className="h-[38px] focus:outline-none focus:ring-0 ad-input"
                   />
                 </div>
@@ -446,12 +446,12 @@ AdsCard.propTypes = {
   media: PropTypes.arrayOf(
     PropTypes.shape({
       media_type: PropTypes.string.isRequired,
-      media_url: PropTypes.string.isRequired,
+      media_url: PropTypes.string.isRequired
     })
   ).isRequired,
   description: PropTypes.string.isRequired,
   status: PropTypes.bool.isRequired,
-  onToggle: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired
 };
 
 export default React.memo(AdsCard);

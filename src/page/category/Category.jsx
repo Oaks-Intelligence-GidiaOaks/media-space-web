@@ -87,31 +87,33 @@ const Category = () => {
                         </li>
                       )}
 
-                      <li className="me-2" role="presentation">
-                        <button
-                          className={`inline-block p-4 rounded-t-lg ${
-                            activeTab === "category"
-                              ? "border-[#4C9C25] text-[#4C9C25] md:font-semibold"
-                              : "text-[#8D92AC]"
-                          }`}
-                          onClick={() => handleTabClick("category")}
-                          role="tab"
-                          aria-controls="category"
-                          aria-selected={activeTab === "category"}
-                        >
-                          <div className="flex gap-2 items-center">
-                            <img
-                              src={
-                                activeTab === "category"
-                                  ? categoryActive
-                                  : categoryGray
-                              }
-                              alt=""
-                            />
-                            <p>Categories</p>
-                          </div>
-                        </button>
-                      </li>
+                      {features.includes("Category Management") && (
+                        <li className="me-2" role="presentation">
+                          <button
+                            className={`inline-block p-4 rounded-t-lg ${
+                              activeTab === "category"
+                                ? "border-[#4C9C25] text-[#4C9C25] md:font-semibold"
+                                : "text-[#8D92AC]"
+                            }`}
+                            onClick={() => handleTabClick("category")}
+                            role="tab"
+                            aria-controls="category"
+                            aria-selected={activeTab === "category"}
+                          >
+                            <div className="flex gap-2 items-center">
+                              <img
+                                src={
+                                  activeTab === "category"
+                                    ? categoryActive
+                                    : categoryGray
+                                }
+                                alt=""
+                              />
+                              <p>Categories</p>
+                            </div>
+                          </button>
+                        </li>
+                      )}
                     </ul>
                   </div>
                 </div>
