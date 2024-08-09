@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 const PublicRoute = ({ component: Component }) => {
   const token = useSelector((state) => state.user?.token);
+  console.log(token, "token");
 
   const isAuthenticated = token !== null && token !== undefined;
 
@@ -11,7 +12,7 @@ const PublicRoute = ({ component: Component }) => {
 };
 
 PublicRoute.propTypes = {
-  component: PropTypes.elementType.isRequired,
+  component: PropTypes.elementType.isRequired
 };
 
 export default PublicRoute;
