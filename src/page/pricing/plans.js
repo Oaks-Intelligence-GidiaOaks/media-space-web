@@ -74,13 +74,13 @@ const plans = [
       title: "Enterprise",
       description:
         "Explore Seamless Community Management at Enterprise Level",
-    //   amount: 200,
+      amount: "Custom",
       discountOff: 250,
       details: ["Everything in Pro", "Custom Request"],
       background: "#141414",
       background2: "#EDF7DC",
     //   currency: "$",
-    //   type: "monthly",
+      type: "monthly",
       recommended:"",
       ctaBtn:"Contact Support",
       text:"#fff"
