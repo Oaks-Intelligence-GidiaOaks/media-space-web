@@ -51,10 +51,31 @@ html {
   scroll-behavior: smooth;
 }
 
-/* .gradient-custom3{
-  background: linear-gradient(to bottom, #FFFFE0 0%, #F9FBFF 100%);
-  
-} */
+/* Hide the scrollbar by default */
+.custom-scrollbar {
+  scrollbar-width: 4px; /* Firefox */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #3D7100;
+  border-radius: 10px;
+}
+
+/* Show scrollbar on hover */
+.custom-scrollbar:hover::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: #3D7100;
+  border-radius: 10px;
+}
 
 .dance {
   animation: dance 3s infinite ease alternate;

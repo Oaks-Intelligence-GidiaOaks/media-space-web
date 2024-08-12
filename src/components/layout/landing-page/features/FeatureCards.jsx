@@ -58,7 +58,7 @@ const FeatureCards = () => {
             </div>
             <div className="w-full h-[75%] mt-auto">
               <img
-                src={images.Surveys_and_Polls}
+                src={images.surveysAndPolls}
                 className="w-full h-full object-contain"
                 alt="target advert"
               />

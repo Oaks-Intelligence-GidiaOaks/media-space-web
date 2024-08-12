@@ -27,73 +27,89 @@ function Footer() {
           <img src={images.logo_new} alt="logo" />
         </Link>
       </div>
-      <div className="pt-[64px]  pb-[64px]">
-        {/* <div className="hidden lg:flex justify-end font-[500]">
-          <p>
-            Download our mobile app{" "}
-            <img src={images.arrowdown} alt="" className="inline" />
-          </p>
-        </div> */}
-
+      <div className="pt-[64px]  pb-[64px] relative z-30">
         <div className="md:flex flex-row flex-wrap justify-between pt-4">
           <div className="flex flex-col gap-5">
             <p className="link-head text-[#3D7100]">Company</p>
-            <Link to={"/"} className="footer-link text-black">
+            <Link to="/" className="footer-link text-black">
               Home
             </Link>
-            <Link to={""} className="footer-link text-black">
-              About
+            <Link to={"/pricing"} className="footer-link text-black">
+              Pricing
             </Link>
-            <Link to={""} className="footer-link text-black">
+            <Link to={"/support"} className="footer-link text-black">
+              Support
+            </Link>
+            <Link to={"/#faq"} className="footer-link text-black">
               FAQ
             </Link>
-            <Link to={""} className="footer-link text-black">
-            Download Product Brochure
+            <Link to={"/"} className="footer-link text-black">
+              Download Product Brochure
             </Link>
+
             <form className="flex gap-1">
-              <input type="text" className="rounded" placeholder="Enter Your Email" /><button className="action-button rounded">Download</button>
+              <input
+                type="text"
+                className="rounded"
+                placeholder="Enter Your Email"
+              />
+              <button className="action-button rounded">Download</button>
             </form>
           </div>
 
           <div className="flex flex-col gap-5">
             <p className="link-head text-[#3D7100]">Legal</p>
             <Link to={""} className="footer-link text-black">
-            Privacy Policy
+              Privacy Policy
             </Link>
             <Link to={""} className="footer-link text-black">
-            Terms of service
+              Terms of service
             </Link>
             <Link to={""} className="footer-link text-black">
-            License
+              License
             </Link>
           </div>
 
           <div className="flex flex-col gap-5">
             <p className="link-head text-[#3D7100]">Social</p>
-            <Link to={"https://x.com/kommunita"} className="footer-link text-black">
+            <Link
+              to={"https://x.com/kommunita"}
+              className="footer-link text-black"
+            >
               X
             </Link>
-            <Link to={"https://instagram.com/kommunitaHQ"} className="footer-link text-black">
+            <Link
+              to={"https://instagram.com/kommunitaHQ"}
+              className="footer-link text-black"
+            >
               Instagram
             </Link>
             {/* <Link to={""} className="footer-link text-black">
               Linkedin
             </Link> */}
-            <Link to={"https://www.facebook.com/profile.php?id=61561857346731&mibextid=ZbWKwL"} className="footer-link text-black">
-            Facebook
+            <Link
+              to={
+                "https://www.facebook.com/profile.php?id=61561857346731&mibextid=ZbWKwL"
+              }
+              className="footer-link text-black"
+            >
+              Facebook
             </Link>
-            <Link to={"https://www.tiktok.com/@kommunita?_t=8oINGoOuikn&_r=1"} className="footer-link text-black">
-            Tiktok
+            <Link
+              to={"https://www.tiktok.com/@kommunita?_t=8oINGoOuikn&_r=1"}
+              className="footer-link text-black"
+            >
+              Tiktok
             </Link>
           </div>
 
           <div className="flex flex-col gap-3 justify-between">
-          <div className="font-[500]">
-          <p>
-            Download our mobile app{" "}
-            <img src={images.arrowdown} alt="" className="inline" />
-          </p>
-        </div>
+            <div className="font-[500]">
+              <p>
+                Download our mobile app{" "}
+                <img src={images.arrowdown} alt="" className="inline" />
+              </p>
+            </div>
             <div className="flex gap-3 justify-between">
               <Link to={""} className="text-black">
                 <img src={images.ios} alt="" />
@@ -112,7 +128,7 @@ function Footer() {
       <img
         src={images.footerimg}
         alt=""
-        className="hidden md:block absolute left-0 bottom-0"
+        className="hidden md:block absolute z-10 left-0 bottom-0"
       />
     </section>
   );

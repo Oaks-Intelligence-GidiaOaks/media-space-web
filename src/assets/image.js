@@ -32,6 +32,7 @@ export const features = `${PATH}/features.svg`;
 export const target_advert = `${PATH}/target-advert.svg`;
 export const Sentiment_Analysis = `${PATH}/Sentiment-Analysis.svg`;
 export const Surveys_and_Polls = `${PATH}/Surveys_and_Polls.svg`;
+export const surveysAndPolls = `${PATH}/surveysAndPolls.svg`;
 export const Performance_and_Analytics = `${PATH}/Performance_and_Analytics.svg`;
 export const how_it_work_web = `${PATH}/how_it_work_web.svg`;
 export const how_it_work_mobile = `${PATH}/how_it_work_mobile.svg`;
