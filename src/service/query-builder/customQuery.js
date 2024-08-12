@@ -13,7 +13,7 @@ const baseQuery = fetchBaseQuery({
       headers.set("authorization", `Bearer ${token}`);
     }
     return headers;
-  },
+  }
 });
 
 const customBaseQuery = async (args, api, extraOptions) => {
@@ -22,38 +22,17 @@ const customBaseQuery = async (args, api, extraOptions) => {
   // console.log(result, "res");
   if (result.error && result.error.status === 406) {
     api.dispatch(logoutUser());
-    showAlert(
-      "Inactive for too long",
-      "Please login again to continue",
-      "error"
-    );
+    showAlert("Inactive for too long", result.error.data.message, "error");
 
     return;
   } else if (result.error && result.error.status === 401) {
     api.dispatch(logoutUser());
     showAlert(
       // "Access Token Expired",
-      "Not Authorised",
-      "Please login again to continue",
+      "",
+      result.error.data.message,
       "error"
     );
-
-    // if (refreshResult.data) {
-    //   api.dispatch(updateUser({ token: refreshResult.data.accessToken }));
-    //   result = await baseQuery(args, api, extraOptions);
-    // } else if (refreshResult.error.status) {
-    //   api.dispatch(logoutUser());
-    //   api.dispatch(closeComponentModal());
-    //   api.dispatch(
-    //     openModal({
-    //       title: "Refresh Token Expired",
-    //       message: "Please login again to continue",
-    //       success: false,
-    //     })
-    //   );
-    // } else {
-    //   api.dispatch(logoutUser);
-    // }
   }
   return result;
 };

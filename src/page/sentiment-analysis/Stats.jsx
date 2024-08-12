@@ -10,7 +10,7 @@ import { Spinner } from "flowbite-react";
 
 const Stats = () => {
   const [country, setCountry] = useState("Nigeria");
-  const [dateRange, setDateRange] = useState("last 12 hours");
+  const [dateRange, setDateRange] = useState("last 30 days");
   const [category, setCategory] = useState("All Categories");
 
   const { data: postStats, isFetching: loadStats } = useGetSentimentStatsQuery({
@@ -20,11 +20,11 @@ const Stats = () => {
   });
 
   return (
-    <div>
-      <div className="flex w-full gap-2 justify-start items-center py-4">
-        <p className="analysis-filter-top pr-5">Filter by:</p>
+    <>
+      <div className="flex flex-col md:flex-row w-full gap-4 justify-start items-start md:items-center py-4">
+        <p className="analysis-filter-top w-auto">Filter by:</p>
         <select
-          className="analysis-filter-input focus:outline-none focus:ring-0"
+          className="analysis-filter-input w-full focus:outline-none focus:ring-0"
           onChange={(e) => {
             setCountry(e.target.value);
           }}
@@ -39,7 +39,7 @@ const Stats = () => {
         </select>
 
         <select
-          className="h-[37.97px] analysis-filter-input focus:outline-none focus:ring-0"
+          className="h-[37.97px] w-full analysis-filter-input focus:outline-none focus:ring-0"
           onChange={(e) => setDateRange(e.target.value)}
           value={dateRange}
         >
@@ -53,7 +53,7 @@ const Stats = () => {
         </select>
 
         <select
-          className="analysis-filter-input focus:outline-none focus:ring-0"
+          className="analysis-filter-input w-full focus:outline-none focus:ring-0"
           value={category}
           onChange={(e) => {
             setCategory(e.target.value);
@@ -69,7 +69,7 @@ const Stats = () => {
         </select>
       </div>
 
-      <div className="w-full super-admin-card-box border-[#E6EDFF] items-center justify-center sm:flex-row sm:flex-wrap sm:justify-center border shadow sm:gap-10 md:grid md:grid-cols-2 md:justify-between lg:grid lg:grid-cols-4 xl:grid-cols-4 mb-20">
+      <div className="w-auto super-admin-card-box border-[#E6EDFF] items-center justify-center sm:flex-row sm:flex-wrap sm:justify-center border shadow sm:gap-10 md:grid md:grid-cols-2 md:justify-between lg:grid lg:grid-cols-4 xl:grid-cols-4 mb-20">
         {loadStats ? (
           <div className="flex items-center justify-center h-full w-full">
             <Spinner />
@@ -99,7 +99,7 @@ const Stats = () => {
           </>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

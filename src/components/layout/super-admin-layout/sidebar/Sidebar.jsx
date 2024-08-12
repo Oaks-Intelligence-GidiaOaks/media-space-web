@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import hamburgerMenu from "../../../../assets/sidebar/menu.svg";
 import closeMenu from "../../../../assets/sidebar/close.svg";
+import { useSelector } from "react-redux";
 
 /* eslint-disable react/prop-types */
 const Sidebar = ({ sidebarItems }) => {
@@ -11,6 +12,32 @@ const Sidebar = ({ sidebarItems }) => {
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
   const [indicatorPosition, setIndicatorPosition] = useState(0);
   const [showMenu, setShowMenu] = useState(true);
+
+  const features = useSelector(
+    (state) => state?.user?.user?.organization_features
+  );
+  // console.log(features);
+
+  const role = useSelector((state) => state?.user?.user?.role);
+
+  const filteredItems = sidebarItems.filter((item) => {
+    if (item.feature) {
+      if (Array.isArray(item.feature)) {
+        const hasFeature = item.feature.some((feature) =>
+          features.includes(feature)
+        );
+        if (!hasFeature) return false;
+      } else {
+        if (!features.includes(item.feature)) return false;
+      }
+    }
+
+    if (item.roles && !item.roles.includes(role)) {
+      return false;
+    }
+
+    return true;
+  });
 
   const activeIconStyling = (route) => {
     if (pathname.includes(route)) {
@@ -28,44 +55,15 @@ const Sidebar = ({ sidebarItems }) => {
     }
   };
 
-  // calculate currentpageindex on page mount.
-  // useEffect(() => {
-  //   if (pathname.includes("organizations") && pathname.includes("users")) {
-  //     setCurrentTabIndex(2);
-  //   } else if (pathname.includes("overview")) {
-  //     setCurrentTabIndex(0);
-  //   } else if (pathname.includes("users") && pathname.includes("staff")) {
-  //     setCurrentTabIndex(3);
-  //   } else if (pathname.includes("users")) {
-  //     setCurrentTabIndex(1);
-  //   } else if (pathname.includes("subscription")) {
-  //     setCurrentTabIndex(4);
-  //   } else if (pathname.includes("survey")) {
-  //     setCurrentTabIndex(5);
-  //   } else if (pathname.includes("settings")) {
-  //     setCurrentTabIndex(6);
-  //   }
-  // }, [pathname]);
-
   useEffect(() => {
-    if (pathname.includes("overview")) {
-      setCurrentTabIndex(0);
-    } else if (pathname.includes("analysis")) {
-      setCurrentTabIndex(1);
-    } else if (pathname.includes("category")) {
-      setCurrentTabIndex(2);
-    } else if (pathname.includes("users") && pathname.includes("staff")) {
-      setCurrentTabIndex(4);
-    } else if (pathname.includes("users")) {
-      setCurrentTabIndex(3);
-    } else if (pathname.includes("subscription")) {
-      setCurrentTabIndex(5);
-    } else if (pathname.includes("survey")) {
-      setCurrentTabIndex(6);
+    const matchedItemIndex = filteredItems.findIndex((item) =>
+      pathname.includes(item.route)
+    );
+    if (matchedItemIndex !== -1) {
+      setCurrentTabIndex(matchedItemIndex);
     }
-  }, [pathname]);
+  }, [pathname, filteredItems]);
 
-  //   calculate current tab index on tab click
   useEffect(() => {
     setIndicatorPosition(
       currentTabIndex === 0
@@ -83,8 +81,8 @@ const Sidebar = ({ sidebarItems }) => {
 
         {/* h-[clamp(480px,80%,713px)] */}
         <div className="w-full h-auto pt-10 rounded-[1.25rem] relative bg-primary-black mt-14 after:content('') after:text-white after:absolute after:w-full after:h-1/2 after:block after:-right-[6px] after:-z-10 after:rounded-[1.25rem] after:bg-gradient-to-b after:from-[#EB9207] after:to-[transparent] after:top-[6%]">
-          <div className="w-full flex flex-col gap-y-8 relative">
-            {sidebarItems.map((sidebarItem, i) => {
+          <div className="w-full flex flex-col gap-8 relative">
+            {filteredItems.map((sidebarItem, i) => {
               return (
                 <button
                   key={sidebarItem.title}
@@ -101,7 +99,7 @@ const Sidebar = ({ sidebarItems }) => {
                       sidebarItem.route
                     )}`}
                     style={{
-                      transition: "all 300ms ease",
+                      transition: "all 300ms ease"
                     }}
                   />
                   <p
@@ -109,7 +107,7 @@ const Sidebar = ({ sidebarItems }) => {
                       sidebarItem.route
                     )}`}
                     style={{
-                      transition: "all 300ms ease",
+                      transition: "all 300ms ease"
                     }}
                   >
                     {sidebarItem.title}
@@ -122,7 +120,7 @@ const Sidebar = ({ sidebarItems }) => {
               className={`absolute w-full h-[3.75rem] bg-[rgba(255,255,255,0.2)] left-0`}
               style={{
                 top: indicatorPosition,
-                transition: "all 300ms ease",
+                transition: "all 300ms ease"
               }}
             />
           </div>
@@ -133,7 +131,12 @@ const Sidebar = ({ sidebarItems }) => {
         </div>
       </div>
       {/* Sidebar for small screens */}
-      <div className="w-[clamp(50px,10%,119px)] left-2 fixed md:hidden md:sticky h-screen ml-0 top-10">
+      <div
+        className={`w-[clamp(50px,10%,119px)] left-2 fixed md:hidden md:sticky h-full ml-0 top-10 z-50 ${
+          !showMenu ? "overflow-y-auto" : ""
+        }`}
+      >
+        {" "}
         {/* menu button */}
         <button
           aria-label="Menu"
@@ -147,12 +150,12 @@ const Sidebar = ({ sidebarItems }) => {
           style={{
             left: showMenu ? "-100px" : 0,
             transition: "all 200ms ease-in-out",
-            boxShadow: "5px 7px 12px rgba(0,0,0,0.3)",
+            boxShadow: "5px 7px 12px rgba(0,0,0,0.3)"
           }}
           className="w-full h-fit py-10 rounded-[1.25rem] relative bg-primary-black mt-14 after:content('') after:text-white after:absolute after:w-full after:h-1/2 after:block after:-right-[6px] after:-z-10 after:rounded-[1.25rem] after:bg-gradient-to-b after:from-[#EB9207] after:to-[transparent] after:top-[6%]"
         >
           <div className="w-full flex flex-col gap-y-8 relative h-auto pb-5 z-50">
-            {sidebarItems.map((sidebarItem, i) => {
+            {filteredItems.map((sidebarItem, i) => {
               const isLastItem = i === sidebarItems.length - 1;
 
               return (
@@ -174,7 +177,7 @@ const Sidebar = ({ sidebarItems }) => {
                       sidebarItem.route
                     )}`}
                     style={{
-                      transition: "all 300ms ease",
+                      transition: "all 300ms ease"
                     }}
                     alt={sidebarItem.title}
                   />
@@ -198,7 +201,7 @@ const Sidebar = ({ sidebarItems }) => {
               className={`absolute w-full h-[3.75rem] bg-[rgba(255,255,255,0.2)] left-0`}
               style={{
                 top: indicatorPosition,
-                transition: "all 300ms ease",
+                transition: "all 300ms ease"
               }}
             />
           </div>

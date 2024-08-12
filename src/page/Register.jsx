@@ -6,44 +6,12 @@ import { AiOutlineMail } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { InputField, PasswordField } from "../components/ui";
 import { Form, Field } from "react-final-form";
-import validate from "validate.js";
 import { updateFormdata, clearFormData } from "../redux/slices/register.slice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showAlert } from "../static/alert";
 import { INDEX, SIGN_UP } from "../routes/CONSTANT";
 import * as images from "../assets";
-
-const constraints = {
-  display_name: {
-    presence: true
-  },
-  email: {
-    presence: true
-  },
-  username: {
-    presence: true
-  },
-  password: {
-    presence: true,
-    length: {
-      minimum: 6
-    }
-  },
-  confirm_password: {
-    presence: true,
-    equality: "password"
-  },
-  terms: {
-    presence: {
-      message: "must be accepted"
-    },
-    inclusion: {
-      within: [true],
-      message: "^must be accepted"
-    }
-  }
-};
 
 const Register = () => {
   const [eyeState, setEyeState] = useState(false);
@@ -54,7 +22,60 @@ const Register = () => {
   };
 
   const validateForm = (values) => {
-    return validate(values, constraints) || {};
+    const errors = {};
+
+    // Validate presence
+    if (!values.password) {
+      errors.password = "Password is required";
+    } else {
+      // Validate length
+      if (values.password.length < 8) {
+        errors.password = "Password must be at least 8 characters long";
+      }
+
+      // Validate format
+      const lowercase = /[a-z]/.test(values.password);
+      const uppercase = /[A-Z]/.test(values.password);
+      const number = /\d/.test(values.password);
+      const specialChar = /[!@#$%^&*]/.test(values.password);
+
+      if (!lowercase) {
+        errors.password = "Password must contain at least one lowercase letter";
+      } else if (!uppercase) {
+        errors.password = "Password must contain at least one uppercase letter";
+      } else if (!number) {
+        errors.password = "Password must contain at least one number";
+      } else if (!specialChar) {
+        errors.password =
+          "Password must contain at least one special character (!@#$%^&*)";
+      }
+    }
+
+    // Validate confirm_password
+    if (!values.confirm_password) {
+      errors.confirm_password = "Please confirm your password";
+    } else if (values.confirm_password !== values.password) {
+      errors.confirm_password = "Passwords do not match";
+    }
+
+    // Other validations for display_name, email, username, and terms
+    if (!values.display_name) {
+      errors.display_name = "Display Name is required";
+    }
+
+    if (!values.username) {
+      errors.username = "Username is required";
+    }
+
+    if (!values.email) {
+      errors.email = "Email is required";
+    }
+
+    if (!values.terms) {
+      errors.terms = "You must accept the terms of use";
+    }
+
+    return errors;
   };
 
   const dispatch = useDispatch();

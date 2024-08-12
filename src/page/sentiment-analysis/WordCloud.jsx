@@ -6,7 +6,18 @@ import { useGetWordCloudQuery } from "../../service/admin/sentiment-analysis";
 import PropTypes from "prop-types";
 import { Spinner } from "flowbite-react";
 
-const colors = ["#28F473", "#09ABC3", "#000", "#5F0CF3", "#E0092F"];
+const colors = [
+  "#28F473", // Bright green
+  "#09ABC3", // Teal blue
+  "#000", // Black
+  "#5F0CF3", // Deep purple
+  "#E0092F", // Bright red
+  "#F3A30F", // Bright orange
+  "#F3E30F", // Bright yellow
+  "#C03CF3", // Light purple
+  "#0CF3D1", // Light teal
+  "#F30C84" // Vibrant pink
+];
 
 const fontScale = scaleLog({
   range: [5, 15] // Adjusted range for font sizes

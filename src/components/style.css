@@ -1,0 +1,120 @@
+.go-live {
+  width: 91.276px;
+  height: 105.439px;
+  border-radius: 3.934px;
+  background: #fff;
+}
+.story-cards {
+  width: 91.276px;
+  height: 110px;
+  border-radius: 3.934px;
+  background: #fff;
+}
+.go-live-text {
+  color: #838383;
+  font-family: Inter;
+  font-size: 9.442px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.story-name {
+  color: #fff;
+  font-family: Inter;
+  font-size: 7.869px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.makepost {
+  border-radius: 3.934px;
+  background: #fff;
+}
+.post-input {
+  color: #979797;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.btn-draft {
+  display: flex;
+  height: 17.417px;
+  padding: 0px 5.5px;
+  justify-content: center;
+  align-items: center;
+  gap: 3.667px;
+  border-radius: 1.833px;
+  background: #eff2fc;
+  color: #838383;
+  font-family: Inter;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.stories-container {
+  scroll-behavior: smooth;
+  z-index: 2 !important;
+}
+.ellipsis-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+}
+.post-content {
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  color: #838383;
+}
+.post-input {
+  font-family: Inter;
+  font-size: 9.21px;
+  font-weight: 400;
+  line-height: 11.15px;
+  letter-spacing: 0.16em;
+  text-align: left;
+}
+.make-post-input {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+}
+.schedule-btn {
+  font-family: Inter;
+  font-size: 5.79px;
+  font-weight: 600;
+  line-height: 7.01px;
+  color: #838383;
+}
+.see-more-text {
+  font-family: Inter;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 12.1px;
+  color: #838383;
+}
+.post-username {
+  font-family: Inter;
+  font-size: 9.44px;
+  font-weight: 400;
+  line-height: 14.16px;
+}
+.post-name {
+  font-family: Inter;
+  font-size: 12.59px;
+  font-weight: 600;
+  line-height: 14.16px;
+}
+.post-time {
+  font-family: Inter;
+  font-size: 9.44px;
+  font-weight: 400;
+  line-height: 14.16px;
+}

@@ -206,7 +206,11 @@ const Subscription = () => {
               </div> */}
 
               <div className="overflow-x-auto">
-                <Tabs aria-label="Full width tabs" style="fullWidth">
+                <Tabs
+                  aria-label="Full width tabs"
+                  style="fullWidth"
+                  className="w-[330px] md:w-full"
+                >
                   {/* CATEGORY SECTION */}
                   {/* <Tabs.Item active title="Category" icon={""}>
                     <CreateCategory />
@@ -427,7 +431,8 @@ const Subscription = () => {
                         id="exposure_time"
                         component="input"
                         type="number"
-                        min="0"
+                        min={1}
+                        max={6}
                         className="h-[38px] focus:outline-none focus:ring-0 ad-input"
                       />
                       {form.getState().submitFailed &&
@@ -452,7 +457,8 @@ const Subscription = () => {
                         id="duration"
                         component="input"
                         type="number"
-                        min="0"
+                        min={1}
+                        max={7}
                         className="h-[38px] focus:outline-none focus:ring-0 ad-input"
                       />
 

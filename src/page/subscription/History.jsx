@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Cards } from "../../components/layout/super-admin-layout";
 import "./style.css";
 import { Dropdown, DropdownItem, Table } from "flowbite-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TiDelete } from "react-icons/ti";
 import { showAlert } from "../../static/alert";
 import PaginationControls from "./PaginationControls";
@@ -10,13 +10,50 @@ import { empty } from "../../assets";
 import bell from "../../assets/notiBell.svg";
 import {
   useSubscriptionStatsQuery,
-  useSubscriptionHistoryQuery
+  useSubscriptionHistoryQuery,
+  useLazyCancelSubscriptionQuery,
+  useLazyRenewSubscriptionQuery,
+  useGetUserPlansQuery,
+  useUpgradeSubscriptionMutation
 } from "../../service/admin/sub.service";
 import { Spinner } from "flowbite-react";
+import Swal from "sweetalert2";
+import { MdOutlineAutorenew } from "react-icons/md";
+import { GrUpgrade } from "react-icons/gr";
+import { useDispatch } from "react-redux";
+import { handleLogout } from "../../static/logout";
+import { Modal } from "flowbite-react";
+import { Form, Field } from "react-final-form";
+import validate from "validate.js";
+import rtkMutation from "../../utils/rtkMutation";
+
+const constraints = {
+  plan_type: {
+    presence: true
+  },
+  plan: {
+    presence: true
+  }
+};
 
 function History() {
   const user = useSelector((state) => state.user.user);
-  const { data, isLoading } = useSubscriptionStatsQuery();
+  const [upgradeModal, setUpgradeModal] = useState(false);
+  const { data: planQuery } = useGetUserPlansQuery();
+  const planData = planQuery?.data;
+
+  const {
+    data,
+    isLoading,
+    refetch: subscriptionStats
+  } = useSubscriptionStatsQuery();
+  const [triggerRenew, { isSuccess: renewSuccess, error: renewError }] =
+    useLazyRenewSubscriptionQuery();
+  const [triggerCancel, { isSuccess: cancelSuccess, error: cancelError }] =
+    useLazyCancelSubscriptionQuery();
+
+  const dispatch = useDispatch();
+
   const paymentStats = data?.data;
   console.log(paymentStats);
 
@@ -24,21 +61,120 @@ function History() {
   const [pageSize, setPageSize] = useState(10);
   const [filter, setFilter] = useState("");
 
-  const { data: history, isFetching } = useSubscriptionHistoryQuery({
+  const {
+    data: history,
+    isFetching,
+    refetch
+  } = useSubscriptionHistoryQuery({
     filter,
     page,
     page_size: pageSize
   });
   const list = history?.data?.data || [];
+  console.log(list);
   const totalPages = Math.ceil(page / history?.data?.page_size);
 
   const handleAction = async (id, action) => {
     console.log(id, action);
+
+    switch (action) {
+      case "renew": {
+        const result = await Swal.fire({
+          title: "Are you sure?",
+          text: "Do you really want to renew your current plan?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, renew it!",
+          cancelButtonText: "No, keep it"
+        });
+
+        if (result.isConfirmed) {
+          console.log("renew plan");
+          triggerRenew();
+        }
+        break;
+      }
+      case "cancel": {
+        const result = await Swal.fire({
+          title: "Are you sure?",
+          text: "Do you really want to cancel your current plan?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, cancel it!",
+          cancelButtonText: "No, keep it"
+        });
+
+        if (result.isConfirmed) {
+          console.log("cancel plan");
+          triggerCancel();
+        }
+        break;
+      }
+
+      default:
+        break;
+    }
   };
+
+  useEffect(() => {
+    if (renewSuccess) {
+      refetch();
+      subscriptionStats();
+      showAlert("Plan renewed successfully", "", "success");
+    } else if (renewError) {
+      showAlert(
+        "Oops",
+        renewError.data.message || "An error occurred",
+        "error"
+      );
+    }
+  }, [renewError, renewSuccess, dispatch, refetch, subscriptionStats]);
+
+  useEffect(() => {
+    if (cancelSuccess) {
+      refetch();
+      subscriptionStats();
+      handleLogout(dispatch);
+
+      showAlert("Plan canceled successfully", "", "success");
+    } else if (cancelError) {
+      showAlert(
+        "Oops",
+        cancelError.data.message || "An error occurred",
+        "error"
+      );
+    }
+  }, [cancelError, cancelSuccess, dispatch, refetch, subscriptionStats]);
 
   const formatDate = (timestamp) => {
     return new Date(timestamp).toISOString().split("T")[0];
   };
+
+  const [upgradeSub, { isSuccess, error }] = useUpgradeSubscriptionMutation();
+
+  const onSubmit = async (values) => {
+    const d = { plan_id: values.plan, plan_type: values.plan_type };
+    await rtkMutation(upgradeSub, d);
+  };
+
+  const validateForm = (values) => {
+    return validate(values, constraints) || {};
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      refetch();
+      subscriptionStats();
+      showAlert("Plan upgraded successfully", "", "success");
+      setUpgradeModal(false);
+      handleLogout(dispatch);
+    } else if (error) {
+      showAlert("Oops", error.data.message || "An error occurred", "error");
+    }
+  }, [error, isSuccess, dispatch, refetch, subscriptionStats]);
+
+  const plan_id = user?.organization_id?.plan_id;
+  // console.log(plan_id);
 
   return (
     <div className="px-3 pt-5">
@@ -103,6 +239,7 @@ function History() {
                 <option value="yearly">Yearly Subscriptions</option>
                 <option value="monthly">Monthly Subscriptions</option>
                 <option value="active">Active Subscriptions</option>
+                <option value="inactive">Inactive Subscriptions</option>
                 <option value="expired">Expired Subscriptions</option>
               </select>
               {isFetching ? (
@@ -159,6 +296,11 @@ function History() {
                                           <span className="h-[8px] w-[8px] bg-[#34C759] rounded-full"></span>{" "}
                                           Active
                                         </span>
+                                      ) : row.status === "Inactive" ? (
+                                        <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-[#302f2f] ring-1 gap-1  ring-inset ring-red-600/10">
+                                          <span className="h-[8px] w-[8px] bg-[#302f2f] rounded-full"></span>{" "}
+                                          Inactive
+                                        </span>
                                       ) : (
                                         <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-[#FF0000] ring-1 gap-1  ring-inset ring-red-600/10">
                                           <span className="h-[8px] w-[8px] bg-[#FF0000] rounded-full"></span>{" "}
@@ -167,44 +309,64 @@ function History() {
                                       )}
                                     </Table.Cell>
                                     <Table.Cell>
-                                      <Dropdown>
-                                        <DropdownItem
-                                          onClick={() =>
-                                            handleAction(row._id, "upgrade")
-                                          }
-                                        >
-                                          <div className="flex items-center justify-center">
-                                            <TiDelete
-                                              className="text-[#34C759]"
-                                              size={15}
-                                            />
-                                            &nbsp;
-                                            <small>
-                                              <p className="text-[#34C759]">
-                                                Upgrade Plan
-                                              </p>
-                                            </small>
-                                          </div>
-                                        </DropdownItem>
-                                        <DropdownItem
-                                          onClick={() =>
-                                            handleAction(row._id, "cancel")
-                                          }
-                                        >
-                                          <div className="flex items-center justify-center">
-                                            <TiDelete
-                                              className="text-[#E71D36]"
-                                              size={15}
-                                            />
-                                            &nbsp;
-                                            <small>
-                                              <p className="text-[#E71D36]">
-                                                Cancel Plan
-                                              </p>
-                                            </small>
-                                          </div>
-                                        </DropdownItem>
-                                      </Dropdown>
+                                      {row.status === "Active" ? (
+                                        <Dropdown>
+                                          <DropdownItem
+                                            onClick={() =>
+                                              setUpgradeModal(true)
+                                            }
+                                          >
+                                            <div className="flex items-center justify-center">
+                                              <GrUpgrade
+                                                className="text-[#34C759]"
+                                                size={20}
+                                              />
+                                              &nbsp;
+                                              <small>
+                                                <p className="text-[#34C759]">
+                                                  Upgrade Plan
+                                                </p>
+                                              </small>
+                                            </div>
+                                          </DropdownItem>
+                                          <DropdownItem
+                                            onClick={() =>
+                                              handleAction(row._id, "renew")
+                                            }
+                                          >
+                                            <div className="flex items-center justify-center">
+                                              <MdOutlineAutorenew
+                                                className="text-blue-500"
+                                                size={20}
+                                              />
+                                              &nbsp;
+                                              <small>
+                                                <p className="text-blue-500">
+                                                  Renew Plan
+                                                </p>
+                                              </small>
+                                            </div>
+                                          </DropdownItem>
+                                          <DropdownItem
+                                            onClick={() =>
+                                              handleAction(row._id, "cancel")
+                                            }
+                                          >
+                                            <div className="flex items-center justify-center">
+                                              <TiDelete
+                                                className="text-[#E71D36]"
+                                                size={20}
+                                              />
+                                              &nbsp;
+                                              <small>
+                                                <p className="text-[#E71D36]">
+                                                  Cancel Plan
+                                                </p>
+                                              </small>
+                                            </div>
+                                          </DropdownItem>
+                                        </Dropdown>
+                                      ) : null}
                                     </Table.Cell>
                                   </Table.Row>
                                 )
@@ -222,7 +384,7 @@ function History() {
                   ) : (
                     <div className="flex flex-col items-center justify-center text-gray-500 pb-20">
                       <p className="pb-5">No data yet</p>
-                      {/* <img src={empty} width={200} height={200} alt="" /> */}
+                      <img src={empty} width={200} height={200} alt="" />
                     </div>
                   )}
                 </div>
@@ -231,6 +393,91 @@ function History() {
           </>
         ) : null}
       </div>
+
+      {upgradeModal && (
+        <Modal
+          show={upgradeModal}
+          onClose={() => setUpgradeModal(false)}
+          size={"xl"}
+        >
+          <Modal.Header>Upgrade Plan</Modal.Header>
+          <Modal.Body>
+            <Form
+              onSubmit={onSubmit}
+              validate={validateForm}
+              render={({ handleSubmit, form, submitting }) => (
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-3 flex flex-col">
+                    <label htmlFor="department" className="badge-label pb-2">
+                      Select new Plan
+                    </label>
+                    <Field
+                      id="plan_id"
+                      type="text"
+                      name="plan"
+                      component="select"
+                      className="badge-department"
+                    >
+                      <option value="">Select Plan</option>
+                      {planData
+                        .filter((row) => row?._id !== plan_id)
+                        .map((row, index) => (
+                          <option key={index} value={row?._id}>
+                            {row?.name}
+                          </option>
+                        ))}
+                    </Field>
+                    {form.getState().submitFailed &&
+                      form.getState().errors.plan && (
+                        <small className="text-red-600">
+                          {form.getState().errors.plan}
+                        </small>
+                      )}
+                  </div>
+                  <div className="mb-3 flex flex-col">
+                    <label htmlFor="department" className="badge-label pb-2">
+                      Select Plan type
+                    </label>
+                    <Field
+                      id="plan_type"
+                      type="text"
+                      name="plan_type"
+                      component="select"
+                      className="badge-department"
+                    >
+                      <option value="">Select billing period</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="annually">Yearly</option>
+                    </Field>
+                    {form.getState().submitFailed &&
+                      form.getState().errors.plan_type && (
+                        <small className="text-red-600">
+                          {form.getState().errors.plan_type}
+                        </small>
+                      )}
+                  </div>
+
+                  <div className="flex justify-end pt-5">
+                    <button type="submit" className="badge-create">
+                      {submitting ? (
+                        <>
+                          <span className="loading-dots">
+                            <span className="loading-dots-dot"></span>
+                            <span className="loading-dots-dot"></span>
+                            <span className="loading-dots-dot"></span>
+                          </span>
+                        </>
+                      ) : (
+                        "Upgrade"
+                      )}
+                    </button>
+                  </div>
+                </form>
+              )}
+            />{" "}
+          </Modal.Body>
+        </Modal>
+      )}
     </div>
   );
 }

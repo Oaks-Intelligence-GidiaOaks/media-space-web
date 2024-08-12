@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { PasswordField, InputField } from "../components/ui";
 import { Form } from "react-final-form";
-import validate from "validate.js";
 import { useEffect } from "react";
 import rtkMutation from "../utils/rtkMutation";
 import { showAlert } from "../static/alert";
@@ -14,18 +13,6 @@ import {
 } from "../service/user.service";
 import { TbPasswordFingerprint } from "react-icons/tb";
 import PropTypes from "prop-types"; // Import PropTypes
-
-const constraints = {
-  code: {
-    presence: true
-  },
-  newPassword: {
-    presence: true
-  },
-  confirmPassword: {
-    presence: true
-  }
-};
 
 const ResetPassword = ({ email }) => {
   const navigate = useNavigate();
@@ -55,7 +42,49 @@ const ResetPassword = ({ email }) => {
   };
 
   const validateForm = (values) => {
-    return validate(values, constraints) || {};
+    const errors = {};
+
+    // Validate presence
+    if (!values.newPassword) {
+      errors.newPassword = "Password is required";
+    } else {
+      // Validate length
+      if (values.newPassword.length < 8) {
+        errors.newPassword = "Password must be at least 8 characters long";
+      }
+
+      // Validate format
+      const lowercase = /[a-z]/.test(values.newPassword);
+      const uppercase = /[A-Z]/.test(values.newPassword);
+      const number = /\d/.test(values.newPassword);
+      const specialChar = /[!@#$%^&*]/.test(values.newPassword);
+
+      if (!lowercase) {
+        errors.newPassword =
+          "Password must contain at least one lowercase letter";
+      } else if (!uppercase) {
+        errors.newPassword =
+          "Password must contain at least one uppercase letter";
+      } else if (!number) {
+        errors.newPassword = "Password must contain at least one number";
+      } else if (!specialChar) {
+        errors.newPassword =
+          "Password must contain at least one special character (!@#$%^&*)";
+      }
+    }
+
+    // Validate confirm_password
+    if (!values.confirmPassword) {
+      errors.confirmPassword = "Please confirm your password";
+    } else if (values.confirm_password !== values.password) {
+      errors.confirmPassword = "Passwords do not match";
+    }
+
+    if (!values.code) {
+      errors.code = "Username is required";
+    }
+
+    return errors;
   };
 
   useEffect(() => {
@@ -145,6 +174,12 @@ const ResetPassword = ({ email }) => {
                     component="input"
                     placeholder=" "
                   />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.code && (
+                      <small className="text-red-600">
+                        {form.getState().errors.code}
+                      </small>
+                    )}
 
                   <PasswordField
                     id="newPassword"
@@ -156,6 +191,12 @@ const ResetPassword = ({ email }) => {
                     toggleEye={toggleEye}
                     eyeState={eyeState}
                   />
+                  {form.getState().submitFailed &&
+                    form.getState().errors.newPassword && (
+                      <small className="text-red-600">
+                        {form.getState().errors.newPassword}
+                      </small>
+                    )}
 
                   <PasswordField
                     id="confirmPassword"
@@ -169,11 +210,9 @@ const ResetPassword = ({ email }) => {
                   />
 
                   {form.getState().submitFailed &&
-                    (form.getState().errors.code ||
-                      form.getState().errors.newPassword ||
-                      form.getState().errors.confirmPassword) && (
+                    form.getState().errors.confirmPassword && (
                       <small className="text-red-600">
-                        Please fill all the fields correctly
+                        {form.getState().errors.confirmPassword}
                       </small>
                     )}
 
@@ -233,7 +272,7 @@ const ResetPassword = ({ email }) => {
 };
 
 ResetPassword.propTypes = {
-  email: PropTypes.string.isRequired
+  email: PropTypes.string
 };
 
 export default ResetPassword;
