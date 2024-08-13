@@ -454,4 +454,6 @@ AdsCard.propTypes = {
   onToggle: PropTypes.func.isRequired
 };
 
-export default React.memo(AdsCard);
+// export default React.memo(AdsCard);
+const MemoizedAdsCard = React.memo(AdsCard);
+export default MemoizedAdsCard;
