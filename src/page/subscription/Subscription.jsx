@@ -189,7 +189,7 @@ const Subscription = () => {
   return (
     <>
       <div className="px-3">
-        <div className="">
+        <div>
           {user && user.role == "SuperAdmin" ? (
             <SuperAdminSubscription />
           ) : (
