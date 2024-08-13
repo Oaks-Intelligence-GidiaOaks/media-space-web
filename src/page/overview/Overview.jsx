@@ -163,12 +163,12 @@ const Overview = () => {
                     topOrg?.map((org) => (
                       <div
                         className="company-card shadow-lg"
-                        key={org.organization.organization_name}
+                        key={org?.organization?.organization_name || ""}
                       >
                         <div className="card-content p-3">
                           <div className="flex justify-between pb-3">
                             <p className="company-name">
-                              {org.organization.organization_name}
+                              {org?.organization?.organization_name || ""}
                             </p>
                             <button>
                               <img src={btn_more_sm} alt="" />
