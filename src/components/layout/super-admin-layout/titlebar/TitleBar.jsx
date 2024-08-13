@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { logo } from "../../../../assets";
+import { logo_new } from "../../../../assets";
 import search from "../../../../assets/titlebar/search.svg";
 import notification from "../../../../assets/titlebar/notification.svg";
 import placeholder from "../../../../assets/user-avatar.png";
@@ -37,7 +37,7 @@ const TitleBar = () => {
         className="flex flex-nowrap items-center w-fit cursor-pointer"
         onClick={navigateToOverview}
       >
-        <img src={logo} className="" />
+        <img src={logo_new} className="" />
       </div>
       <div className="flex gap-2 sm:gap-4 items-center">
         <button
