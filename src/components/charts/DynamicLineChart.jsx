@@ -14,7 +14,8 @@ const parseTrendData = (trendData, filter) => {
   if (!trendData) return parsedData;
 
   const parseDate = (date, format) => {
-    return dayjs(date, format).format();
+    const parsedDate = dayjs(date, format);
+    return parsedDate.isValid() ? parsedDate.format() : null;
   };
 
   const addData = (data, type) => {
@@ -32,12 +33,14 @@ const parseTrendData = (trendData, filter) => {
           parsedDate = parseDate(date, "HH:mm");
           break;
         default:
-          parsedDate = new Date();
+          parsedDate = null;
       }
-      if (!monthData[parsedDate]) {
+      if (parsedDate && !monthData[parsedDate]) {
         monthData[parsedDate] = { positive: 0, negative: 0, neutral: 0 };
       }
-      monthData[parsedDate][type] += value;
+      if (parsedDate) {
+        monthData[parsedDate][type] += value;
+      }
     });
   };
 
@@ -45,29 +48,36 @@ const parseTrendData = (trendData, filter) => {
   addData(trendData.negative, "negative");
   addData(trendData.neutral, "neutral");
 
-  // Add dummy data for the last month
-  const lastDate = Object.keys(monthData).sort().pop();
-  const lastDateObj = new Date(lastDate);
-  const nextMonth = new Date(
-    lastDateObj.getFullYear(),
-    filter === "year" ? lastDateObj.getMonth() + 1 : lastDateObj.getMonth() - 1,
-    1
-  );
+  // Add dummy data only if there is valid last data
+  if (Object.keys(monthData).length) {
+    const lastDate = Object.keys(monthData).sort().pop();
+    const lastDateObj = new Date(lastDate);
+    const nextMonth = new Date(
+      lastDateObj.getFullYear(),
+      filter === "year"
+        ? lastDateObj.getMonth() + 1
+        : lastDateObj.getMonth() - 1,
+      1
+    );
 
-  const dummyDataPoint = {
-    x: nextMonth,
-    y: 0
-  };
+    const dummyDataPoint = {
+      x: nextMonth,
+      y: 0
+    };
 
-  parsedData.positive.push(dummyDataPoint);
-  parsedData.negative.push(dummyDataPoint);
-  parsedData.neutral.push(dummyDataPoint);
+    parsedData.positive.push(dummyDataPoint);
+    parsedData.negative.push(dummyDataPoint);
+    parsedData.neutral.push(dummyDataPoint);
+  }
 
   Object.keys(monthData).forEach((date) => {
     const { positive, negative, neutral } = monthData[date];
-    parsedData.positive.push({ x: new Date(date), y: positive });
-    parsedData.negative.push({ x: new Date(date), y: negative });
-    parsedData.neutral.push({ x: new Date(date), y: neutral });
+    const validDate = new Date(date);
+    if (!isNaN(validDate)) {
+      parsedData.positive.push({ x: validDate, y: positive });
+      parsedData.negative.push({ x: validDate, y: negative });
+      parsedData.neutral.push({ x: validDate, y: neutral });
+    }
   });
 
   return parsedData;
@@ -122,7 +132,7 @@ const DynamicLineChart = ({ trendsData = {} }) => {
     },
     xaxis: {
       type: "datetime",
-      categories: filteredData.positive.map((item) => item.x.toISOString()),
+      categories: filteredData?.positive?.map((item) => item.x.toISOString()),
       tickAmount:
         filter === "year"
           ? 12
@@ -313,7 +323,7 @@ const DynamicLineChart = ({ trendsData = {} }) => {
 };
 
 DynamicLineChart.propTypes = {
-  trendsData: PropTypes.object.isRequired
+  trendsData: PropTypes.object
 };
 
 export default DynamicLineChart;
