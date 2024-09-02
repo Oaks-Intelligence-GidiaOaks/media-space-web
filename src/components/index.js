@@ -5,3 +5,4 @@ export { default as CreatePost } from "./post/CreatePost";
 export { default as CreatePolls } from "./polls/CreatePolls";
 export { default as CreateSurvey } from "./survey/CreateSurvey";
 export { default as ActiveSurvey } from "./survey/ActiveSurvey";
+export { default as SurveyHistory } from "./survey/SurveyHistory";

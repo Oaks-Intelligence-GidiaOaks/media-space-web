@@ -26,8 +26,15 @@ const CreateSurvey = () => {
   const handleBannerChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const bannerURL = URL.createObjectURL(file);
-      setBanner(bannerURL);
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        console.log(base64String);
+        setBanner(base64String);
+      };
+
+      reader.readAsDataURL(file);
     }
   };
 
@@ -92,7 +99,7 @@ const CreateSurvey = () => {
     const data = {
       banner,
       audience,
-      messageAlert,
+      message_alert: messageAlert,
       topic,
       description,
       questions

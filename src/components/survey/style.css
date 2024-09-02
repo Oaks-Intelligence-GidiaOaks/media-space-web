@@ -1,0 +1,86 @@
+.active-survey-card-box {
+  padding: 24px;
+}
+.survey-topic-text {
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24.2px;
+  color: #2d2b2b;
+}
+.survey-desc-text {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #2d2b2b;
+}
+.survey-created-date {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  color: #838383;
+}
+.survey-response-text {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.36px;
+  color: #2d2b2b;
+}
+.survey-response-count {
+  font-family: Inter;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 38.73px;
+  color: #2d2b2b;
+}
+
+.dropdown-menu {
+  width: 210px;
+  height: auto; /* Adjust based on content */
+  /* padding: 24px 40px; */
+  /* gap: 28px; */
+  border-radius: 8px 0 0 0;
+  opacity: 1; /* Make sure it's visible */
+  background: #ffffff;
+  z-index: 1000; /* Ensure it appears above other elements */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow if needed */
+}
+
+.dropdown-item {
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.36px;
+  color: #333; /* Darker text color on hover */
+}
+
+.dropdown-item:last-child {
+  margin-bottom: 0;
+}
+.survey-badge {
+  width: 69px;
+  height: 24px;
+  padding: 5px 10px 7px 10px;
+  gap: 10px;
+  border-radius: 12px;
+  opacity: 0px;
+  background: #ffe8d7;
+  font-family: Helvetica;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+  color: #931222;
+}
+.survey-pagination-btn {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #344054;
+}

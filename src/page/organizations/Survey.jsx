@@ -1,7 +1,10 @@
 import "./styles.css";
 import { useState } from "react";
-import { CreateSurvey, ActiveSurvey } from "../../components";
-import { useActiveSurveyQuery } from "../../service/admin/survey.service";
+import { CreateSurvey, ActiveSurvey, SurveyHistory } from "../../components";
+import {
+  useActiveSurveyQuery,
+  useSurveyHistoryQuery
+} from "../../service/admin/survey.service";
 import { Spinner } from "flowbite-react";
 
 function Survey() {
@@ -16,6 +19,9 @@ function Survey() {
 
   const { data: activeSurvey, isFetching: activeSurveyFetching } =
     useActiveSurveyQuery();
+
+  const { data: surveyHistory, isFetching: surveyHistoryFetching } =
+    useSurveyHistoryQuery();
 
   return (
     <>
@@ -74,7 +80,35 @@ function Survey() {
           </div>
         )}
 
-        {activeTab === "history" && <div>History Content</div>}
+        {activeTab === "history" && (
+          <div>
+            {surveyHistoryFetching ? (
+              <div className="flex justify-center items-center pt-5">
+                <Spinner />
+              </div>
+            ) : surveyHistory?.data.length === 0 ? (
+              <div className="flex flex-col justify-center items-center gap-5 pt-10 w-full">
+                <p className="empty-survey-text">
+                  You have not created a survey yet
+                </p>
+                <p className="empty-survey-desc text-center">
+                  Create new survey to collect valuable insights, understand{" "}
+                  <br className="hidden md:flex" />
+                  opinions, and make informed decisions from your followers.
+                </p>
+                <button
+                  className="w-[181px] h-[46.9px] rounded-[6.98px] p-2 bg-[#3D7100] text-white"
+                  onClick={() => setActiveTab("create-survey")}
+                >
+                  Create new
+                </button>
+              </div>
+            ) : (
+              <SurveyHistory />
+            )}
+          </div>
+        )}
+
         {activeTab === "analytics" && <div>Analytics Content</div>}
       </div>
     </>
