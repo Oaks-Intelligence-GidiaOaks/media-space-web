@@ -53,7 +53,7 @@ const Card = ({
               </button>
             </li>
             <li className="hover:bg-slate-100 dropdown-item p-2">Preview</li>
-            <li className="hover:bg-slate-100 dropdown-item p-2">Share</li>
+            {/* <li className="hover:bg-slate-100 dropdown-item p-2">Share</li> */}
             <li className="hover:bg-slate-100 dropdown-item p-2 text-[#FF3E3E]">
               <button className="w-full text-start" onClick={handleDeleteClick}>
                 Delete

@@ -9,6 +9,7 @@ import { showAlert } from "../../static/alert";
 
 const ActiveSurvey = () => {
   const { data: activeSurvey, refetch } = useActiveSurveyQuery();
+  console.log(activeSurvey);
 
   console.log(activeSurvey);
 
@@ -74,7 +75,7 @@ const ActiveSurvey = () => {
 
   return (
     <div className="flex flex-wrap gap-5 w-full items-center">
-      {[...activeSurvey.data]
+      {[...activeSurvey.data.data]
         ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .map((row, idx) => (
           <Card
