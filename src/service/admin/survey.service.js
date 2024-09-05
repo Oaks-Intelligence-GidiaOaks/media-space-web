@@ -2,7 +2,7 @@ import {
   CREATE_SURVEY,
   END_SURVEY,
   SURVEY_RESPONSES,
-  DOWNLOAD_SURVEY,
+  DOWNLOAD_SURVEY
 } from "../constants";
 import apiSlice from "../api/apiSlice";
 
@@ -12,40 +12,41 @@ export const organizationApiSlice = apiSlice.injectEndpoints({
       query: (data) => ({
         url: CREATE_SURVEY,
         body: data,
-        method: "POST",
+        method: "POST"
       }),
-      invalidatesTags: ["Survey"],
+      invalidatesTags: ["Survey"]
     }),
     getAllSurvey: builder.query({
       query: () => ({
         url: CREATE_SURVEY,
-        method: "GET",
-      }),
+        method: "GET"
+      })
     }),
     endSurvey: builder.mutation({
       query: (id) => ({
         url: `${END_SURVEY}/${id}`,
-        method: "PATCH",
-      }),
+        method: "PATCH"
+      })
     }),
     activeSurvey: builder.query({
-      query: () => ({
-        url: `${CREATE_SURVEY}?survey_type=active`,
-        method: "GET",
-      }),
+      query: ({ page, page_size }) => ({
+        url: `${CREATE_SURVEY}?survey_type=active&page=${page}&page_size=${page_size}`,
+        method: "GET"
+      })
     }),
+
     surveyHistory: builder.query({
-      query: () => ({
-        url: `${CREATE_SURVEY}?survey_type=history`,
-        method: "GET",
-      }),
+      query: ({ page, page_size }) => ({
+        url: `${CREATE_SURVEY}?survey_type=history&page=${page}&page_size=${page_size}`,
+        method: "GET"
+      })
     }),
     deleteSurvey: builder.mutation({
       query: (id) => ({
         url: `${CREATE_SURVEY}/${id}`,
-        method: "DELETE",
+        method: "DELETE"
       }),
-      invalidatesTags: ["Survey"],
+      invalidatesTags: ["Survey"]
     }),
     // surveyResponses: builder.query({
     //   query: () => ({
@@ -57,17 +58,24 @@ export const organizationApiSlice = apiSlice.injectEndpoints({
     getResponse: builder.query({
       query: (id) => ({
         url: `${CREATE_SURVEY}/${id}/response`,
-        method: "GET",
-      }),
+        method: "GET"
+      })
     }),
 
     downloadResponse: builder.query({
       query: (id) => ({
         url: `${DOWNLOAD_SURVEY}/${id}`,
-        method: "GET",
-      }),
+        method: "GET"
+      })
     }),
-  }),
+
+    updateSurvey: builder.mutation({
+      query: (data) => ({
+        url: `${CREATE_SURVEY}/${data.surveyId}`,
+        method: "PATCH"
+      })
+    })
+  })
 });
 
 export const {
@@ -80,4 +88,5 @@ export const {
   // useSurveyResponsesQuery,
   useGetResponseQuery,
   useDownloadResponseQuery,
+  useUpdateSurveyMutation
 } = organizationApiSlice;

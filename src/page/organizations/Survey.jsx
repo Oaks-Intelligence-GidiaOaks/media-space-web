@@ -17,9 +17,6 @@ function Survey() {
     { id: "analytics", label: "Analytics" }
   ];
 
-  const { data: activeSurvey, isFetching: activeSurveyFetching } =
-    useActiveSurveyQuery();
-
   const { data: surveyHistory, isFetching: surveyHistoryFetching } =
     useSurveyHistoryQuery();
 
@@ -53,59 +50,13 @@ function Survey() {
 
         {activeTab === "active-survey" && (
           <div>
-            {activeSurveyFetching ? (
-              <div className="flex justify-center items-center pt-5">
-                <Spinner />
-              </div>
-            ) : activeSurvey?.data.length === 0 ? (
-              <div className="flex flex-col justify-center items-center gap-5 pt-10 w-full">
-                <p className="empty-survey-text">
-                  You have not created a survey yet
-                </p>
-                <p className="empty-survey-desc text-center">
-                  Create new survey to collect valuable insights, understand{" "}
-                  <br className="hidden md:flex" />
-                  opinions, and make informed decisions from your followers.
-                </p>
-                <button
-                  className="w-[181px] h-[46.9px] rounded-[6.98px] p-2 bg-[#3D7100] text-white"
-                  onClick={() => setActiveTab("create-survey")}
-                >
-                  Create new
-                </button>
-              </div>
-            ) : (
-              <ActiveSurvey />
-            )}
+            <ActiveSurvey />
           </div>
         )}
 
         {activeTab === "history" && (
           <div>
-            {surveyHistoryFetching ? (
-              <div className="flex justify-center items-center pt-5">
-                <Spinner />
-              </div>
-            ) : surveyHistory?.data.length === 0 ? (
-              <div className="flex flex-col justify-center items-center gap-5 pt-10 w-full">
-                <p className="empty-survey-text">
-                  You have not created a survey yet
-                </p>
-                <p className="empty-survey-desc text-center">
-                  Create new survey to collect valuable insights, understand{" "}
-                  <br className="hidden md:flex" />
-                  opinions, and make informed decisions from your followers.
-                </p>
-                <button
-                  className="w-[181px] h-[46.9px] rounded-[6.98px] p-2 bg-[#3D7100] text-white"
-                  onClick={() => setActiveTab("create-survey")}
-                >
-                  Create new
-                </button>
-              </div>
-            ) : (
-              <SurveyHistory />
-            )}
+            <SurveyHistory />
           </div>
         )}
 

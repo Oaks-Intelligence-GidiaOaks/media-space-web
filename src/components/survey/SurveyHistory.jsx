@@ -6,11 +6,48 @@ import {
 import Card from "./Card";
 import { useEffect, useState } from "react";
 import { showAlert } from "../../static/alert";
+import { Spinner } from "flowbite-react";
 
 const SurveyHistory = () => {
-  const { data: activeSurvey, refetch } = useSurveyHistoryQuery();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const [totalPages, setTotalPages] = useState(1);
+
+  const {
+    data: activeSurvey,
+    refetch,
+    isFetching: activeSurveyFetching
+  } = useSurveyHistoryQuery({
+    page: currentPage,
+    page_size: itemsPerPage
+  });
+
+  console.log(activeSurvey, "history");
+
+  useEffect(() => {
+    if (activeSurvey?.data?.total_items) {
+      setTotalPages(Math.ceil(activeSurvey.data.total_items / itemsPerPage));
+    }
+  }, [activeSurvey]);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      refetch();
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      refetch();
+    }
+  };
+
+  const goToPage = (page) => {
+    setCurrentPage(page);
+    refetch();
+  };
 
   const [deleteSurvey, { isSuccess: deleteSuccess, error: deleteError }] =
     useDeleteSurveyMutation();
@@ -72,54 +109,57 @@ const SurveyHistory = () => {
     }
   }, [endSurveySuccess, endSurveyError, refetch]);
 
-  // Pagination logic
-  const totalItems = activeSurvey?.data.length || 0;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  const paginatedData = activeSurvey?.data.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
   return (
-    <div className="flex flex-col gap-5 w-full items-center">
-      {paginatedData && paginatedData.length > 0 ? (
-        <>
-          <div className="flex flex-wrap gap-5 w-full justify-start">
-            {paginatedData.map((row, idx) => (
-              <Card
-                classes="border border-[#BDBDBD] rounded-[12px] w-full md:w-[48%]"
-                id={row?._id}
-                key={idx}
-                badge={true}
-                topic={row?.topic}
-                desc={row?.description}
-                created={row?.createdAt}
-                count={0}
-                deleteSurvey={handleDeleteSurvey}
-                endSurvey={handleEndSurvey}
-              />
-            ))}
+    <>
+      <div className="flex flex-col w-full">
+        {activeSurveyFetching ? (
+          <div className="flex justify-center items-center pt-5">
+            <Spinner />
           </div>
+        ) : activeSurvey?.data.length === 0 ? (
+          <div className="flex flex-col justify-center items-center gap-5 pt-10 w-full">
+            <p className="empty-survey-text">
+              You have not created a survey yet
+            </p>
+            <p className="empty-survey-desc text-center">
+              Create new survey to collect valuable insights, understand
+              <br className="hidden md:flex" />
+              opinions, and make informed decisions from your followers.
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-5 w-full items-center">
+            {[...(activeSurvey?.data?.data || [])]
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+              .map((row, idx) => (
+                <Card
+                  id={row?._id}
+                  key={idx}
+                  topic={row?.topic}
+                  desc={row?.description}
+                  created={row?.createdAt}
+                  count={row?.response_count}
+                  deleteSurvey={handleDeleteSurvey}
+                  endSurvey={handleEndSurvey}
+                  status={row?.active}
+                  badge={true}
+                  hideEdit={true}
+                />
+              ))}
+          </div>
+        )}
 
-          {/* Pagination Controls */}
-          <div className="flex justify-center gap-5 items-center mt-4 w-full">
+        {/* Pagination Controls */}
+        {activeSurvey?.data && (
+          <div className="mt-5 flex justify-between items-center">
             <button
-              className={`px-4 py-2 border rounded-[8px] survey-pagination-btn w-[114px] ${
-                currentPage === 1
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-white"
-              }`}
-              onClick={() => handlePageChange(currentPage - 1)}
+              onClick={handlePrevPage}
               disabled={currentPage === 1}
+              className="px-4 py-2 border rounded-[8px] survey-pagination-btn w-[114px]"
             >
               &larr; Previous
             </button>
-            <div>
+            <div className="flex gap-2">
               {Array.from({ length: totalPages }, (_, index) => (
                 <button
                   key={index}
@@ -128,29 +168,23 @@ const SurveyHistory = () => {
                       ? "bg-gray-200 text-gray-900"
                       : "bg-white text-gray-500"
                   }`}
-                  onClick={() => handlePageChange(index + 1)}
+                  onClick={() => goToPage(index + 1)}
                 >
                   {index + 1}
                 </button>
               ))}
             </div>
             <button
-              className={`px-4 py-2 border rounded-[8px] survey-pagination-btn w-[88px] ${
-                currentPage === totalPages
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-white"
-              }`}
-              onClick={() => handlePageChange(currentPage + 1)}
+              className="px-4 py-2 border rounded-[8px] survey-pagination-btn w-[88px]"
+              onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
               Next &rarr;
             </button>
           </div>
-        </>
-      ) : (
-        <p>No surveys available.</p>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

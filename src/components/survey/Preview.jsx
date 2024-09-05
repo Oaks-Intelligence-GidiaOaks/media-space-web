@@ -8,6 +8,7 @@ import trash from "../../assets/icons/trash.svg";
 import rtkMutation from "../../utils/rtkMutation";
 import { showAlert } from "../../static/alert";
 import { useCreateSurveyMutation } from "../../service/admin/survey.service";
+import Modals from "../modals/Modal";
 
 const CreateSurvey = () => {
   const [banner, setBanner] = useState(null);
@@ -15,6 +16,7 @@ const CreateSurvey = () => {
   const [topic, setTopic] = useState("");
   const [description, setDescription] = useState("");
   const [messageAlert, setMessageAlert] = useState("");
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [questions, setQuestions] = useState([
     {
       question_text: "",
@@ -128,6 +130,14 @@ const CreateSurvey = () => {
       showAlert("Oops", error.data.message || "An error occurred", "error");
     }
   }, [isSuccess, error]);
+
+  const handlePreview = () => {
+    setIsPreviewOpen(true); // Open the preview modal
+  };
+
+  const handleClosePreview = () => {
+    setIsPreviewOpen(false); // Close the preview modal
+  };
 
   return (
     <>
@@ -315,6 +325,19 @@ const CreateSurvey = () => {
       </div>
 
       <div className="mt-5 justify-between items-center flex gap-5">
+        {/* <button
+          className="w-[181px] h-[46.9px] rounded-[6.98px] p-2 bg-[#fff] text-black border"
+          onClick={handlePreview}
+          disabled={
+            !topic.trim() ||
+            !description.trim() ||
+            !Array.isArray(questions) ||
+            questions.length === 0
+          }
+        >
+          Preview
+        </button> */}
+
         <button
           className="w-[181px] h-[46.9px] rounded-[6.98px] p-2 bg-[#3D7100] text-white"
           onClick={handleSubmit}
@@ -338,6 +361,81 @@ const CreateSurvey = () => {
           )}
         </button>
       </div>
+
+      {/* Survey Preview Modal */}
+      {isPreviewOpen && (
+        <Modals
+          title="Survey Preview"
+          openModal={isPreviewOpen}
+          modalSize="2xl"
+          onClose={handleClosePreview}
+        >
+          <div className="modal-content p-6 bg-white rounded-lg shadow-lg space-y-6">
+            {banner && (
+              <div className="mb-6">
+                <img
+                  src={banner}
+                  alt="Preview Banner"
+                  className="w-full h-48 object-cover rounded-lg shadow-md"
+                />
+              </div>
+            )}
+
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold text-gray-800">{topic}</h3>
+              <p className="text-lg text-gray-600">{description}</p>
+              {messageAlert && (
+                <p className="text-md text-gray-500 italic">"{messageAlert}"</p>
+              )}
+            </div>
+
+            <div className="space-y-4">
+              {questions.map((question, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-100 p-4 rounded-lg shadow-sm"
+                >
+                  <h4 className="text-xl font-medium text-gray-700">
+                    Q{index + 1}: {question.question_text}
+                  </h4>
+                  <p className="text-md text-gray-500 mt-1">
+                    Answer Type:{" "}
+                    <span className="font-semibold">
+                      {question.answer_type.replace("_", " ")}
+                    </span>
+                  </p>
+                  {question.answer_type === "multiple_choice" ||
+                  question.answer_type === "single_choice" ? (
+                    <ul className="list-disc pl-5 mt-2 text-gray-600">
+                      {question.answer_options.length > 0 ? (
+                        question.answer_options.map((option, optionIndex) => (
+                          <li key={optionIndex}>{option}</li>
+                        ))
+                      ) : (
+                        <p className="text-sm text-red-500">
+                          No options provided
+                        </p>
+                      )}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-gray-500 mt-2">
+                      This question expects a{" "}
+                      {question.answer_type.replace("_", " ")} answer.
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={handleClosePreview}
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none"
+            >
+              Close Preview
+            </button>
+          </div>
+        </Modals>
+      )}
     </>
   );
 };
